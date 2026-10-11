@@ -1,0 +1,12 @@
+import {build} from 'esbuild';
+import {mkdir,writeFile} from 'node:fs/promises';
+await mkdir('qa',{recursive:true});
+await mkdir('research',{recursive:true});
+await build({entryPoints:['src/data/products.ts'],bundle:true,platform:'node',format:'esm',outfile:'qa/catalogue-check.mjs'});
+const {products}=await import('../qa/catalogue-check.mjs');
+const escape=s=>String(s).replaceAll('|','/');
+const lines=['# Recherchierter Produktbestand','', 'Stand der Recherche: 11.10.2026. Beobachtete Preise inklusive Mehrwertsteuer, ohne Versand. Alle Symbolabbildungen sind eigene SVGs, keine Originalfotos.', '', '| Modell | Händler | Region / Stufe | Beobachteter Artikelpreis | Primärquelle |', '| --- | --- | --- | --- | --- |'];
+for(const p of products)lines.push(`| ${escape(p.brand+' '+p.name)} | ${p.shop}${p.retailOnly?' (nur Filiale)':''} | ${p.region} / ${p.tier} | ${p.price===null?'unbekannt':`${p.priceKind==='from'?'ab ':''}${p.price.toFixed(2)} EUR`} | [Produktseite](${p.url}) |`);
+lines.push('','Konkrete Eigenschaften, Unsicherheiten, Vorteile, Grenzen und Bewertungsstufen stehen pro Modell in `src/data/products.ts`. Der JSON-Katalog enthält die EUR-Preisbeobachtungen der 30 ausgewählten GripGrab-Modelle.');
+await writeFile('research/PRODUCTS.md',lines.join('\n')+'\n');
+console.log(`Documented ${products.length} sourced models`);

@@ -1,0 +1,286 @@
+{
+  "checked": "2026-10-11",
+  "method": "Visible browser product pages; no checkout",
+  "results": [
+    {
+      "url": "https://www.action.com/de-de/p/2569969/thermosocken/",
+      "model": "Thermosocken",
+      "price": "2,99 € / 3 Paar",
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.action.com/de-de/p/2554993/thermolate-mutze/",
+      "observed": [
+        "  - paragraph: Immer 1.500 Produkte für unter 1 Euro",
+        "    - heading \"Thermolate Mütze\" [level=1]",
+        "    - generic: \"Preis: 1,99 Euro\"",
+        "    - generic: 1,99 €/st"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.action.com/de-de/p/2577090/thermolate-handschuhe/",
+      "observed": [
+        "  - paragraph: Immer 1.500 Produkte für unter 1 Euro",
+        "    - heading \"Thermolate Handschuhe\" [level=1]",
+        "    - generic: \"Preis: 2,99 Euro\"",
+        "    - generic: 2,99 €/st"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.action.com/de-de/p/2577489/thermo-nackenwarmer/",
+      "observed": [
+        "  - paragraph: Immer 1.500 Produkte für unter 1 Euro",
+        "    - heading \"Thermo-Nackenwärmer\" [level=1]",
+        "    - generic: \"Preis: 3,69 Euro\"",
+        "    - generic: 3,69 €/st"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.action.com/de-de/p/2568247/kaytan-thermo-sporthose/",
+      "observed": [
+        "  - paragraph: Immer 1.500 Produkte für unter 1 Euro",
+        "    - heading \"Kaytan Thermo-Sporthose\" [level=1]",
+        "    - generic: \"Preis: 7,95 Euro\"",
+        "    - generic: 7,95 €/st"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.action.com/de-de/p/3217084/thermohose/",
+      "observed": [
+        "  - paragraph: Immer 1.500 Produkte für unter 1 Euro",
+        "    - heading \"Thermohose\" [level=1]",
+        "    - generic: \"Preis: 2,99 Euro\"",
+        "    - generic: 2,99 €/st"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.action.com/de-de/p/3218112/regenjacke-mit-aufbewahrungstasche/",
+      "observed": [
+        "    - heading \"Regenjacke mit Aufbewahrungstasche\" [level=1]",
+        "    - generic: \"Preis: 9,96 Euro\"",
+        "    - generic: 9,96 €/st",
+        "      - listitem: Schützt vor Regen mit wasserdichter oder wasserabweisender Beschichtung und versiegelten Nähten",
+        "    - generic: Mit dieser Regenjacke im Neon- oder reflektierenden Design bist du für jedes Wetter bestens gerüstet. Sie ist wasserdicht oder wasserabweisend, winddicht und verfügt über versiegelte Nähte für zusätzlichen Schutz. Ideal zum Radfahren, Wandern oder für Festivals. In der kompakten Aufbewahrungstasche lässt sie sich leicht mitnehmen und bei Bedarf schnell verstauen. Wähle deinen Lieblingsstil und bleibe bei jedem Wetter geschützt und gut sichtbar.",
+        "  - link \"Set Regenkleidung Größen S–XL | Verschiedene Farben 12,95 € 12,95 €/st\":"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.action.com/de-de/p/3004778/set-regenkleidung/",
+      "observed": [
+        "    - heading \"Set Regenkleidung\" [level=1]",
+        "    - generic: \"Preis: 12,95 Euro\"",
+        "    - generic: 12,95 €/st",
+        "  - link \"Werckmann Softshell-Jacke Größe M–XXL 14,95 € 14,95 €/st\":",
+        "    - generic \"14,95 € 14,95 €/st\":",
+        "      - generic: 14,95 €/st"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.action.com/de-de/p/2568221/kaytan-thermo-sportshirt/",
+      "observed": [
+        "    - heading \"Kaytan Thermo-Sportshirt\" [level=1]",
+        "    - generic: \"Preis: 8,95 Euro\"",
+        "    - generic: 8,95 €/st",
+        "  - link \"Kaytan Thermo-Sportshirt Größen S–XL 8,95 € 8,95 €/st Nachhaltigkeit\":",
+        "    - generic \"8,95 € 8,95 €/st\":",
+        "      - generic: 8,95 €/st"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.action.com/de-de/p/3217087/thermoshirt/",
+      "observed": [
+        "    - heading \"Thermoshirt\" [level=1]",
+        "    - generic: \"Preis: 2,99 Euro\"",
+        "    - generic: 2,99 €/st",
+        "  - link \"Thermoshirt Größe S–XL 2,99 € 2,99 €/st\":",
+        "    - generic \"2,99 € 2,99 €/st\":",
+        "      - generic: 2,99 €/st"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.decathlon.de/p/fahrrad-regenhose-city-100-schwarz/169380/c382m8402040",
+      "observed": [
+        "Fahrrad Regenhose City 100 schwarz",
+        "Aktueller Preis 24,99 €"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.decathlon.de/p/sturmhaube-radsport-merino-damen-herren-schwarz/329097/c382m8605557",
+      "observed": [
+        "    - heading \"Sturmhaube Radsport Merino Damen/Herren schwarz\" [level=1]",
+        "    - generic: Aktueller Preis",
+        "  - generic: Aktueller Preis",
+        "  - generic: Aktueller Preis"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.decathlon.de/p/unterhelmmutze-fahrrad-500-schwarz/336824/c382m8678236",
+      "observed": [
+        "    - heading \"Unterhelmmütze Fahrrad 500 schwarz\" [level=1]",
+        "    - generic: Aktueller Preis"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.decathlon.de/p/fahrrad-uberschuhe-city-900-wasserdicht-schwarz/352807/c1m8872116",
+      "observed": [
+        "    - heading \"Fahrrad-Überschuhe City 900 wasserdicht schwarz\" [level=1]",
+        "    - generic: Aktueller Preis",
+        "  - generic: Aktueller Preis",
+        "  - generic: Aktueller Preis"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.decathlon.de/p/fahrrad-regenjacke-city-540-herren-sichtbar-bei-nacht-schwarz/341852/c382m8789250",
+      "observed": [
+        "    - heading \"Fahrrad Regenjacke City 540 Herren sichtbar bei Nacht schwarz\" [level=1]",
+        "    - generic: Aktueller Preis",
+        "  - generic: Aktueller Preis",
+        "  - generic: Aktueller Preis"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.decathlon.de/p/fahrrad-regenhose-city-900-herren-schwarz/325714/c382c382m8588152",
+      "observed": [
+        "    - heading \"Fahrrad Regenhose City 900 Herren schwarz\" [level=1]",
+        "    - generic: Aktueller Preis",
+        "  - generic: Aktueller Preis",
+        "  - generic: Aktueller Preis"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.decathlon.de/p/fahrrad-handschuhe-wasserdicht-zwischensaison-edr-waterproof/347153/c382m8803784",
+      "observed": [
+        "    - heading \"Fahrrad Handschuhe wasserdicht Zwischensaison „EDR waterproof“\" [level=1]",
+        "    - text: 29,99 €",
+        "  - text: 29,99 €",
+        "  - text: 9,99 €",
+        "  - text: 44,99 €"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.decathlon.de/p/regenjacke-rennrad-langarm-edr-herren-blau/301771/c364c364c379m8911229",
+      "observed": [
+        "    - heading \"Regenjacke Rennrad langarm EDR Herren blau\" [level=1]",
+        "    - text: 54,99 €",
+        "      - generic: oder ab 9,16 €/Monat mit Ratenzahlung",
+        "  - text: 9,99 €",
+        "  - text: 44,99 €"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.decathlon.de/p/fahrrad-handschuhe-fleece-atmungsaktiv-essential-schwarz/4684/c1m8286469",
+      "observed": [
+        "    - heading \"Fahrrad Handschuhe Fleece atmungsaktiv „Essential“ schwarz\" [level=1]",
+        "    - text: 9,99 €"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.decathlon.de/p/fahrrad-beinlinge-winter-schwarz/312381/c382m8573303",
+      "observed": [
+        "    - heading \"Fahrrad Beinlinge Winter schwarz\" [level=1]",
+        "    - text: 19,99 €"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.decathlon.de/p/merino-tights-herren-lange-unterwaesche-trekking-mt500-schwarz/301655/8501932",
+      "observed": [
+        "    - heading \"Merino Funktionsunterwäsche Herren lang Trekking ‒ MT500 schwarz\" [level=1]",
+        "    - text: 42,99 €"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.decathlon.de/p/handschuhe-damen-herren-winddicht-touchscreenfahig-trekking-mt900-grau/335267/c71c382m8655822",
+      "observed": [
+        "    - heading \"Handschuhe Damen/Herren winddicht touchscreenfähig Trekking - MT900 grau\" [level=1]",
+        "    - text: 27,99 €",
+        "  - text: 27,99 €",
+        "  - text: 14,99 €",
+        "  - text: 12,99 €"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.decathlon.de/p/winterschuhe-herren-wasserdicht-winterwandern-nh100-schwarz/338961/c382m8737445",
+      "observed": [
+        "    - heading \"Winterschuhe Herren wasserdicht Winterwandern - NH100 schwarz\" [level=1]",
+        "    - text: 39,99 €",
+        "      - generic: oder ab 6,66 €/Monat mit Ratenzahlung",
+        "  - text: 6,99 €",
+        "  - text: Vorher 7,99 €"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.decathlon.de/p/regenjacke-herren-wasserdicht-winddicht-wandern-raincut-1-2-zip-schwarz/352054/c1c419m8862313",
+      "observed": [
+        "    - heading \"Regenjacke Herren wasserdicht winddicht Wandern - Raincut 1/2 Zip schwarz\" [level=1]",
+        "    - text: 12,99 €",
+        "  - text: 7,99 €",
+        "  - text: 12,99 €",
+        "  - text: 12,99 €"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.decathlon.de/p/fahrrad-handschuhe-winter-edr-light-schwarz/305595/c382c382m8530327",
+      "observed": [
+        "Fahrrad Handschuhe Winter EDR Light schwarz",
+        "19,99 €",
+        "Komforttemperatur 7–12 °C"
+      ],
+      "result": "browser-verified",
+      "resolvedFrom": "https://www.decathlon.de/p/winter-fahrradhandschuhe-500-blau/305595/c364c382m8530323"
+    },
+    {
+      "url": "https://www.bike-discount.de/de/endura-mt500-waterproof-mtb-regenjacke-20140288",
+      "result": "product-not-found",
+      "observed": [
+        "Die angegebene Seite konnte leider nicht gefunden werden."
+      ]
+    },
+    {
+      "url": "https://www.bike-discount.de/de/endura-mt500-waterproof-mtb-hose",
+      "result": "browser-verified",
+      "observed": [
+        "Endura MT500 Waterproof - MTB Hose",
+        "144,99 €"
+      ]
+    },
+    {
+      "url": "https://www.bike-discount.de/de/shimano-sh-mw702-mtb-winterschuhe",
+      "observed": [
+        "  - heading \"Shimano SH-MW702 - MTB Winterschuhe\" [level=1]:",
+        "  - paragraph: 169,99 €"
+      ],
+      "result": "browser-verified"
+    },
+    {
+      "url": "https://www.bike-discount.de/de/vaude-minaki-mid-stx-iii-mtb-winterschuhe",
+      "observed": [
+        "  - heading \"Vaude Minaki Mid STX III - MTB Winterschuhe\" [level=1]:",
+        "  - paragraph: 168,00 €"
+      ],
+      "result": "browser-verified"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.env*
+qa/screenshots/
+qa/catalogue-check.mjs
+research/raw/

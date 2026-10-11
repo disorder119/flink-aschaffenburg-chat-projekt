@@ -1,0 +1,302 @@
+{
+  "thermo-windproof-winter-headband": {
+    "name": "Thermo Windproof Winter Headband",
+    "price": 30,
+    "from": true,
+    "url": "https://www.gripgrab.com/products/thermo-windproof-winter-headband",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "aquashield-waterproof-cycling-cap": {
+    "name": "AquaShield Waterproof Cycling Cap",
+    "price": 35,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/aquashield-waterproof-cycling-cap",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "merino-blend-lightweight-beanie": {
+    "name": "Merino Blend Lightweight Beanie",
+    "price": 35,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/merino-blend-lightweight-beanie",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "belgian-style-thermal-windproof-winter-cycling-cap": {
+    "name": "Belgian Style Thermal Windproof Winter Cycling Cap",
+    "price": 45,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/belgian-style-thermal-windproof-winter-cycling-cap",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "multifunctional-merino-neck-warmer": {
+    "name": "Multifunctional Merino Neck Warmer",
+    "price": 30,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/multifunctional-merino-neck-warmer",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "thermal-winter-balaclava": {
+    "name": "Thermal Winter Balaclava",
+    "price": 35,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/thermal-winter-balaclava",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "aviator-windproof-deep-winter-skull-cap": {
+    "name": "Aviator Windproof Deep Winter Skull Cap",
+    "price": 40,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/aviator-windproof-deep-winter-skull-cap",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "skull-cap": {
+    "name": "Thermo Spring-Autumn Skull Cap",
+    "price": 30,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/skull-cap",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "ride-2-windproof-winter-gloves": {
+    "name": "RIDE 2 Windproof Winter Gloves",
+    "price": 50,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/ride-2-windproof-winter-gloves",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "ride-2-waterproof-winter-gloves": {
+    "name": "RIDE 2 Waterproof Winter Gloves",
+    "price": 70,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/ride-2-waterproof-winter-gloves",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "ride-2-windproof-spring-autumn-gloves": {
+    "name": "RIDE 2 Windproof Spring-Autumn Gloves",
+    "price": 40,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/ride-2-windproof-spring-autumn-gloves",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "polaris-2-waterproof-winter-gloves": {
+    "name": "Polaris 2 Waterproof Winter Gloves",
+    "price": 110,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/polaris-2-waterproof-winter-gloves",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "nordic-2-windproof-deep-winter-lobster-gloves": {
+    "name": "Nordic 2 Windproof Deep Winter Lobster Gloves",
+    "price": 90,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/nordic-2-windproof-deep-winter-lobster-gloves",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "waterproof-knitted-winter-gloves": {
+    "name": "Waterproof Knitted Winter Gloves",
+    "price": 55,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/waterproof-knitted-winter-gloves",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "primavera-2-merino-spring-autumn-gloves": {
+    "name": "Primavera 2 Merino Spring-Autumn Gloves",
+    "price": 35,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/primavera-2-merino-spring-autumn-gloves",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "merino-wool-liner-gloves": {
+    "name": "Merino Wool Liner Gloves",
+    "price": 25,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/merino-wool-liner-gloves",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "pacr-winter-jacket": {
+    "name": "PACR Winter Jacket",
+    "price": 220,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/pacr-winter-jacket",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "ride-winter-jacket": {
+    "name": "RIDE Winter Jacket",
+    "price": 150,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/ride-winter-jacket",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "ride-waterproof-lightweight-jacket": {
+    "name": "RIDE Waterproof Lightweight Jacket",
+    "price": 120,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/ride-waterproof-lightweight-jacket",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "ride-winter-long-sleeve-base-layer": {
+    "name": "RIDE Winter Long Sleeve Base Layer",
+    "price": 65,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/ride-winter-long-sleeve-base-layer",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "merino-blend-thermal-long-sleeve-base-layer": {
+    "name": "Merino Blend Thermal Long Sleeve Base Layer",
+    "price": 75,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/merino-blend-thermal-long-sleeve-base-layer",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "explr-waterproof-lightweight-pants": {
+    "name": "EXPLR Waterproof Lightweight Pants",
+    "price": 150,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/explr-waterproof-lightweight-pants",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "arctic-2-waterproof-deep-winter-gravel-shoe-covers": {
+    "name": "Arctic 2 Waterproof Deep Winter Gravel Shoe Covers",
+    "price": 85,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/arctic-2-waterproof-deep-winter-gravel-shoe-covers",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "aquaseal-waterproof-cycling-gaiter": {
+    "name": "AquaSeal Waterproof Cycling Gaiter",
+    "price": 20,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/aquaseal-waterproof-cycling-gaiter",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "alpine-merino-high-cut-winter-socks": {
+    "name": "Alpine Merino High Cut Winter Socks",
+    "price": 35,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/alpine-merino-high-cut-winter-socks",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "dryfoot-waterproof-everyday-shoe-covers-2": {
+    "name": "DryFoot 2 Waterproof Everyday Shoe Covers",
+    "price": 45,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/dryfoot-waterproof-everyday-shoe-covers-2",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "thermo-sl-winter-socks": {
+    "name": "Thermo SL Winter Socks",
+    "price": 20,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/thermo-sl-winter-socks",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "merino-lined-waterproof-winter-socks": {
+    "name": "Merino-Lined Waterproof Winter Socks",
+    "price": 55,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/merino-lined-waterproof-winter-socks",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "racethermo-waterproof-winter-road-shoe-covers": {
+    "name": "RaceThermo Waterproof Winter Road Shoe Covers",
+    "price": 45,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/racethermo-waterproof-winter-road-shoe-covers",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "merino-winter-sock": {
+    "name": "Merino Winter Socks",
+    "price": 20,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/merino-winter-sock",
+    "checked": "2026-10-11",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  }
+}
