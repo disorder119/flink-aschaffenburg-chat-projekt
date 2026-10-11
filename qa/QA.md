@@ -23,7 +23,7 @@ Stand: 11.10.2026. Ausführung in Node.js 24 und im verbundenen Microsoft-Edge-B
 - Budget + maximal 10 €: drei passende günstige Handartikel.
 - Starkregen + Frost: zwei isolierte Membranhandschuhe; milde EDR-waterproof-Handschuhe ausgeschlossen.
 - Merken / Entfernen, lokale Speicherung nach Reload, Produktdetails mit Quellen und Stufentabelle.
-- Produktvergleich mit Preisen, Nässe, Wärme, Vorteilen, Grenzen und Shoplinks.
+- Produktvergleich mit Preisen, Nässe, Wärme, Vorteilen, Grenzen und Shoplinks; vierter Artikel wird mit sichtbarem Hinweis abgelehnt, Vergleichstabelle zeigt drei Produktspalten.
 - Budget-Set 127,84 €. Austausch der Kopfkomponente von 9,99 € zu 40 € ergibt 157,85 €.
 - Premium-Set nach korrigiertem VAUDE-Schuhpreis **ab 808,00 €**; Best Value 387,45 €.
 - Kopieren der Einkaufsliste in die Browserzwischenablage einschließlich echter URLs bestätigt.
@@ -54,7 +54,11 @@ Repository: https://github.com/disorder119/flink-aschaffenburg-chat-projekt
 
 Pages-Ziel: https://disorder119.github.io/flink-aschaffenburg-chat-projekt/
 
-Der endgültige Workflow-Status und der unabhängige Abruf der Produktionsassets werden nach Deployment in `deployment.json` festgehalten. Ein konfiguriertes Pages-Ziel allein zählt ausdrücklich nicht als erfolgreicher Live-Nachweis.
+**Erste Veröffentlichung bestätigt:** Workflow [38164432641](https://github.com/disorder119/flink-aschaffenburg-chat-projekt/actions/runs/38164432641) hat Build, Tests und Deployment für Commit `1e4e52426d03e41c7cddaeceeb921694577d4b55` erfolgreich abgeschlossen. HTTPS-Index, JavaScript, CSS und Favicon liefern HTTP 200; siehe [deployment.json](deployment.json). Die öffentliche Website wurde im Browser geöffnet. Körperbereich, Budget-/Preisfilter (Kopf, günstig, maximal 5 € → zwei Artikel), Favoriten nach Reload und Premium-Set **ab 808,00 €** wurden auf der echten URL bestätigt. Direkter Aufruf der Outfit- und Datenschutzseiten funktioniert. Testauswahlen auf der Live-Domain anschließend über die angebotene Datenschutzfunktion gelöscht. Keine Konsolenfehler.
+
+Ein normaler Browser-Screenshot der veröffentlichten Seite wurde lokal gespeichert. Der CDP-Screenshotweg schlug auf der öffentlichen Domain technisch fehl; die vorhandene alternative Browser-Screenshotfunktion lieferte einen sichtbaren Nachweis. Dieser Toolfehler ist keine bestandene CDP-Prüfung und keine Behauptung eines Safari-Tests.
+
+`scripts/verify-deployment.mjs` prüft bei späteren Aufrufen die aktuellen HTTP-Ressourcen und schreibt `live-assets.json`; den Workflow-Status muss man jeweils separat lesen. Die gespeicherte erste Veröffentlichung ist ein datierter Nachweis, keine automatische Behauptung über zukünftige Commits.
 
 ## Tatsächlich offene Angaben
 

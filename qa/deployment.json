@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-10-11T18:37:06.147Z",
+  "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/",
+  "indexStatus": 200,
+  "https": true,
+  "workflow": {
+    "id": 38164432641,
+    "url": "https://github.com/disorder119/flink-aschaffenburg-chat-projekt/actions/runs/38164432641",
+    "commit": "1e4e52426d03e41c7cddaeceeb921694577d4b55",
+    "build": "success",
+    "tests": "success",
+    "deploy": "success"
+  },
+  "resources": [
+    {
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/favicon.svg",
+      "status": 200,
+      "bytes": 178
+    },
+    {
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/assets/index-CMGTHpCB.js",
+      "status": 200,
+      "bytes": 338026
+    },
+    {
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/assets/index-DsvRBRS1.css",
+      "status": 200,
+      "bytes": 47340
+    }
+  ],
+  "browser": "Public URL opened and rendered in Microsoft Edge; no console warnings/errors",
+  "limits": "No physical iPhone or Safari browser available. Operator information still incomplete."
+}
