@@ -6,8 +6,9 @@ Live: https://disorder119.github.io/flink-aschaffenburg-chat-projekt/
 
 ## Was die Anwendung bietet
 
-- Eigenständige SVG-Fahrerfigur mit fünf per Touch und Tastatur auswählbaren Körperregionen.
-- 67 recherchierte Modelle, mindestens drei pro Körperregion und Budgetstufe. 56 erhalten eine redaktionelle Eignungsbewertung; bei unzureichenden Daten bleibt die Zahl offen.
+- Rosa Rider-Studio mit fünf auswählbaren Körperregionen, drehbarer 3D-Figur und leichter SVG-Ansicht. Farbstile für Flink, Wolt, Uber Eats, Lieferando und die Community, ohne Markenlogos oder behauptete Partnerschaften.
+- 72 recherchierte Modelle, darunter zwei abnehmbare Lenkerstulpen. 61 erhalten eine redaktionelle Eignungsbewertung; bei unzureichenden Daten bleibt die Zahl offen.
+- Fünf echte, modellgenau zugeordnete Pressefotos, sichtbare Bildquellen, Foto-Filter und Bilder in Produktdetails, Vergleich und Outfit. Übrige Produkte behalten gekennzeichnete Symbolbilder.
 - Budget, exakter maximaler Artikelpreis, Wetter, Fahrzeug, Schichtdauer, Suche und Sortierung.
 - Lokale Merkliste, Vergleich von maximal drei Artikeln derselben Produktgruppe und Körperregion.
 - Outfit-Auswahl mit zusätzlichen Schichten, Cent-genauer Artikelsumme und kopierbarer Einkaufsliste.
@@ -40,13 +41,14 @@ Hash-Navigation (`#/outfit`, `#/methodik` etc.) funktioniert auf Project Pages u
 ## Produktdaten und Recherche
 
 - `src/data/products.ts`: redaktionelle Produktangaben, Quellen, Preisbeobachtung, Stufen, Nachteile und Grenzen.
-- `src/data/gripgrab-source.json`: 30 ausgewählte konkrete Modelle aus dem öffentlichen GripGrab-Katalog, inklusive beobachteter EUR-Preise.
+- `src/data/gripgrab-source.json`: 33 ausgewählte konkrete Modelle aus dem öffentlichen GripGrab-Katalog, inklusive beobachteter EUR-Preise.
+- `src/data/photos.json`: Zuordnung von Foto, Modellvariante, Pressequelle, Nutzungsangebot und Prüfdatum.
 - `src/lib/logic.ts`: nachvollziehbare Gewichtungen, Filter, Vergleichsgrenzen und Berechnung.
 - `src/data/kits.ts`: Zusammenstellung der drei Sets.
 - `research/RESEARCH.md`: Recherchenachweis und Einschränkungen.
 - `qa/QA.md` und `qa/link-check.json`: dokumentierte Prüfungen.
 
-Recherche: **11.10.2026**. Preise sind beobachtete Artikelpreise inkl. MwSt. und ohne Versand; keine Echtzeit-Preis- oder Lagerzusage. Hersteller-/Händlerseiten können Suchindexfassungen enthalten. Technische Eigenschaften werden nicht als eigene Messergebnisse ausgegeben. Eine unbekannte Eigenschaft bleibt ausdrücklich unbekannt.
+Recherche: **11.10.2026**, Ergänzungen am **12.10.2026**. Preise sind beobachtete Artikelpreise inkl. MwSt. und ohne Versand; keine Echtzeit-Preis- oder Lagerzusage. Hersteller-/Händlerseiten können Suchindexfassungen enthalten. Technische Eigenschaften werden nicht als eigene Messergebnisse ausgegeben. Eine unbekannte Eigenschaft bleibt ausdrücklich unbekannt.
 
 Action verkauft diese Artikel in Filialen. Die Website verlinkt offizielle Informationsseiten und behauptet keine Online-Bestellmöglichkeit. Packpreise (Thermosocken) und Strauss-Einzelpreise inkl. MwSt. werden korrekt verwendet; Staffelrabatte nicht als Einzelpreis dargestellt.
 
@@ -73,7 +75,9 @@ Die Anwendung setzt keine Tracker und keine eigenen Cookies ein. Favoriten und O
 
 ## Assets und Wartung
 
-Fahrer und Symbolabbildungen sind eigenständig erstellte SVGs, keine kopierten Markenlogos oder Produktfotos. Symbolabbildungen sind als solche gekennzeichnet. Manrope ist lokal eingebunden; die SIL-OFL steht in `public/manrope-OFL.txt`. Abhängigkeiten und deren Lizenzhinweise bleiben zu beachten.
+Fahrer, 3D-Modell und Symbolabbildungen sind eigenständig erstellt. Fünf echte Pressefotos von Decathlon und GripGrab werden lokal mit sichtbaren Credits im redaktionellen Kontext verwendet; Quellen und Grenzen stehen in `research/PHOTOS.md`. Die Foto-Zuordnung ersetzt keine Erlaubnis für Werbung: `photoFor` blendet Pressefotos bei aktivierter Affiliate-Konfiguration bis zu einer gesonderten Rechteprüfung aus. Symbolbilder bleiben ausdrücklich gekennzeichnet. Manrope ist lokal eingebunden; die SIL-OFL steht in `public/manrope-OFL.txt`. Abhängigkeiten und deren Lizenzhinweise bleiben zu beachten.
+
+Auf Touch-Geräten startet die leichte SVG-Ansicht. Bei Datensparen, sehr langsamer Verbindung oder höchstens 4 GB RAM / vier CPU-Kernen wird WebGL nicht geladen. Auf geeigneten Geräten ist 3D optional, auf leistungsfähigen Desktop-Geräten automatisch. Die separate 3D-Datei wird dynamisch geladen; maximal 24 Bilder/s, Pixelverhältnis 1, Pause außerhalb des sichtbaren Bereichs. Reduzierte Bewegung wird respektiert, Effekte lassen sich ausschalten. Fotos laden verzögert, Karten zunächst in Gruppen von sechs.
 
 ```sh
 npm run check:links

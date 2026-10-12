@@ -10,7 +10,8 @@ export type Group =
   | "pants"
   | "shoe"
   | "sock"
-  | "cover";
+  | "cover"
+  | "pogie";
 export type Water = "waterproof" | "repellent" | "none" | "unknown";
 export type Vehicle = "bike" | "ebike" | "scooter";
 export type Weather = "light" | "heavy" | "cold" | "frost" | "wind" | "mixed";
@@ -50,11 +51,13 @@ export interface Product {
   uncertainty: string;
   assessment: Assessment | null;
   retailOnly: boolean;
-  compatibility?: "spd" | "road" | "gravel";
+  compatibility?: "spd" | "road" | "gravel" | "flatbar" | "flatshoe";
   badge?: { label: string; reason: string };
   independentSource?: string;
 }
 export interface Filters {
+  photoOnly?: boolean;
+  group?: Group | "all";
   region: Region | "all";
   tier: Tier | "all";
   maxPrice: number | null;

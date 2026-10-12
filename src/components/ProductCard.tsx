@@ -11,7 +11,7 @@ import {
 import type { Product } from "../types";
 import { dateLabel, money, scoreOf, tierLabels } from "../lib/logic";
 import { shopLink } from "../config/affiliate";
-import { GearArt } from "./GearArt";
+import { ProductImage } from "./ProductImage";
 export const waterLabels = {
   waterproof: "Wasserdicht laut Quelle",
   repellent: "Wasserabweisend",
@@ -51,17 +51,7 @@ export function ProductCard({
         >
           <Heart size={19} fill={favorite ? "currentColor" : "none"} />
         </button>
-        <GearArt
-          group={p.group}
-          color={
-            p.tier === "premium"
-              ? "#364a40"
-              : p.tier === "value"
-                ? "#6e8061"
-                : "#7a836c"
-          }
-        />
-        <span className="symbol-note">SYMBOLABBILDUNG</span>
+        <ProductImage product={p} />
         {p.badge && (
           <button className="tip-tag" onClick={onDetails}>
             <span /> {p.badge.label}

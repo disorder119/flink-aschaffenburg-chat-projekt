@@ -298,5 +298,35 @@
     "currency": "EUR",
     "available": true,
     "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "arctic-2-waterproof-deep-winter-road-shoe-covers": {
+    "name": "Arctic 2 Waterproof Deep Winter Road Shoe Covers",
+    "price": 75,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/arctic-2-waterproof-deep-winter-road-shoe-covers",
+    "checked": "2026-10-12",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "explr-waterproof-lightweight-jacket": {
+    "name": "EXPLR Waterproof Lightweight Jacket",
+    "price": 200,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/explr-waterproof-lightweight-jacket",
+    "checked": "2026-10-12",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
+  },
+  "trailblazer-flat-pedal-mtb-shoe-covers": {
+    "name": "TrailBlazer Flat Pedal MTB Shoe Covers",
+    "price": 80,
+    "from": false,
+    "url": "https://www.gripgrab.com/products/trailblazer-flat-pedal-mtb-shoe-covers",
+    "checked": "2026-10-12",
+    "currency": "EUR",
+    "available": true,
+    "source": "https://www.gripgrab.com/products.json?limit=250"
   }
 }

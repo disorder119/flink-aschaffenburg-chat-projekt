@@ -1,4 +1,5 @@
 import type { Assessment, Filters, Group, Product, Region } from "../types.ts";
+import { photoFor } from "../data/photos.ts";
 export const regions: {
   id: Region;
   label: string;
@@ -52,6 +53,7 @@ export const groupLabels: Record<Group, string> = {
   shoe: "Winterschuhe",
   sock: "Socken",
   cover: "Überschuhe & Gamaschen",
+  pogie: "Lenkerstulpen / Pogies",
 };
 export const criterionLabels = [
   "Wetterschutz",
@@ -74,6 +76,7 @@ export const weights: Record<Group, Assessment> = {
   shoe: [25, 25, 10, 10, 5, 5, 10, 10],
   sock: [15, 25, 20, 10, 10, 5, 0, 15],
   cover: [30, 20, 10, 15, 5, 10, 5, 5],
+  pogie: [25, 25, 10, 15, 5, 5, 5, 10],
 };
 // Missing optional evidence is excluded, never silently filled. No score below 80% coverage.
 export function scoreOf(p: Product): {
@@ -115,7 +118,9 @@ export function filteredProducts(
 ): Product[] {
   const query = f.search.trim().toLocaleLowerCase("de");
   const matching = products.filter((p) => {
+    if (f.photoOnly && !photoFor(p.id)) return false;
     if (f.region !== "all" && p.region !== f.region) return false;
+    if (f.group && f.group !== "all" && p.group !== f.group) return false;
     if (f.tier !== "all" && p.tier !== f.tier) return false;
     if (f.maxPrice !== null && (p.price === null || p.price > f.maxPrice))
       return false;
@@ -183,7 +188,7 @@ export function shoppingList(items: Product[], link: (p: Product) => string) {
       (p) =>
         `${regions.find((r) => r.id === p.region)?.label}: ${p.brand} ${p.name} – ${p.price === null ? "Preis unbekannt" : `${p.priceKind === "from" ? "ab " : ""}${money(p.price)}`} (${p.shop}${p.retailOnly ? ", nur Filiale" : ""})\n${link(p)}`,
     ),
-    `${total.complete ? "Beobachtete Artikelsumme" : "Bekannte Teilsumme"}: ${total.from ? "ab " : ""}${money(total.amount)} · Preise vom 11.10.2026 · zzgl. Versand`,
+    `${total.complete ? "Beobachtete Artikelsumme" : "Bekannte Teilsumme"}: ${total.from ? "ab " : ""}${money(total.amount)} · Preisprüfungen ${[...new Set(items.map((p) => p.checked))].sort().map(dateLabel).join(" / ")} · zzgl. Versand`,
     "Größen und Shoppreise vor Kauf prüfen. Helm, Licht und geeignete Schutzausrüstung ergänzen.",
   ].join("\n\n");
 }

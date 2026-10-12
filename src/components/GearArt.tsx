@@ -1,12 +1,14 @@
 import type { Group } from "../types";
+import { useId } from "react";
 // Original, deliberately schematic product illustrations; never presented as product photos.
 export function GearArt({
   group,
-  color = "#3e5b4b",
+  color = "var(--accent)",
 }: {
   group: Group;
   color?: string;
 }) {
+  const gradientId = "gear-" + useId().replaceAll(":", "");
   return (
     <svg
       className="gear-art"
@@ -15,17 +17,58 @@ export function GearArt({
       aria-label="Symbolabbildung, kein Original-Produktfoto"
     >
       <defs>
-        <linearGradient id={`art-${group}-${color.replace("#", "")}`}>
+        <linearGradient id={gradientId}>
           <stop stopColor={color} />
-          <stop offset="1" stopColor="#23362e" />
+          <stop offset="1" stopColor="var(--rider-dark)" />
         </linearGradient>
       </defs>
       <ellipse cx="140" cy="143" rx="72" ry="5" fill="#172925" opacity=".07" />
+      {group === "pogie" && (
+        <g>
+          <path
+            d="M47 70h186"
+            stroke="#514151"
+            strokeWidth="9"
+            strokeLinecap="round"
+          />
+          <path
+            d="m40 51 65-15q23-3 29 16l7 39q2 13-15 19l-58 14q-22 4-28-15l-11-32q-4-16 11-26z"
+            fill={`url(#${gradientId})`}
+          />
+          <path
+            d="m240 51-65-15q-23-3-29 16l-7 39q-2 13 15 19l58 14q22 4 28-15l11-32q4-16-11-26z"
+            fill={`url(#${gradientId})`}
+          />
+          <ellipse
+            cx="99"
+            cy="103"
+            rx="28"
+            ry="12"
+            transform="rotate(-17 99 103)"
+            fill="#3c283e"
+          />
+          <ellipse
+            cx="181"
+            cy="103"
+            rx="28"
+            ry="12"
+            transform="rotate(17 181 103)"
+            fill="#3c283e"
+          />
+          <path
+            d="m40 60 49-10m151 10-49-10"
+            stroke="#fff4fa"
+            strokeWidth="5"
+            strokeLinecap="round"
+          />
+          <path d="m62 42 8 6m148-6-8 6" stroke="#fff" strokeWidth="3" />
+        </g>
+      )}
       {(group === "shell" || group === "softshell" || group === "base") && (
         <g stroke="#24392e" strokeWidth="1.5">
           <path
             d="m112 20 15-6 26 0 16 6 26 20 20 54-22 10-21-37 1 68h-67l1-69-21 37-21-9 20-54z"
-            fill={`url(#art-${group}-${color.replace("#", "")})`}
+            fill={`url(#${gradientId})`}
           />
           <path
             d="m125 16 14 17 15-17m-14 18v102"

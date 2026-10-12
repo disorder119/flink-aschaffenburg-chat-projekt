@@ -32,7 +32,7 @@ test("catalogue has at least 45 distinct sourced models, complete cards and thre
     assert.equal(p.pros.length, 3, p.id);
     assert.ok(p.cons.length >= 2);
     assert.ok(p.material && p.use && p.waterNote && p.warmthNote);
-    assert.equal(p.checked, "2026-10-11");
+    assert.ok(['2026-10-11','2026-10-12'].includes(p.checked));
     assert.ok(p.price === null || p.price > 0);
     assert.ok(!/[?&](awc|utm_|ref=|affiliate)/.test(p.url));
     if (p.shop === "Action") assert.ok(p.retailOnly);

@@ -1,9 +1,14 @@
 # Recherchierter Produktbestand
 
-Stand der Recherche: 11.10.2026. Beobachtete Preise inklusive Mehrwertsteuer, ohne Versand. Alle Symbolabbildungen sind eigene SVGs, keine Originalfotos.
+Grundrecherche: 11.10.2026, Ergänzungen: 12.10.2026. Das Prüfdatum steht pro Artikel in den Produktdaten. Beobachtete Preise inklusive Mehrwertsteuer, ohne Versand. Echte Pressefotos sind separat in `src/data/photos.json` dokumentiert; übrige Symbolbilder sind eigene SVGs.
 
 | Modell | Händler | Region / Stufe | Beobachteter Artikelpreis | Primärquelle |
 | --- | --- | --- | --- | --- |
+| GripGrab TrailBlazer Flat Pedal MTB Shoe Covers | GripGrab | fuesse / premium | 80.00 EUR | [Produktseite](https://www.gripgrab.com/products/trailblazer-flat-pedal-mtb-shoe-covers) |
+| GripGrab EXPLR Waterproof Lightweight Jacket | GripGrab | oberkoerper / premium | 200.00 EUR | [Produktseite](https://www.gripgrab.com/products/explr-waterproof-lightweight-jacket) |
+| GripGrab Arctic 2 Waterproof Deep Winter Road Shoe Covers | GripGrab | fuesse / premium | 75.00 EUR | [Produktseite](https://www.gripgrab.com/products/arctic-2-waterproof-deep-winter-road-shoe-covers) |
+| BTWIN City 940 Lenkerstulpen · abnehmbar | Decathlon | haende / value | 29.99 EUR | [Produktseite](https://www.decathlon.de/p/fahrradstulpen-city-940-abnehmbar-warm-wasserdicht-grau/345299/c383m8797364) |
+| BTWIN City 900 Lenkerstulpen · abnehmbar | Decathlon | haende / value | 29.99 EUR | [Produktseite](https://www.decathlon.de/p/fahrradstulpen-abnehmbar-warm-wasserdicht-city-900/338429/c311c394m8735752) |
 | Action (Eigenangebot) Thermo-Nackenwärmer | Action (nur Filiale) | kopf / budget | 3.69 EUR | [Produktseite](https://www.action.com/de-de/p/2577489/thermo-nackenwarmer/) |
 | Thermolate Thermolate Mütze | Action (nur Filiale) | kopf / budget | 1.99 EUR | [Produktseite](https://www.action.com/de-de/p/2554993/thermolate-mutze/) |
 | Thermolate Thermolate Handschuhe L–XXL | Action (nur Filiale) | haende / budget | 2.99 EUR | [Produktseite](https://www.action.com/de-de/p/2577090/thermolate-handschuhe/) |
@@ -72,4 +77,4 @@ Stand der Recherche: 11.10.2026. Beobachtete Preise inklusive Mehrwertsteuer, oh
 | GripGrab Arctic 2 Waterproof Deep Winter Gravel Shoe Covers | GripGrab | fuesse / premium | 85.00 EUR | [Produktseite](https://www.gripgrab.com/products/arctic-2-waterproof-deep-winter-gravel-shoe-covers) |
 | GripGrab AquaSeal Waterproof Cycling Gaiter | GripGrab | fuesse / budget | 20.00 EUR | [Produktseite](https://www.gripgrab.com/products/aquaseal-waterproof-cycling-gaiter) |
 
-Konkrete Eigenschaften, Unsicherheiten, Vorteile, Grenzen und Bewertungsstufen stehen pro Modell in `src/data/products.ts`. Der JSON-Katalog enthält die EUR-Preisbeobachtungen der 30 ausgewählten GripGrab-Modelle.
+Konkrete Eigenschaften, Unsicherheiten, Vorteile, Grenzen und Bewertungsstufen stehen pro Modell in `src/data/products.ts`. Der JSON-Katalog enthält die EUR-Preisbeobachtungen der 33 ausgewählten GripGrab-Modelle.

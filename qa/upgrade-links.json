@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-10-12T03:35:55.135Z",
+  "results": [
+    {
+      "id": "gg-trailblazer-flat-pedal-mtb-shoe-covers",
+      "url": "https://www.gripgrab.com/products/trailblazer-flat-pedal-mtb-shoe-covers",
+      "status": 200,
+      "finalUrl": "https://www.gripgrab.com/products/trailblazer-flat-pedal-mtb-shoe-covers",
+      "result": "http-ok"
+    },
+    {
+      "id": "gg-explr-waterproof-lightweight-jacket",
+      "url": "https://www.gripgrab.com/products/explr-waterproof-lightweight-jacket",
+      "status": 200,
+      "finalUrl": "https://www.gripgrab.com/products/explr-waterproof-lightweight-jacket",
+      "result": "http-ok"
+    },
+    {
+      "id": "gg-arctic-2-waterproof-deep-winter-road-shoe-covers",
+      "url": "https://www.gripgrab.com/products/arctic-2-waterproof-deep-winter-road-shoe-covers",
+      "status": 200,
+      "finalUrl": "https://www.gripgrab.com/products/arctic-2-waterproof-deep-winter-road-shoe-covers",
+      "result": "http-ok"
+    },
+    {
+      "id": "dec-city940-pogies",
+      "url": "https://www.decathlon.de/p/fahrradstulpen-city-940-abnehmbar-warm-wasserdicht-grau/345299/c383m8797364",
+      "status": 403,
+      "finalUrl": "https://www.decathlon.de/p/fahrradstulpen-city-940-abnehmbar-warm-wasserdicht-grau/345299/c383m8797364",
+      "result": "automated-access-blocked"
+    },
+    {
+      "id": "dec-city900-pogies",
+      "url": "https://www.decathlon.de/p/fahrradstulpen-abnehmbar-warm-wasserdicht-city-900/338429/c311c394m8735752",
+      "status": 403,
+      "finalUrl": "https://www.decathlon.de/p/fahrradstulpen-abnehmbar-warm-wasserdicht-city-900/338429/c311c394m8735752",
+      "result": "automated-access-blocked"
+    }
+  ],
+  "note": "Alle fünf konkreten Modelle und Preise zusätzlich in offiziellen Produktseiten über die Web-Recherche geprüft. HTTP allein bestätigt weder Lagerbestand noch Preis."
+}

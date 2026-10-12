@@ -21,6 +21,7 @@ import {
   Wind,
   X,
   Zap,
+  Sparkles,
 } from "lucide-react";
 import type { Filters, Product, Region, Weather } from "./types";
 import { products, RESEARCH_DATE } from "./data/products";
@@ -44,7 +45,11 @@ import { operator } from "./config/operator";
 import { Rider } from "./components/Rider";
 import { ProductCard, waterLabels } from "./components/ProductCard";
 import { GearArt } from "./components/GearArt";
+import { ProductImage } from "./components/ProductImage";
+import { photoFor } from "./data/photos";
 import { Modal } from "./components/Modal";
+import { useExperience } from "./components/useExperience";
+import { riderStyles } from "./lib/experience";
 const initialFilters: Filters = {
   region: "haende",
   tier: "all",
@@ -95,6 +100,7 @@ function safeOutfit(): Outfit {
   };
 }
 const productById = (id: string) => products.find((p) => p.id === id);
+const photoProducts = products.filter((p) => photoFor(p.id));
 export function outfitProducts(outfit: Outfit): Product[] {
   return [...new Set([...Object.values(outfit.primary), ...outfit.extras])]
     .map((id) => productById(id!))
@@ -148,6 +154,9 @@ function KitCards({ onUse }: { onUse: (outfit: Outfit) => void }) {
   );
 }
 export function App() {
+  const experience = useExperience();
+  const appearance = riderStyles.find((s) => s.id === experience.style)!;
+  const [visibleCount, setVisibleCount] = useState(6);
   const [route, setRoute] = useState(location.hash.slice(2) || "");
   const [filters, setFilters] = useState<Filters>(initialFilters);
   const [favorites, setFavorites] = useState<string[]>(() => {
@@ -207,7 +216,16 @@ export function App() {
   const total = totalOf(chosen);
   const compared = compare.map(productById).filter((p): p is Product => !!p);
   const setFilter = <K extends keyof Filters>(key: K, value: Filters[K]) =>
-    setFilters((old) => ({ ...old, [key]: value }));
+    setFilters((old) => ({
+      ...old,
+      [key]: value,
+      ...(key === "region" ? { group: "all" as const } : {}),
+    }));
+  useEffect(() => setVisibleCount(6), [filters]);
+  const focusPogies = () => {
+    setFilters({ ...initialFilters, region: "haende", group: "pogie" });
+    navigate("ausruestung");
+  };
   const navigate = (path: string) => {
     location.hash = `#/${path}`;
     if (route === path && path === "ausruestung")
@@ -241,7 +259,7 @@ export function App() {
       return;
     }
     if (
-      ["base", "liner", "sock", "cover"].includes(p.group) &&
+      ["base", "liner", "sock", "cover", "pogie"].includes(p.group) &&
       outfit.primary[p.region]
     )
       setOutfit((old) => ({ ...old, extras: [...old.extras, p.id] }));
@@ -285,7 +303,19 @@ export function App() {
   );
   const isHome = route === "" || route === "ausruestung";
   return (
-    <>
+    <div
+      className="rider-app"
+      data-style={experience.style}
+      data-motion={experience.motion ? "on" : "off"}
+      style={
+        {
+          "--accent": appearance.color,
+          "--rider-light": appearance.light,
+          "--rider-dark": appearance.dark,
+          "--rider-bag": appearance.bag,
+        } as React.CSSProperties
+      }
+    >
       <a className="skip-link" href="#main">
         Zum Inhalt
       </a>
@@ -319,6 +349,24 @@ export function App() {
           </nav>
           <div className="header-actions">
             <button
+              className="motion-button icon-button"
+              aria-label={
+                experience.motion
+                  ? "Animationen ausschalten"
+                  : "Animationen einschalten"
+              }
+              aria-pressed={experience.motion}
+              onClick={() => experience.setMotion(!experience.motion)}
+              title={
+                experience.motion
+                  ? "Animationen ausschalten"
+                  : "Animationen einschalten"
+              }
+            >
+              <Sparkles size={18} />
+              <span>Effekte</span>
+            </button>
+            <button
               className="saved-button"
               onClick={() => setFavoritesOpen(true)}
               aria-label={`Merkliste öffnen, ${favorites.length} Produkte`}
@@ -344,24 +392,39 @@ export function App() {
             <section className="hero section-wrap">
               <div className="hero-copy">
                 <div className="eyebrow">
-                  <span /> FÜR DIE, DIE DRAUSSEN LIEFERN
+                  <span /> ASCHAFFENBURG RIDER CLUB · UNABHÄNGIG
                 </div>
                 <h1>
-                  Deine Schicht.
+                  Dein Job.
                   <br />
-                  Dein Wetter.
-                  <br />
-                  <em>Deine Ausrüstung.</em>
+                  <em>Dein Upgrade.</em>
                 </h1>
+                <div className="style-selector">
+                  <span className="field-label">WÄHLE DEINEN RIDER-STYLE</span>
+                  <div role="group" aria-label="Rider-Style">
+                    {riderStyles.map((style) => (
+                      <button
+                        key={style.id}
+                        aria-pressed={experience.style === style.id}
+                        onClick={() => experience.setStyle(style.id)}
+                        style={
+                          { "--swatch": style.color } as React.CSSProperties
+                        }
+                      >
+                        <span />
+                        {style.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
                 <p>
-                  Regen auf der Jacke. Wind im Gesicht.
-                  <br className="desktop-br" /> Gutes Equipment macht den
-                  Unterschied.
+                  Regen, Frost oder Gegenwind?
+                  <br className="desktop-br" /> Dein nächstes Setup wartet hier.
                 </p>
                 <p className="hero-explanation">
-                  Finde passende Ausrüstung für deinen Körper, dein Budget und
-                  deinen Arbeitsalltag. Von günstigen Basics bis zum
-                  durchdachten Winter-Outfit.
+                  Für Flink, Wolt, Uber Eats, Lieferando und alle, die auf dem
+                  Rad liefern. Tippe auf einen Körperbereich und finde passende
+                  Ausrüstung für dein Budget.
                 </p>
                 <a className="button hero-button" href="#/ausruestung">
                   Ausrüstung finden
@@ -379,7 +442,15 @@ export function App() {
                   </div>
                 </div>
               </div>
-              <Rider selected={filters.region} onSelect={selectRegion} />
+              <Rider
+                selected={filters.region}
+                onSelect={selectRegion}
+                style={experience.style}
+                enable3d={experience.enable3d}
+                motion={experience.motion}
+                constrained={experience.constrained}
+                onRequest3d={experience.request3d}
+              />
             </section>
             <div className="trust-strip section-wrap">
               <div>
@@ -405,6 +476,50 @@ export function App() {
               </div>
             </div>
             <section className="catalogue section-wrap" id="ausruestung">
+              <div className="photo-discovery">
+                <div className="photo-discovery-heading">
+                  <div>
+                    <span className="eyebrow">
+                      ECHTE PRODUKTE. ECHTE FOTOS.
+                    </span>
+                    <h2>Dein nächstes Upgrade.</h2>
+                    <p>
+                      {photoProducts.length} Artikel mit zugeordneten
+                      Herstellerfotos. Weitere Artikel mit gekennzeichneten
+                      Symbolbildern.
+                    </p>
+                  </div>
+                  <button
+                    className="text-button"
+                    onClick={() =>
+                      setFilters({
+                        ...initialFilters,
+                        region: "all",
+                        photoOnly: true,
+                      })
+                    }
+                  >
+                    Alle Artikel mit Foto <ArrowRight size={16} />
+                  </button>
+                </div>
+                <div className="photo-preview-grid">
+                  {photoProducts.slice(0, 4).map((p) => (
+                    <button
+                      className="photo-preview"
+                      key={p.id}
+                      onClick={() => setDetails(p)}
+                    >
+                      <ProductImage product={p} compact />
+                      <span>{p.brand}</span>
+                      <strong>{p.name}</strong>
+                      <b>
+                        {p.priceKind === "from" ? "ab " : ""}
+                        {money(p.price!)}
+                      </b>
+                    </button>
+                  ))}
+                </div>
+              </div>
               <div className="section-heading">
                 <div>
                   <span className="eyebrow">01 / DEINE AUSRÜSTUNG</span>
@@ -440,6 +555,40 @@ export function App() {
                   </button>
                 ))}
               </div>
+              {filters.region === "haende" && (
+                <div
+                  className="hand-categories"
+                  role="group"
+                  aria-label="Ausrüstung für Hände"
+                >
+                  <button
+                    aria-pressed={!filters.group || filters.group === "all"}
+                    onClick={() => setFilter("group", "all")}
+                  >
+                    Alle Handartikel
+                  </button>
+                  <button
+                    aria-pressed={filters.group === "glove"}
+                    onClick={() => setFilter("group", "glove")}
+                  >
+                    Handschuhe
+                  </button>
+                  <button
+                    aria-pressed={filters.group === "pogie"}
+                    onClick={() => setFilter("group", "pogie")}
+                  >
+                    Lenkerstulpen / Pogies <span>NEU</span>
+                  </button>
+                </div>
+              )}
+              {filters.group === "pogie" && (
+                <p className="pogie-note">
+                  Diese Handwärmer werden über den Lenker gestülpt. Bremsen,
+                  Schaltung und schnelles Herausziehen der Hände müssen nach der
+                  Montage frei funktionieren. Nur für die jeweils angegebenen
+                  Fahrradlenker.
+                </p>
+              )}
               <div className="filter-panel">
                 <div className="primary-filters">
                   <div className="budget-filter">
@@ -529,6 +678,14 @@ export function App() {
                     Zurücksetzen
                   </button>
                 </div>
+                <button
+                  className={`photo-filter ${filters.photoOnly ? "selected" : ""}`}
+                  aria-pressed={!!filters.photoOnly}
+                  onClick={() => setFilter("photoOnly", !filters.photoOnly)}
+                >
+                  <Check size={15} />
+                  Nur Artikel mit Produktfoto
+                </button>
                 {advanced && (
                   <div className="advanced-filters" id="advanced-filters">
                     <div className="weather-filter">
@@ -657,7 +814,25 @@ export function App() {
                 </p>
               )}
               {list.length ? (
-                <div className="product-grid">{list.map(renderCard)}</div>
+                <>
+                  <div className="product-grid">
+                    {list.slice(0, visibleCount).map(renderCard)}
+                  </div>
+                  {visibleCount < list.length && (
+                    <div className="more-products">
+                      <button
+                        className="button outline"
+                        onClick={() => setVisibleCount((n) => n + 6)}
+                      >
+                        Weitere Produkte anzeigen <Plus size={16} />
+                      </button>
+                      <span>
+                        {Math.min(visibleCount, list.length)} von {list.length}{" "}
+                        angezeigt
+                      </span>
+                    </div>
+                  )}
+                </>
               ) : (
                 <div className="empty-state">
                   <Search size={32} />
@@ -683,6 +858,31 @@ export function App() {
                 nur in Filialen erhältlich.{" "}
                 <a href="#/methodik">So entstehen die Punkte ↗</a>
               </p>
+            </section>
+            <section className="pogie-banner section-wrap">
+              <div>
+                <span className="eyebrow">
+                  WARMER GRIFF. WENIGER GEGENWIND.
+                </span>
+                <h2>
+                  Handschuhe?
+                  <br />
+                  <em>Geht auch am Lenker.</em>
+                </h2>
+                <p>
+                  Lenkerstulpen schützen rund um Griff, Bremse und Hand.
+                  Entdecke belegte Modelle und prüfe, welches zu deinem Lenker
+                  passt.
+                </p>
+                <button className="button" onClick={focusPogies}>
+                  Lenkerstulpen entdecken
+                  <ArrowRight size={18} />
+                </button>
+              </div>
+              <div className="pogie-banner-art">
+                <GearArt group="pogie" />
+                <span>POGIES / ÜBERSTÜLPBARE HANDWÄRMER</span>
+              </div>
             </section>
             <section className="kits-section section-wrap">
               <div className="section-heading">
@@ -759,20 +959,23 @@ export function App() {
                   return (
                     <article className="outfit-slot" key={r.id}>
                       <div className="slot-visual">
-                        <GearArt
-                          group={
-                            selected?.group ??
-                            (
-                              [
-                                "head",
-                                "shell",
-                                "glove",
-                                "pants",
-                                "shoe",
-                              ] as const
-                            )[i]
-                          }
-                        />
+                        {selected ? (
+                          <ProductImage product={selected} compact />
+                        ) : (
+                          <GearArt
+                            group={
+                              (
+                                [
+                                  "head",
+                                  "shell",
+                                  "glove",
+                                  "pants",
+                                  "shoe",
+                                ] as const
+                              )[i]
+                            }
+                          />
+                        )}
                       </div>
                       <div className="slot-content">
                         <span className="field-label">
@@ -940,7 +1143,11 @@ export function App() {
                 <p>
                   {chosen.length} Artikel · inkl. MwSt. · zzgl. Versand
                   <br />
-                  Preise recherchiert am {dateLabel(RESEARCH_DATE)}
+                  Preisprüfungen:{" "}
+                  {[...new Set(chosen.map((p) => p.checked))]
+                    .sort()
+                    .map(dateLabel)
+                    .join(" / ") || "noch keine Auswahl"}
                   <br />
                   Keine aktuelle Preis- oder Lieferzusage.
                 </p>
@@ -1356,11 +1563,12 @@ export function App() {
             </p>
             <h2>Merkliste und Outfit im Browser</h2>
             <p>
-              Produkt-IDs aus Merkliste und Outfit werden in localStorage auf
-              deinem Gerät gespeichert. Die Anwendung sendet diese Auswahl nicht
-              an einen Server. Die Daten bleiben bis zum Löschen oder Entfernen
-              der Browserdaten bestehen. Bei blockiertem Speicher funktionieren
-              die Auswahlen nur für die laufende Sitzung. Zweck ist die von dir
+              Produkt-IDs aus Merkliste und Outfit sowie der gewählte Farbstil
+              und die Einstellung für Effekte werden in localStorage auf deinem
+              Gerät gespeichert. Die Anwendung sendet diese Auswahl nicht an
+              einen Server. Die Daten bleiben bis zum Löschen oder Entfernen der
+              Browserdaten bestehen. Bei blockiertem Speicher funktionieren die
+              Auswahlen nur für die laufende Sitzung. Zweck ist die von dir
               gewählte Merk- und Konfigurationsfunktion.
             </p>
             <button
@@ -1381,10 +1589,10 @@ export function App() {
             <h2>Shoplinks und Bilder</h2>
             <p>
               Shopseiten werden erst durch einen Klick geöffnet. Danach gilt die
-              Datenschutzerklärung des jeweiligen Händlers. Alle Illustrationen
-              und Schriftdateien werden lokal mit der Website geladen; die
-              Anwendung lädt keine externen Produktbilder, Werbepixel oder
-              Schriftserver.
+              Datenschutzerklärung des jeweiligen Händlers. Produktfotos,
+              Illustrationen und Schriftdateien werden lokal mit der Website
+              geladen; die Anwendung lädt keine externen Produktbilder,
+              Werbepixel oder Schriftserver.
             </p>
             <h2>Kommerzielle Verlinkungen</h2>
             <p>
@@ -1443,7 +1651,8 @@ export function App() {
             <p>
               Unabhängiges Community-Projekt für Lieferfahrer in Aschaffenburg.
               <br />
-              Keine offizielle Website von Flink.
+              Keine offizielle Website von Flink. Auch keine Partnerschaft mit
+              Wolt, Uber Eats oder Lieferando.
             </p>
             <nav aria-label="Weitere Informationen">
               <a href="#/methodik">Bewertung & Quellen</a>
@@ -1551,7 +1760,7 @@ export function App() {
                     <th>Merkmal</th>
                     {compared.map((p) => (
                       <th key={p.id}>
-                        <GearArt group={p.group} />
+                        <ProductImage product={p} compact />
                         <span>
                           {p.brand}
                           <br />
@@ -1667,7 +1876,7 @@ export function App() {
           />
         </Modal>
       )}
-    </>
+    </div>
   );
 }
 function InfoIcon() {
@@ -1697,10 +1906,11 @@ function ShopButton({ p }: { p: Product }) {
 function ProductDetails({ p }: { p: Product }) {
   const score = scoreOf(p);
   const w = weights[p.group];
+  const photo = photoFor(p.id);
   return (
     <>
       <div className="detail-product">
-        <GearArt group={p.group} />
+        <ProductImage product={p} />
         <div>
           <span className="eyebrow">
             {tierLabels[p.tier]} · {p.shop}
@@ -1720,6 +1930,14 @@ function ProductDetails({ p }: { p: Product }) {
           </small>
         </div>
       </div>
+      {photo && (
+        <p className="photo-source">
+          {photo.credit}. {photo.variant} Farbe und Ausführung im Shop prüfen.{" "}
+          <a href={photo.source} target="_blank" rel="noopener noreferrer">
+            Bildquelle / Pressebereich ↗
+          </a>
+        </p>
+      )}
       <p className="lead">{p.use}</p>
       {p.badge && (
         <div className="notice green">
@@ -1760,11 +1978,15 @@ function ProductDetails({ p }: { p: Product }) {
           <>
             <dt>Kompatibilität</dt>
             <dd>
-              {p.compatibility === "spd"
-                ? "MTB-/SPD-Konstruktion; passende Pedale bzw. Plattformsitz prüfen."
-                : p.compatibility === "road"
-                  ? "Für Rennradschuhe; nicht für beliebige Alltagsschuhe."
-                  : "Für Gravel-Radschuhe; passende Sohlenöffnungen prüfen."}
+              {p.compatibility === "flatshoe"
+                ? "Nur für passende Flat-Pedal-MTB-Schuhe; vollständig flache Sohle oder versenkte Cleats. Keine Kompatibilität mit beliebigen Alltagsschuhen."
+                : p.compatibility === "flatbar"
+                  ? "Nur für passende gerade oder City-Lenker. Bremsen, Schaltung und freies Herausziehen der Hände vor der Fahrt prüfen."
+                  : p.compatibility === "spd"
+                    ? "MTB-/SPD-Konstruktion; passende Pedale bzw. Plattformsitz prüfen."
+                    : p.compatibility === "road"
+                      ? "Für Rennradschuhe; nicht für beliebige Alltagsschuhe."
+                      : "Für Gravel-Radschuhe; passende Sohlenöffnungen prüfen."}
             </dd>
           </>
         )}
