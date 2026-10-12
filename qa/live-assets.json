@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-11T18:41:00.854Z",
+  "checkedAt": "2026-10-12T03:41:34.167Z",
   "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/",
   "indexStatus": 200,
   "https": true,
@@ -10,14 +10,14 @@
       "bytes": 178
     },
     {
-      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/assets/index-CMGTHpCB.js",
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/assets/index-BsS2xlNF.js",
       "status": 200,
-      "bytes": 338026
+      "bytes": 358809
     },
     {
-      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/assets/index-DsvRBRS1.css",
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/assets/index-39OGBqH3.css",
       "status": 200,
-      "bytes": 47340
+      "bytes": 66681
     }
   ],
   "note": "HTTP asset check only. Check GitHub Actions separately; this script does not infer workflow status, browser rendering or product availability."

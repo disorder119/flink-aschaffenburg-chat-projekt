@@ -1,0 +1,66 @@
+{
+  "checkedAt": "2026-10-12T03:41:34.992Z",
+  "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/",
+  "https": true,
+  "indexStatus": 200,
+  "buildAssetsMatch": true,
+  "workflow": {
+    "url": "https://github.com/disorder119/flink-aschaffenburg-chat-projekt/actions/runs/38200652957",
+    "commit": "2188fbe26b593af0d8839c449ca9416fbb1ecce2",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "build",
+        "conclusion": "success"
+      },
+      {
+        "name": "deploy",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "photos": [
+    {
+      "id": "dec-mt900",
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/product-images/dec-mt900.jpg",
+      "status": 200,
+      "bytes": 19096,
+      "mime": "image/jpeg",
+      "matchesLocalFile": true
+    },
+    {
+      "id": "gg-explr-waterproof-lightweight-pants",
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/product-images/gg-explr-waterproof-lightweight-pants.jpg",
+      "status": 200,
+      "bytes": 61953,
+      "mime": "image/jpeg",
+      "matchesLocalFile": true
+    },
+    {
+      "id": "gg-arctic-2-waterproof-deep-winter-road-shoe-covers",
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/product-images/gg-arctic-2-road.jpg",
+      "status": 200,
+      "bytes": 102933,
+      "mime": "image/jpeg",
+      "matchesLocalFile": true
+    },
+    {
+      "id": "gg-explr-waterproof-lightweight-jacket",
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/product-images/gg-explr-jacket.jpg",
+      "status": 200,
+      "bytes": 83449,
+      "mime": "image/jpeg",
+      "matchesLocalFile": true
+    },
+    {
+      "id": "gg-trailblazer-flat-pedal-mtb-shoe-covers",
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/product-images/gg-trailblazer.jpg",
+      "status": 200,
+      "bytes": 130705,
+      "mime": "image/jpeg",
+      "matchesLocalFile": true
+    }
+  ],
+  "note": "Browser rendering separately documented in UPGRADE-2026-10-12.md."
+}
