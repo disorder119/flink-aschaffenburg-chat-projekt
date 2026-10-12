@@ -1,5 +1,6 @@
 import type { Assessment, Filters, Group, Product, Region } from "../types.ts";
 import { photoFor } from "../data/photos.ts";
+import { currentLocale, tr } from "../i18n/core.ts";
 export const regions: {
   id: Region;
   label: string;
@@ -54,6 +55,9 @@ export const groupLabels: Record<Group, string> = {
   sock: "Socken",
   cover: "Überschuhe & Gamaschen",
   pogie: "Lenkerstulpen / Pogies",
+  warmer: "Hand-, Fuß- & Körperwärmer",
+  visibility: "Sichtbarkeits-Zubehör",
+  accessory: "Weiteres Winter-Zubehör",
 };
 export const criterionLabels = [
   "Wetterschutz",
@@ -77,6 +81,9 @@ export const weights: Record<Group, Assessment> = {
   sock: [15, 25, 20, 10, 10, 5, 0, 15],
   cover: [30, 20, 10, 15, 5, 10, 5, 5],
   pogie: [25, 25, 10, 15, 5, 5, 5, 10],
+  warmer: [0, 35, 20, 15, 5, 5, 0, 20],
+  visibility: [0, 0, 10, 20, 15, 10, 35, 10],
+  accessory: [30, 5, 15, 15, 10, 5, 10, 10],
 };
 // Missing optional evidence is excluded, never silently filled. No score below 80% coverage.
 export function scoreOf(p: Product): {
@@ -118,6 +125,7 @@ export function filteredProducts(
 ): Product[] {
   const query = f.search.trim().toLocaleLowerCase("de");
   const matching = products.filter((p) => {
+    if (f.supplementsOnly && !p.supplement) return false;
     if (f.photoOnly && !photoFor(p.id)) return false;
     if (f.region !== "all" && p.region !== f.region) return false;
     if (f.group && f.group !== "all" && p.group !== f.group) return false;
@@ -127,7 +135,7 @@ export function filteredProducts(
     if (f.favoritesOnly && !favorites.includes(p.id)) return false;
     if (
       query &&
-      !`${p.name} ${p.brand} ${p.shop} ${regions.find((r) => r.id === p.region)?.label} ${groupLabels[p.group]}`
+      !`${p.name} ${p.brand} ${p.shop} ${regions.find((r) => r.id === p.region)?.label} ${groupLabels[p.group]} ${tr(regions.find((r) => r.id === p.region)?.label)} ${tr(groupLabels[p.group])}`
         .toLocaleLowerCase("de")
         .includes(query)
     )
@@ -175,20 +183,23 @@ export function compareAllowed(existing: Product[], p: Product): string | null {
   return null;
 }
 export const money = (v: number) =>
-  new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(
-    v,
-  );
+  new Intl.NumberFormat(currentLocale(), {
+    style: "currency",
+    currency: "EUR",
+  }).format(v);
 export const dateLabel = (v: string) =>
-  new Date(v + "T12:00:00").toLocaleDateString("de-DE");
+  new Date(v + "T12:00:00").toLocaleDateString(currentLocale());
 export function shoppingList(items: Product[], link: (p: Product) => string) {
   const total = totalOf(items);
   return [
-    "Meine Ausrüstung · Flink Aschaffenburg Chat Projekt",
+    tr("Meine Ausrüstung · Flink Aschaffenburg Chat Projekt"),
     ...items.map(
       (p) =>
-        `${regions.find((r) => r.id === p.region)?.label}: ${p.brand} ${p.name} – ${p.price === null ? "Preis unbekannt" : `${p.priceKind === "from" ? "ab " : ""}${money(p.price)}`} (${p.shop}${p.retailOnly ? ", nur Filiale" : ""})\n${link(p)}`,
+        `${tr(regions.find((r) => r.id === p.region)?.label)}: ${p.brand} ${p.name} – ${p.price === null ? tr("Preis unbekannt") : `${p.priceKind === "from" ? tr("ab ") : ""}${money(p.price)}`} (${p.shop}${p.retailOnly ? tr(", nur Filiale") : ""})\n${link(p)}`,
     ),
-    `${total.complete ? "Beobachtete Artikelsumme" : "Bekannte Teilsumme"}: ${total.from ? "ab " : ""}${money(total.amount)} · Preisprüfungen ${[...new Set(items.map((p) => p.checked))].sort().map(dateLabel).join(" / ")} · zzgl. Versand`,
-    "Größen und Shoppreise vor Kauf prüfen. Helm, Licht und geeignete Schutzausrüstung ergänzen.",
+    `${tr(total.complete ? "Beobachtete Artikelsumme" : "Bekannte Teilsumme")}: ${total.from ? tr("ab ") : ""}${money(total.amount)} · ${tr("Preisprüfungen")} ${[...new Set(items.map((p) => p.checked))].sort().map(dateLabel).join(" / ")} ${tr("· zzgl. Versand")}`,
+    tr(
+      "Größen und Shoppreise vor Kauf prüfen. Helm, Licht und geeignete Schutzausrüstung ergänzen.",
+    ),
   ].join("\n\n");
 }

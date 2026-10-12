@@ -1,3 +1,4 @@
+import { tr } from "../i18n/core";
 import type { Region } from "../types";
 export function RiderVector({
   selected,
@@ -15,14 +16,16 @@ export function RiderVector({
   };
   return (
     <div className="vector-stage">
-      <div className="stage-cross cross-one">+</div>
-      <div className="stage-cross cross-two">+</div>
-      <div className="stage-caption">SCHICHTBEREIT / ASCHAFFENBURG</div>
+      <div className="stage-cross cross-one">{tr("+")}</div>
+      <div className="stage-cross cross-two">{tr("+")}</div>
+      <div className="stage-caption">{tr("SCHICHTBEREIT / ASCHAFFENBURG")}</div>
       <svg
         className="rider"
         viewBox="0 0 500 620"
         role="group"
-        aria-label="Interaktiver Lieferfahrer. Wähle Kopf, Oberkörper, Hände, Beine oder Füße."
+        aria-label={tr(
+          "Interaktiver Lieferfahrer. Wähle Kopf, Oberkörper, Hände, Beine oder Füße.",
+        )}
       >
         <defs>
           <linearGradient id="coat" x1="0" y1="0" x2="1" y2="1">
@@ -94,12 +97,12 @@ export function RiderVector({
           className={`rider-part ${active("oberkoerper")}`}
           role="button"
           tabIndex={0}
-          aria-label="Oberkörper auswählen"
+          aria-label={tr("Oberkörper auswählen")}
           aria-pressed={selected === "oberkoerper"}
           onKeyDown={select("oberkoerper")}
           onClick={() => onSelect("oberkoerper")}
         >
-          <title>Oberkörper: Jacken und Basisschichten</title>
+          <title>{tr("Oberk\u00F6rper: Jacken und Basisschichten")}</title>
           <path
             d="m314 175 36 20 13 115-17 18-64-23-10-124z"
             fill="url(#bag)"
@@ -175,12 +178,12 @@ export function RiderVector({
           className={`rider-part ${active("beine")}`}
           role="button"
           tabIndex={0}
-          aria-label="Beine auswählen"
+          aria-label={tr("Beine auswählen")}
           aria-pressed={selected === "beine"}
           onKeyDown={select("beine")}
           onClick={() => onSelect("beine")}
         >
-          <title>Beine: Hosen und Regenüberhosen</title>
+          <title>{tr("Beine: Hosen und Regen\u00FCberhosen")}</title>
           <path
             d="m209 331 45 4-1 63-17 96-9 39-33-3 8-40 6-90z"
             fill="url(#pants)"
@@ -221,12 +224,14 @@ export function RiderVector({
           className={`rider-part ${active("fuesse")}`}
           role="button"
           tabIndex={0}
-          aria-label="Füße auswählen"
+          aria-label={tr("Füße auswählen")}
           aria-pressed={selected === "fuesse"}
           onKeyDown={select("fuesse")}
           onClick={() => onSelect("fuesse")}
         >
-          <title>Füße: Schuhe, Socken und Überschuhe</title>
+          <title>
+            {tr("F\u00FC\u00DFe: Schuhe, Socken und \u00DCberschuhe")}
+          </title>
           <path
             d="m193 523 31 4 1 22-22 10-38-3-2-11 25-13z"
             fill="url(#boot)"
@@ -258,12 +263,14 @@ export function RiderVector({
           className={`rider-part ${active("haende")}`}
           role="button"
           tabIndex={0}
-          aria-label="Hände auswählen"
+          aria-label={tr("Hände auswählen")}
           aria-pressed={selected === "haende"}
           onKeyDown={select("haende")}
           onClick={() => onSelect("haende")}
         >
-          <title>Hände: Handschuhe für sicheres Bremsen</title>
+          <title>
+            {tr("H\u00E4nde: Handschuhe f\u00FCr sicheres Bremsen")}
+          </title>
           <path
             d="m161 296 23 6 3 21-7 18-15-1-10-20z"
             fill="#23362d"
@@ -293,12 +300,12 @@ export function RiderVector({
           className={`rider-part ${active("kopf")}`}
           role="button"
           tabIndex={0}
-          aria-label="Kopf auswählen"
+          aria-label={tr("Kopf auswählen")}
           aria-pressed={selected === "kopf"}
           onKeyDown={select("kopf")}
           onClick={() => onSelect("kopf")}
         >
-          <title>Kopf: Mützen und Halswärmer</title>
+          <title>{tr("Kopf: M\u00FCtzen und Halsw\u00E4rmer")}</title>
           <path d="m235 133-3 19 16 16 30-10-6-28z" fill="#b88365" />
           <path
             d="m222 84 62-1 8 22-6 27-22 17-26-6-18-24z"
@@ -358,38 +365,49 @@ export function RiderVector({
         onClick={() => onSelect("kopf")}
         aria-pressed={selected === "kopf"}
       >
-        <span>01</span>Kopf<small>↗</small>
+        <span>{tr("01")}</span>
+        {tr("Kopf")}
+        <small>{tr("\u2197")}</small>
       </button>
       <button
         className={`hotspot hotspot-body ${active("oberkoerper")}`}
         onClick={() => onSelect("oberkoerper")}
         aria-pressed={selected === "oberkoerper"}
       >
-        <span>02</span>Oberkörper<small>↗</small>
+        <span>{tr("02")}</span>
+        {tr("Oberk\u00F6rper")}
+        <small>{tr("\u2197")}</small>
       </button>
       <button
         className={`hotspot hotspot-hands ${active("haende")}`}
         onClick={() => onSelect("haende")}
         aria-pressed={selected === "haende"}
       >
-        <span>03</span>Hände<small>↗</small>
+        <span>{tr("03")}</span>
+        {tr("H\u00E4nde")}
+        <small>{tr("\u2197")}</small>
       </button>
       <button
         className={`hotspot hotspot-legs ${active("beine")}`}
         onClick={() => onSelect("beine")}
         aria-pressed={selected === "beine"}
       >
-        <span>04</span>Beine<small>↗</small>
+        <span>{tr("04")}</span>
+        {tr("Beine")}
+        <small>{tr("\u2197")}</small>
       </button>
       <button
         className={`hotspot hotspot-feet ${active("fuesse")}`}
         onClick={() => onSelect("fuesse")}
         aria-pressed={selected === "fuesse"}
       >
-        <span>05</span>Füße<small>↗</small>
+        <span>{tr("05")}</span>
+        {tr("F\u00FC\u00DFe")}
+        <small>{tr("\u2197")}</small>
       </button>
       <p className="stage-instruction">
-        <span className="pulse-dot" /> Tippe auf einen Körperbereich
+        <span className="pulse-dot" />
+        {tr(" Tippe auf einen K\u00F6rperbereich")}
       </p>
     </div>
   );

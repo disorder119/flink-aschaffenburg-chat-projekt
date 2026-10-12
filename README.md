@@ -8,13 +8,14 @@ Live: https://disorder119.github.io/flink-aschaffenburg-chat-projekt/
 
 - Rosa Rider-Studio mit fünf auswählbaren Körperregionen, drehbarer 3D-Figur und leichter SVG-Ansicht. Farbstile für Flink, Wolt, Uber Eats, Lieferando und die Community, ohne Markenlogos oder behauptete Partnerschaften.
 - Feste Konfiguratorfläche: Körperbereich, Budget, Artikel, Filter, Merkliste, Sets und Outfit wechseln auf demselben Bildschirm. Ein Produkt pro Ansicht mit Pfeiltasten und kompakter Direktwahl. Kaufaktionen und Live-Summe bleiben erreichbar; umfangreiche Filter und Informationen scrollen nur im Inhaltsbereich.
-- 72 recherchierte Modelle, darunter zwei abnehmbare Lenkerstulpen. 61 erhalten eine redaktionelle Eignungsbewertung; bei unzureichenden Daten bleibt die Zahl offen.
-- Alle 72 Empfehlungen haben modellgenau zugeordnete Originalfotos mit sichtbaren Bildquellen, auch in Produktdetails, Vergleich und Outfit. Keine Symbolzeichnungen oder rosa Einfärbung der Produkte. 68 Bilder werden direkt vom offiziellen Bildserver eingebettet; vier passende Pressefotos liegen lokal.
+- 82 recherchierte Modelle, darunter zwei abnehmbare Lenkerstulpen und zehn zusätzliche Wärmer-/Sichtbarkeitsartikel. 61 erhalten eine redaktionelle Eignungsbewertung; bei unzureichenden Daten bleibt die Zahl offen.
+- Alle 82 Empfehlungen haben modellgenau zugeordnete Originalfotos mit sichtbaren Bildquellen, auch in Produktdetails, Vergleich und Outfit. Keine Symbolzeichnungen oder rosa Einfärbung der Produkte. 78 Bilder werden direkt vom offiziellen Bildserver eingebettet; vier passende Pressefotos liegen lokal.
 - Budget, exakter maximaler Artikelpreis, Wetter, Fahrzeug, Schichtdauer, Suche und Sortierung.
 - Lokale Merkliste, Vergleich von maximal drei Artikeln derselben Produktgruppe und Körperregion.
 - Outfit-Auswahl mit zusätzlichen Schichten, Cent-genauer Artikelsumme und kopierbarer Einkaufsliste.
 - Drei vorbereitete Sets mit jeweils acht echten Artikeln. Die Preise werden aus Produktdaten berechnet.
-- Deutsche Ratgeber-, Bewertungs-, Datenschutz- und Impressumsseiten.
+- Deutsch, Englisch, Arabisch (RTL) und Hindi: Navigation, Produktmerkmale, Grenzen, Ratgeber, Bewertungen und Informationsseiten. Offizielle Modellnamen bleiben unverändert.
+- Installierbare Home-Bildschirm-App mit eigenem rosa Icon, iPhone-Standalone-Metadaten, Offline-App-Shell und lokal gespeicherten Sprachpaketen. Externe Fotos und Händlerseiten brauchen weiterhin Internet.
 
 ## Lokal starten
 
@@ -72,11 +73,19 @@ Dieses Muster ist eine Konfigurationsanleitung, kein funktionsfähiger Affiliate
 
 `src/config/operator.ts` enthält bewusst keine erfundene Identität. Name, ladungsfähige Anschrift und Kontakt-E-Mail müssen ergänzt werden; weitere Felder je nach Betreiberkonstellation. Das öffentliche Impressum und die Datenschutzhinweise zeigen den unvollständigen Status. Diese offenen rechtlichen Angaben können bereits für den öffentlichen Betrieb relevant sein und müssen vor kommerzieller Nutzung zwingend geprüft werden.
 
-Die Anwendung setzt keine Tracker und keine eigenen Cookies ein. Favoriten und Outfit bleiben in localStorage. GitHub Pages protokolliert laut GitHub IP-Adressen zu Sicherheitszwecken. Shopanbieter erhalten Verbindungsdaten erst beim Öffnen ihres Links.
+Die Anwendung setzt keine Tracker und keine eigenen Cookies ein. Favoriten und Outfit bleiben in localStorage. GitHub Pages protokolliert laut GitHub IP-Adressen zu Sicherheitszwecken. Externe Bildserver erhalten bereits beim Laden eines Produktfotos Verbindungsdaten; Händlerseiten erst beim Öffnen des Links. Die aufgerufene App-URL wird bei Bildern nicht als Referrer übertragen.
 
 ## Assets und Wartung
 
-Fahrer und 3D-Modell sind eigenständig erstellt. Alle 72 Produktfotos gehören zum konkret verlinkten Modell; vier freigegebene GripGrab-Pressefotos werden lokal ausgeliefert, 68 Originalbilder direkt vom öffentlichen Hersteller-/Händlerserver eingebettet. Quellen, technische Prüfung und Grenzen stehen in `research/PHOTOS.md` und `qa/exact-photo-check.json`. Externe Bilder werden nicht auf GitHub kopiert; das ist keine Behauptung einer erteilten Bildlizenz. Keine Zugangssperren oder Schutzmaßnahmen werden umgangen. Vor werblicher Nutzung erneut prüfen; eine aktive Affiliate-Konfiguration deaktiviert die Bilder weiterhin bis zur gesonderten Rechteprüfung. Bei Ladefehlern gibt es einen neutralen Hinweis, niemals eine Zeichnung oder ein anderes Modell. Manrope ist lokal eingebunden; die SIL-OFL steht in `public/manrope-OFL.txt`. Abhängigkeiten und deren Lizenzhinweise bleiben zu beachten.
+Neue Winterartikel und Quellen stehen in `src/data/extras.ts` und `research/EXTRAS-2026-10-12.json`. Packpreise zählen immer als ganzer Artikelpreis. Wärmer landen als Zusatzartikel im Outfit, auch wenn noch kein Handschuh oder Schuh gewählt wurde.
+
+Sprachtexte liegen getrennt in `src/i18n/translations/` (Deutsch → Englisch, Arabisch, Hindi). `npm run build` aktualisiert die geprüften UI-/Produktquellen und kompiliert die lokalen Sprachpakete; fehlende geprüfte Texte stoppen den Build. Offizielle Modellnamen werden nicht übersetzt. Bei neuen Produkten Merkmale und Warnungen in allen drei Zielsprachen ergänzen. Die automatische Vollständigkeitsprüfung ersetzt keine fachsprachliche Prüfung durch Muttersprachler.
+
+Für die iPhone-App: Website in Safari öffnen → Teilen → **Zum Home-Bildschirm** → falls angeboten **Als Web-App öffnen** → Hinzufügen. Alte Verknüpfungen gegebenenfalls neu hinzufügen. App-Shell, Daten und Sprachpakete werden nach dem ersten erfolgreichen Online-Laden offline gespeichert. Originalfotos auf externen Servern und Kaufseiten benötigen Internet. Die optionale 3D-Datei wird nicht vorab gespeichert. Details und Testgrenzen: `qa/APP-2026-10-12.md`.
+
+Die Base wird für ein Repository namens `<organisation>.github.io` automatisch `/`, für dieses Project-Pages-Repository bleibt sie `/flink-aschaffenburg-chat-projekt/`. Optional `VITE_BASE_PATH` setzen; `VITE_REPOSITORY_URL` ist im Workflow automatisch das tatsächliche Repository. Eine Adresse ohne persönlichen Benutzernamen benötigt eine eigene Organisation oder eine bereits vorhandene Domain; die globale Umbenennung des persönlichen Kontos ist dafür nicht nötig.
+
+Fahrer und 3D-Modell sind eigenständig erstellt. Alle 82 Produktfotos gehören zum konkret verlinkten Modell; vier freigegebene GripGrab-Pressefotos werden lokal ausgeliefert, 78 Originalbilder direkt vom öffentlichen Hersteller-/Händlerserver eingebettet. Quellen, technische Prüfung und Grenzen stehen in `research/PHOTOS.md` und `qa/exact-photo-check.json`. Externe Bilder werden nicht auf GitHub kopiert; das ist keine Behauptung einer erteilten Bildlizenz. Keine Zugangssperren oder Schutzmaßnahmen werden umgangen. Vor werblicher Nutzung erneut prüfen; eine aktive Affiliate-Konfiguration deaktiviert die Bilder weiterhin bis zur gesonderten Rechteprüfung. Bei Ladefehlern gibt es einen neutralen Hinweis, niemals eine Zeichnung oder ein anderes Modell. Manrope ist lokal eingebunden; die SIL-OFL steht in `public/manrope-OFL.txt`. Abhängigkeiten und deren Lizenzhinweise bleiben zu beachten.
 
 Auf Touch-Geräten und bei Bildschirmbreiten bis 760 Pixel startet die leichte SVG-Ansicht. Bei Datensparen, sehr langsamer Verbindung oder höchstens 4 GB RAM / vier CPU-Kernen wird WebGL nicht geladen. Auf geeigneten Geräten ist 3D optional, auf leistungsfähigen Desktop-Geräten automatisch. Die separate 3D-Datei wird dynamisch geladen; maximal 24 Bilder/s, Pixelverhältnis 1, Pause außerhalb des sichtbaren Bereichs. Reduzierte Bewegung wird respektiert, Effekte lassen sich ausschalten. Im Konfigurator ist jeweils eine kompakte Produktkarte gemountet; Fotos laden verzögert. Die Höhe folgt dem sichtbaren Browserfenster, Eingaben auf dem Handy erhalten mehr Platz. Keine neue Laufzeitabhängigkeit für diesen Umbau.
 

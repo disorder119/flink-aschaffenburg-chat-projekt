@@ -1,3 +1,4 @@
+import { tr } from "../i18n/core";
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Box, Hand } from "lucide-react";
 import type { Region } from "../types";
@@ -92,9 +93,12 @@ export function Rider({
       <div className="scene-orbit orbit-two" />
       <div className="scene-dots" />
       <div className="stage-caption">
-        <span /> DEIN WINTER-SETUP
+        <span />
+        {tr(" DEIN WINTER-SETUP")}
       </div>
-      <div className="scene-status">{ready ? "LIVE 3D" : "RIDER STUDIO"}</div>
+      <div className="scene-status">
+        {tr(ready ? "LIVE 3D" : "RIDER STUDIO")}
+      </div>
       <div
         className={`fallback-scene ${ready ? "scene-hidden" : ""}`}
         aria-hidden={ready}
@@ -107,51 +111,61 @@ export function Rider({
         onClick={() => onSelect("kopf")}
         aria-pressed={selected === "kopf"}
       >
-        <span>01</span>Kopf<small>↗</small>
+        <span>{tr("01")}</span>
+        {tr("Kopf")}
+        <small>{tr("\u2197")}</small>
       </button>
       <button
         className={`hotspot hotspot-body ${active("oberkoerper")}`}
         onClick={() => onSelect("oberkoerper")}
         aria-pressed={selected === "oberkoerper"}
       >
-        <span>02</span>Oberkörper<small>↗</small>
+        <span>{tr("02")}</span>
+        {tr("Oberk\u00F6rper")}
+        <small>{tr("\u2197")}</small>
       </button>
       <button
         className={`hotspot hotspot-hands ${active("haende")}`}
         onClick={() => onSelect("haende")}
         aria-pressed={selected === "haende"}
       >
-        <span>03</span>Hände<small>↗</small>
+        <span>{tr("03")}</span>
+        {tr("H\u00E4nde")}
+        <small>{tr("\u2197")}</small>
       </button>
       <button
         className={`hotspot hotspot-legs ${active("beine")}`}
         onClick={() => onSelect("beine")}
         aria-pressed={selected === "beine"}
       >
-        <span>04</span>Beine<small>↗</small>
+        <span>{tr("04")}</span>
+        {tr("Beine")}
+        <small>{tr("\u2197")}</small>
       </button>
       <button
         className={`hotspot hotspot-feet ${active("fuesse")}`}
         onClick={() => onSelect("fuesse")}
         aria-pressed={selected === "fuesse"}
       >
-        <span>05</span>Füße<small>↗</small>
+        <span>{tr("05")}</span>
+        {tr("F\u00FC\u00DFe")}
+        <small>{tr("\u2197")}</small>
       </button>
       <div className="scene-controls">
         {ready ? (
           <>
             <button
-              aria-label="Fahrer nach links drehen"
+              aria-label={tr("Fahrer nach links drehen")}
               onClick={() => controller.current?.turn(-1)}
             >
               <ChevronLeft size={17} />
             </button>
             <span>
               <Hand size={13} />
-              Wischen & drehen
+              {tr("Wischen & drehen")}
             </span>
             <button
-              aria-label="Fahrer nach rechts drehen"
+              aria-label={tr("Fahrer nach rechts drehen")}
               onClick={() => controller.current?.turn(1)}
             >
               <ChevronRight size={17} />
@@ -160,12 +174,12 @@ export function Rider({
         ) : !constrained && motion && !failed ? (
           <button className="enable-3d" onClick={onRequest3d}>
             <Box size={16} />
-            3D-Ansicht öffnen
+            {tr("3D-Ansicht \u00F6ffnen")}
           </button>
         ) : (
           <span>
             <Hand size={14} />
-            Körperbereich antippen
+            {tr("K\u00F6rperbereich antippen")}
           </span>
         )}
       </div>

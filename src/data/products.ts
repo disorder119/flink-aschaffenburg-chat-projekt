@@ -1,5 +1,6 @@
 import type { Assessment, Group, Product, Region, Tier, Water } from "../types";
 import catalogue from "./gripgrab-source.json" with { type: "json" };
+import { extras } from "./extras.ts";
 export const RESEARCH_DATE = "2026-10-11";
 type Entry = [
   string,
@@ -144,6 +145,7 @@ const noInsulation = "Ungefütterte Wetterschicht; warme Basisschicht ergänzen.
 const waterproofCover =
   "Wasserdichtes Material; Öffnungen an Sohle und Schaft können Wasser einlassen.";
 export const products: Product[] = [
+  ...extras,
   g(
     [
       "trailblazer-flat-pedal-mtb-shoe-covers",

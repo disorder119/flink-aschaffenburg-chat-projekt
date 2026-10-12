@@ -82,12 +82,12 @@ test("every recommendation has an exact-model photo and documented source", () =
       assert.equal(photo.delivery, "official-embed");
       assert.match(
         photo.source,
-        /^https:\/\/(www\.(gripgrab|decathlon|action|strauss|lidl|vaude|bike-discount|endurasport)\.(com|de)|bike\.shimano\.com)\//,
+        /^https:\/\/(www\.(gripgrab|decathlon|action|strauss|lidl|vaude|bike-discount|endurasport|theheatcompany)\.(com|de)|bike\.shimano\.com)\//,
       );
       assert.ok(photo.remote);
       assert.match(
         photo.remote!,
-        /^https:\/\/(contents\.mediadecathlon\.com|cdn\.shopify\.com|asset\.action\.com|cdn\.strauss\.com|www\.lidl\.de|www\.vaude\.com|www\.endurasport\.com|dassets\.shimano\.com)\//,
+        /^https:\/\/(contents\.mediadecathlon\.com|cdn\.shopify\.com|asset\.action\.com|cdn\.strauss\.com|www\.lidl\.de|www\.vaude\.com|www\.endurasport\.com|dassets\.shimano\.com|d3m1gwy11l97op\.cloudfront\.net)\//,
       );
       assert.equal(photoSrc(photo, "/project/"), photo.remote);
       assert.doesNotMatch(

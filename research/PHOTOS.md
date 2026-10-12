@@ -1,6 +1,6 @@
 # Originalbilder der Empfehlungen · 12.10.2026
 
-Alle 72 Empfehlungen haben ein Foto des konkret verlinkten Modells. Der Schlüssel in `src/data/photos.json` ist die Produkt-ID; `productUrl`, `sourceTitle` und `reference` dokumentieren die Zuordnung. Quelle, Originaldatei, Auslieferungs-URL, Variante und Prüfdatum sind getrennt gespeichert. Bilder werden vollständig mit `object-fit: contain` und ohne Farbmischung gezeigt. Eine Marke oder ähnliche Produktgruppe reicht nicht für eine Zuordnung.
+Alle 82 Empfehlungen haben ein Foto des konkret verlinkten Modells. Der Schlüssel in `src/data/photos.json` ist die Produkt-ID; `productUrl`, `sourceTitle` und `reference` dokumentieren die Zuordnung. Quelle, Originaldatei, Auslieferungs-URL, Variante und Prüfdatum sind getrennt gespeichert. Bilder werden vollständig mit `object-fit: contain` und ohne Farbmischung gezeigt. Eine Marke oder ähnliche Produktgruppe reicht nicht für eine Zuordnung.
 
 Die City 940 ist Artikel 8797364 (graphitgrau), mit Originalbild p3100863 aus ihrer Produktgalerie. Die City 900 ist Artikel 8735752, Bild p3222422. Sie teilen sich kein Foto. Das ältere MT900-Pressefoto mit FORCLAZ-Markierung wurde durch das aktuelle Galeriefoto p2572825 der verlinkten Artikelnummer 8655822 ersetzt.
 
@@ -19,7 +19,7 @@ Bildquelle und Verkaufslink können bei drei Artikeln unterschiedlich sein. Prei
 
 ## Einbettung und Nutzung
 
-68 Bilder werden als direkte HTTPS-Bilddateien vom öffentlich zugänglichen Originalserver eingebettet, ohne Kopie in GitHub, Bildproxy, Shop-Skripte, Werbeparameter oder Umgehung einer Einbettungssperre. Vier lokal angebotene Presse-Packshots haben den bisher dokumentierten redaktionellen Nutzungsrahmen. Sichtbare Credits und Quellen bleiben erhalten. Eine freie Bildlizenz oder Partnerschaft wird nicht behauptet.
+78 Bilder werden als direkte HTTPS-Bilddateien vom öffentlich zugänglichen Originalserver eingebettet, ohne Kopie in GitHub, Bildproxy, Shop-Skripte, Werbeparameter oder Umgehung einer Einbettungssperre. Vier lokal angebotene Presse-Packshots haben den bisher dokumentierten redaktionellen Nutzungsrahmen. Sichtbare Credits und Quellen bleiben erhalten. Eine freie Bildlizenz oder Partnerschaft wird nicht behauptet.
 
 Die technische Entscheidung zur direkten Einbettung orientiert sich an der Unterscheidung zwischen direkter Einbettung frei zugänglicher Inhalte und erneutem Hochladen von Kopien: [EuGH C-392/19](https://curia.europa.eu/jcms/upload/docs/application/pdf/2021-03/cp210036en.pdf), [EuGH C-161/17](https://curia.europa.eu/jcms/upload/docs/application/pdf/2018-08/cp180123en.pdf). Das ist eine begrenzte Umsetzung anhand der geprüften Quellen, keine verbindliche Rechtsprüfung aller denkbaren späteren Verwendungen. Bei Widerspruch oder künftiger technischer Sperre Bild deaktivieren und Rechte klären; keine Schutzmaßnahmen umgehen. Affiliate-Monetarisierung deaktiviert die Fotoanzeige weiterhin bis zur separaten Prüfung.
 

@@ -1,6 +1,6 @@
 import type { Product } from "../types.ts";
 export type WorkspaceView =
-  "products" | "filters" | "outfit" | "favorites" | "kits";
+  "products" | "filters" | "outfit" | "favorites" | "kits" | "extras";
 export function workspaceViewOf(route: string): WorkspaceView | null {
   if (["", "ausruestung"].includes(route)) return "products";
   const views: Record<string, WorkspaceView> = {
@@ -8,6 +8,7 @@ export function workspaceViewOf(route: string): WorkspaceView | null {
     outfit: "outfit",
     merkliste: "favorites",
     sets: "kits",
+    extras: "extras",
   };
   return Object.prototype.hasOwnProperty.call(views, route)
     ? views[route]

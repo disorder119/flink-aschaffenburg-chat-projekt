@@ -1,0 +1,7 @@
+{
+  "Premium": ["Premium", "ممتاز", "प्रीमियम"],
+  "Artikel {0} von {1}": ["Item {0} of {1}", "المنتج {0} من {1}", "{1} में से उत्पाद {0}"],
+  "{name}, {price}, Artikel {index} von {total}": ["{name}, {price}, item {index} of {total}", "{name}، {price}، المنتج {index} من {total}", "{name}, {price}, {total} में से वस्तु {index}"],
+  "{count} Artikel passen zu deinen Filtern.": ["{count} items match your filters.", "{count} منتجات تطابق مرشّحاتك.", "आपके फ़िल्टर से {count} वस्तुएँ मेल खाती हैं।"],
+  "{count} Artikel im Outfit.": ["{count} items in your outfit.", "{count} منتجات في تجهيزاتك.", "आपके आउटफ़िट में {count} वस्तुएँ हैं।"]
+}

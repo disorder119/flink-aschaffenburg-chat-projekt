@@ -1,0 +1,910 @@
+{
+  "checkedAt": "2026-10-12T13:29:17.905Z",
+  "count": 82,
+  "passed": 82,
+  "failed": [],
+  "largest": [
+    {
+      "id": "gg-trailblazer-flat-pedal-mtb-shoe-covers",
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/product-images/gg-trailblazer.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 130705,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "shimano-mw702",
+      "url": "https://dassets.shimano.com/content/dam/global/cg1SHICCycling/final/products/cg2SHICLifeStyleGear/cg3SHICFootwear/cg4SHICShoes/cg5SHICShoes/SH-MW702-shic6-primary_1.jpg/jcr:content/renditions/SH-MW702-shic6-primary_1_750_750.jpeg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 118397,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "heat-hand-warmer",
+      "url": "https://d3m1gwy11l97op.cloudfront.net/media/image/05/f2/71/the-heat-company-product-handwarmer-01_600x600@2x.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 105896,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "heat-toe-warmer",
+      "url": "https://d3m1gwy11l97op.cloudfront.net/media/image/3a/26/30/the-heat-company-product-toewarmers-01_600x600.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 103342,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-arctic-2-waterproof-deep-winter-road-shoe-covers",
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/product-images/gg-arctic-2-road.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 102933,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "strauss-basis",
+      "url": "https://cdn.strauss.com/de/assets/pdp/images/Original/product/1.Release.3410960/e_s_Funktions-Long_Pants_basis-warm-296311-1-638744232457438190.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 91447,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "strauss-xwarm",
+      "url": "https://cdn.strauss.com/de/assets/pdp/images/Original/product/1.Release.3410840/e_s_Funktions-Long_Pants_thermo_stretch-x-warm-307455-0-638781416995654256.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 88511,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-explr-waterproof-lightweight-jacket",
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/product-images/gg-explr-jacket.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 83449,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    }
+  ],
+  "results": [
+    {
+      "id": "dec-city940-pogies",
+      "url": "https://contents.mediadecathlon.com/p3100863/k$7ea042890eeda05f50b783917d8130c7/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 9339,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "gg-trailblazer-flat-pedal-mtb-shoe-covers",
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/product-images/gg-trailblazer.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 130705,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-arctic-2-waterproof-deep-winter-road-shoe-covers",
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/product-images/gg-arctic-2-road.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 102933,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-explr-waterproof-lightweight-jacket",
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/product-images/gg-explr-jacket.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 83449,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "dec-city900-pogies",
+      "url": "https://contents.mediadecathlon.com/p3222422/k$5bee7a3a82f74fecf9d4b5c0c2dda7df/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 9856,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "action-gloves",
+      "url": "https://asset.action.com/image/upload/t_digital_product_image/w_512/2577090_8721302635296-110_01_hqtptb.webp",
+      "status": 200,
+      "mime": "image/webp",
+      "bytes": 14904,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "action-socks",
+      "url": "https://asset.action.com/image/upload/t_digital_product_image/w_512/27368781.webp",
+      "status": 200,
+      "mime": "image/webp",
+      "bytes": 18462,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "action-beanie",
+      "url": "https://asset.action.com/image/upload/t_digital_product_image/w_512/2554993_8721302635364-110_01_adkyrm.webp",
+      "status": 200,
+      "mime": "image/webp",
+      "bytes": 50934,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "action-neck",
+      "url": "https://asset.action.com/image/upload/t_digital_product_image/w_512/2577489_8721282249599-110_01_djaswl.webp",
+      "status": 200,
+      "mime": "image/webp",
+      "bytes": 12832,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "action-pants",
+      "url": "https://asset.action.com/image/upload/t_digital_product_image/w_512/2568247_8718964297344-110_01_kpptc8.webp",
+      "status": 200,
+      "mime": "image/webp",
+      "bytes": 8156,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "action-shirt-w",
+      "url": "https://asset.action.com/image/upload/t_digital_product_image/w_512/3217087_8718964247011-110_01_f6s9hv.webp",
+      "status": 200,
+      "mime": "image/webp",
+      "bytes": 8488,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "action-shirt",
+      "url": "https://asset.action.com/image/upload/t_digital_product_image/w_512/2568221_8718964247929-110_01_v684y4.webp",
+      "status": 200,
+      "mime": "image/webp",
+      "bytes": 11670,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "action-pants-w",
+      "url": "https://asset.action.com/image/upload/t_digital_product_image/w_512/3217084_8718964247172-110_01_less2c.webp",
+      "status": 200,
+      "mime": "image/webp",
+      "bytes": 5656,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "action-rain",
+      "url": "https://asset.action.com/image/upload/t_digital_product_image/w_512/3218112_8712382142446-110_01_acs4nv.webp",
+      "status": 200,
+      "mime": "image/webp",
+      "bytes": 13548,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "action-rainset",
+      "url": "https://asset.action.com/image/upload/t_digital_product_image/w_512/39766473.webp",
+      "status": 200,
+      "mime": "image/webp",
+      "bytes": 7646,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "dec-balaclava",
+      "url": "https://contents.mediadecathlon.com/p3215716/k$acb196462f0ed100b59175ad7815e74e/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 10458,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-cap",
+      "url": "https://contents.mediadecathlon.com/p3215698/k$f2993d68f353daf83eaf208450663ea4/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 13856,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-edr-gloves",
+      "url": "https://contents.mediadecathlon.com/p3047141/k$15b6227209dc85fcba0b72d40128a514/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 14333,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-essential",
+      "url": "https://contents.mediadecathlon.com/p3047150/k$8a70bd5202d59bb3e16cd9a1c0798ca8/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 16559,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-mt900",
+      "url": "https://contents.mediadecathlon.com/p2572825/k$a44aceb67f69b4a02466ba5800f266e0/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 17845,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-raincut",
+      "url": "https://contents.mediadecathlon.com/p2644239/k$a8f5d5a6f3139d101ace0f0deaacca1c/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 12523,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-city-jacket",
+      "url": "https://contents.mediadecathlon.com/p3222500/k$c8c83ce8c7162f0b48ebfdfdebe25d66/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 11838,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-edr-jacket",
+      "url": "https://contents.mediadecathlon.com/p2464574/k$98764568754f4235b23f0bc420019cdb/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 13066,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-city900-pants",
+      "url": "https://contents.mediadecathlon.com/p3222488/k$b8c2b51b6591789f1736a51469efd2f8/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 14813,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-city-pants",
+      "url": "https://contents.mediadecathlon.com/p2572928/k$155adabc642accda9ad76547adc6a172/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 12445,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-merino-pants",
+      "url": "https://contents.mediadecathlon.com/p2815528/k$561f14eedcb0aeab8af780d6bea2cf2d/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 11162,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-winter-gloves",
+      "url": "https://contents.mediadecathlon.com/p3047157/k$1ca36d83087bddb7f5ce6524e53bd186/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 11840,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-legwarmers",
+      "url": "https://contents.mediadecathlon.com/p3225824/k$6e6be14530d810f4413a87df44e9fb0a/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 9480,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-city-covers",
+      "url": "https://contents.mediadecathlon.com/p2871164/k$e29276d0b9c3b8b3798082893f2a8f7d/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 20130,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-nh100",
+      "url": "https://contents.mediadecathlon.com/p2779001/k$bd9a4742f9910b8cfa0dfac4c44c3df0/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 10253,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "strauss-xwarm",
+      "url": "https://cdn.strauss.com/de/assets/pdp/images/Original/product/1.Release.3410840/e_s_Funktions-Long_Pants_thermo_stretch-x-warm-307455-0-638781416995654256.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 88511,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "strauss-basis",
+      "url": "https://cdn.strauss.com/de/assets/pdp/images/Original/product/1.Release.3410960/e_s_Funktions-Long_Pants_basis-warm-296311-1-638744232457438190.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 91447,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "lidl-pants",
+      "url": "https://www.lidl.de/assets/gcp91a455a1502c48fc912485dacaffb22a.jpg",
+      "status": 200,
+      "mime": "image/jpg",
+      "bytes": 58215,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "lidl-gloves",
+      "url": "https://www.lidl.de/assets/gcpf4f8ab17834047dfb9f38e39c6a8266b.jpg",
+      "status": 200,
+      "mime": "image/jpg",
+      "bytes": 54286,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "vaude-escape-pants",
+      "url": "https://www.vaude.com/media/catalog/product/cache/207e23213cf636ccdef205098cf3c8a3/4/8/48019_010_6__480190105300_150c2491.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 15624,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "vaude-fluid",
+      "url": "https://www.vaude.com/media/catalog/product/cache/207e23213cf636ccdef205098cf3c8a3/0/6/06343_010_6__063430100200_7c153d85.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 16927,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "vaude-yaras",
+      "url": "https://www.vaude.com/media/catalog/product/cache/207e23213cf636ccdef205098cf3c8a3/4/5/45604_010_6__456040105200_39c862ef.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 18974,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "vaude-luminum",
+      "url": "https://www.vaude.com/media/catalog/product/cache/207e23213cf636ccdef205098cf3c8a3/4/7/47963_136_6__479631365200_a2e150f4.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 31526,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "vaude-minaki",
+      "url": "https://www.vaude.com/media/catalog/product/cache/207e23213cf636ccdef205098cf3c8a3/4/8/48585_010_6__485850100360_e5d18586.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 17307,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-skull-cap",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/5002_01_728bfd4e-9cb3-47f8-aa02-aab15ef5d4bc.jpg?v=1670337290&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 14237,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "endura-mt500-pants",
+      "url": "https://www.endurasport.com/cdn/shop/files/R-E8136BK-B1_1ad680c3-6eee-4bb1-96c5-760a672db99c.jpg?v=1774214105&width=550",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 13261,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-multifunctional-merino-neck-warmer",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/5029_01.jpg?v=1644487485&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 15210,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-thermo-windproof-winter-headband",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/5005_01.jpg?v=1644324242&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 13927,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-thermal-winter-balaclava",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/5006_01.jpg?v=1666698097&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 9519,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-aquashield-waterproof-cycling-cap",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/5047_01B.jpg?v=1660647623&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 19440,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-merino-blend-lightweight-beanie",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/5041_59.jpg?v=1649158427&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 20384,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-aviator-windproof-deep-winter-skull-cap",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/5003_01_ef225bae-c128-4a75-94e2-965b15fd4c55.jpg?v=1666699172&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 12534,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-belgian-style-thermal-windproof-winter-cycling-cap",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/5031_01.jpg?v=1644324419&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 14938,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-merino-wool-liner-gloves",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/1052_01.jpg?v=1644410480&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 25124,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-primavera-2-merino-spring-autumn-gloves",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/1075_01.jpg?v=1655210066&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 25870,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-ride-2-windproof-spring-autumn-gloves",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/files/108901_GG-com_f93306cc-6fdb-4805-859c-540029be11da.jpg?v=1725018910&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 24793,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-ride-2-windproof-winter-gloves",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/files/109001_GG-com_127fce1c-dfd4-439a-8ed2-513c4c21033a.jpg?v=1725018705&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 22946,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-waterproof-knitted-winter-gloves",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/1074_01.jpg?v=1673427465&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 20326,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-ride-2-waterproof-winter-gloves",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/files/109101_GG-com_553d2803-f203-4ebe-802a-056e13449d54.jpg?v=1725018597&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 22590,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-polaris-2-waterproof-winter-gloves",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/1082_01_de4dc0de-7970-4d21-94d6-31987b466801.jpg?v=1694516921&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 23801,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-nordic-2-windproof-deep-winter-lobster-gloves",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/1081_01_17f7c2bb-baa9-4724-a808-38dfcaa54a13.jpg?v=1660644832&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 20555,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-ride-winter-long-sleeve-base-layer",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/files/6063_01_Side_GG-com.jpg?v=1722517608&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 16135,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-merino-blend-thermal-long-sleeve-base-layer",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/6008_01_0ccc6fbe-f9a5-4e1f-b91e-2aaf3ed4d218.jpg?v=1644331835&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 13607,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-ride-winter-jacket",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/files/d0ae65b7e462c1ca00cbb178a5645b6229019e30.jpg?v=1787147238&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 13114,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-pacr-winter-jacket",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/files/f639d1692727917eaea46aac29f80409d0c90c68.jpg?v=1787147221&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 13216,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-ride-waterproof-lightweight-jacket",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/files/7f91eb028f6c1e12fa909c043ddb0498519536ad.jpg?v=1787147221&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 28323,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-thermo-sl-winter-socks",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/3019_01.jpg?v=1644316622&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 13596,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-merino-winter-sock",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/3005_01.jpg?v=1644315883&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 19239,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-alpine-merino-high-cut-winter-socks",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/3023_01_a5db39c8-46a3-4a05-8110-526e88ceee26.jpg?v=1660645237&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 17530,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-explr-waterproof-lightweight-pants",
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/product-images/gg-explr-waterproof-lightweight-pants.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 61953,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-dryfoot-waterproof-everyday-shoe-covers-2",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/2035_01.jpg?v=1744183953&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 12516,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-racethermo-waterproof-winter-road-shoe-covers",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/2023_08_bc7c9b8c-3c03-4086-9195-bb5bee273fe2.jpg?v=1669817115&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 20075,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-merino-lined-waterproof-winter-socks",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/products/3016_01.jpg?v=1644316704&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 22974,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-arctic-2-waterproof-deep-winter-gravel-shoe-covers",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/files/bfe96c78d83f8224f889980dfcea8329bcfc67c7.jpg?v=1756464970&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 18715,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "gg-aquaseal-waterproof-cycling-gaiter",
+      "url": "https://cdn.shopify.com/s/files/1/1565/1561/files/2045_01_GG-com.jpg?v=1722502410&width=512",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 12853,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "lidl-shirt",
+      "url": "https://www.lidl.de/assets/gcp56011cabd8f34d94b0fb66ece1bd9150.jpg",
+      "status": 200,
+      "mime": "image/jpg",
+      "bytes": 53497,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "shimano-mw702",
+      "url": "https://dassets.shimano.com/content/dam/global/cg1SHICCycling/final/products/cg2SHICLifeStyleGear/cg3SHICFootwear/cg4SHICShoes/cg5SHICShoes/SH-MW702-shic6-primary_1.jpg/jcr:content/renditions/SH-MW702-shic6-primary_1_750_750.jpeg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 118397,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "action-thermofect-warmer",
+      "url": "https://asset.action.com/image/upload/t_digital_product_image/w_512/3003086_8715342059563-111_01_wxsmun.webp",
+      "status": 200,
+      "mime": "image/webp",
+      "bytes": 26888,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "dec-foot-warmers",
+      "url": "https://contents.mediadecathlon.com/p3054307/k$40ee1568f41433a2fb2c812b3e0b9260/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 9817,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-hand-warmers",
+      "url": "https://contents.mediadecathlon.com/p3054309/k$43f124621d90d794b8c90729984dc661/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 9008,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "heat-toe-warmer",
+      "url": "https://d3m1gwy11l97op.cloudfront.net/media/image/3a/26/30/the-heat-company-product-toewarmers-01_600x600.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 103342,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "heat-hand-warmer",
+      "url": "https://d3m1gwy11l97op.cloudfront.net/media/image/05/f2/71/the-heat-company-product-handwarmer-01_600x600@2x.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 105896,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "dec-body-warmers",
+      "url": "https://contents.mediadecathlon.com/p3054308/k$6d5bd6a7cefb4cf7c73438d70e662c6f/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 9688,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "heat-sole-warmer",
+      "url": "https://d3m1gwy11l97op.cloudfront.net/media/image/d1/b8/3b/the-heat-company-product-insole-foot-warmer-01GDsAZxCVJYfOh_600x600.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "bytes": 79360,
+      "cors": null,
+      "resourcePolicy": null,
+      "passed": true
+    },
+    {
+      "id": "dec-helmet-cover",
+      "url": "https://contents.mediadecathlon.com/p3222437/k$f625be7cfc73bd35174a44fd87ec85c8/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 10063,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "dec-backpack-reflector",
+      "url": "https://contents.mediadecathlon.com/p3236347/k$6dd18f2596331960d45bf3a82b7cc672/picture.jpg?format=auto&f=512x0&quality=70",
+      "status": 200,
+      "mime": "image/jpeg;charset=UTF-8",
+      "bytes": 10066,
+      "cors": "*",
+      "resourcePolicy": "cross-origin",
+      "passed": true
+    },
+    {
+      "id": "action-click-warmer",
+      "url": "https://asset.action.com/image/upload/t_digital_product_image/w_512/2542277_8711292210726-111_01_lkn8uk.webp",
+      "status": 200,
+      "mime": "image/webp",
+      "bytes": 19232,
+      "cors": "*",
+      "resourcePolicy": null,
+      "passed": true
+    }
+  ]
+}

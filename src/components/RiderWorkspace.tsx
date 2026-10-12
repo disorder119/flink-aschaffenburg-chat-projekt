@@ -1,3 +1,4 @@
+import { tr } from "../i18n/core";
 import { useEffect, useState } from "react";
 import {
   ArrowUpRight,
@@ -39,13 +40,11 @@ import {
 } from "../lib/workspace";
 import { riderStyles } from "../lib/experience";
 import { shopLink } from "../config/affiliate";
-
 import { type useExperience } from "./useExperience";
 import { Rider } from "./Rider";
 import { ProductImage } from "./ProductImage";
 import { waterLabels } from "./ProductCard";
 import { Modal } from "./Modal";
-
 interface Props {
   view: WorkspaceView;
   filters: Filters;
@@ -84,10 +83,14 @@ const views = [
     label: "Filter",
     icon: SlidersHorizontal,
   },
+  { view: "extras", route: "extras", label: "Zubehör", icon: Flame },
   { view: "outfit", route: "outfit", label: "Outfit", icon: Layers },
   { view: "favorites", route: "merkliste", label: "Merkliste", icon: Heart },
 ] as const;
-const weatherOptions: { id: Weather; label: string }[] = [
+const weatherOptions: {
+  id: Weather;
+  label: string;
+}[] = [
   { id: "light", label: "Leichter Regen" },
   { id: "heavy", label: "Starker Regen" },
   { id: "cold", label: "Kalt" },
@@ -100,7 +103,6 @@ function price(p: Product) {
     ? "Preis offen"
     : `${p.priceKind === "from" ? "ab " : ""}${money(p.price)}`;
 }
-
 export function RiderWorkspace(props: Props) {
   const {
     view,
@@ -149,7 +151,8 @@ export function RiderWorkspace(props: Props) {
     setPickerOpen(false);
   };
   const selectRegion = (r: Region) => {
-    onRegion(r);
+    if (view === "extras") onFilter("region", r);
+    else onRegion(r);
   };
   const showPhotos = () => {
     props.onReset();
@@ -160,7 +163,7 @@ export function RiderWorkspace(props: Props) {
   return (
     <section
       className={`rider-workspace ${editing ? "is-editing" : ""}`}
-      aria-label="Interaktiver Ausrüstungskonfigurator"
+      aria-label={tr("Interaktiver Ausrüstungskonfigurator")}
       onFocusCapture={(e) => {
         if ((e.target as HTMLElement).matches("input")) setEditing(true);
       }}
@@ -172,18 +175,22 @@ export function RiderWorkspace(props: Props) {
       <div className="workspace-scene">
         <div className="studio-title">
           <div>
-            <span className="eyebrow">DEIN RIDER-STUDIO</span>
+            <span className="eyebrow">{tr("DEIN RIDER-STUDIO")}</span>
             <h1>
-              Ein Setup.
+              {tr("Ein Setup.")}
               <br />
-              <em>Deine Schicht.</em>
+              <em>{tr("Deine Schicht.")}</em>
             </h1>
-            <p>Körperbereich antippen. Ausrüstung auswählen.</p>
+            <p>
+              {tr(
+                "K\u00F6rperbereich antippen. Ausr\u00FCstung ausw\u00E4hlen.",
+              )}
+            </p>
           </div>
           <label className="studio-style">
-            <span>Rider-Style</span>
+            <span>{tr("Rider-Style")}</span>
             <select
-              aria-label="Rider-Style wählen"
+              aria-label={tr("Rider-Style wählen")}
               value={experience.style}
               onChange={(e) =>
                 experience.setStyle(e.target.value as typeof experience.style)
@@ -191,7 +198,7 @@ export function RiderWorkspace(props: Props) {
             >
               {riderStyles.map((s) => (
                 <option key={s.id} value={s.id}>
-                  {s.label}
+                  {tr(s.label)}
                 </option>
               ))}
             </select>
@@ -209,23 +216,25 @@ export function RiderWorkspace(props: Props) {
         <div className="studio-status">
           <span>
             <span className="pulse-dot" />
-            {allProducts.length} recherchierte Artikel
+            {allProducts.length}
+            {tr(" recherchierte Artikel")}
           </span>
           <button onClick={showPhotos}>
             <Camera size={14} />
-            Echte Produktfotos
+            {tr("Echte Produktfotos")}
           </button>
         </div>
         <p className="studio-community">
-          Unabhängiges Community-Projekt für Lieferfahrer in Aschaffenburg.
-          Keine offizielle Website von Flink.
+          {tr(
+            "Unabh\u00E4ngiges Community-Projekt f\u00FCr Lieferfahrer in Aschaffenburg. Keine offizielle Website von Flink.",
+          )}
         </p>
       </div>
       <div className="workspace-controls">
         <div
           className="workspace-regions"
           role="group"
-          aria-label="Körperregion auswählen"
+          aria-label={tr("Körperregion auswählen")}
         >
           {regions.map((r, i) => (
             <button
@@ -233,13 +242,16 @@ export function RiderWorkspace(props: Props) {
               aria-pressed={filters.region === r.id}
               onClick={() => selectRegion(r.id)}
             >
-              <span>0{i + 1}</span>
-              {r.short}
+              <span>
+                {tr("0")}
+                {i + 1}
+              </span>
+              {tr(r.short)}
               {outfit.primary[r.id] && (
                 <Check
                   className="region-complete"
                   size={11}
-                  aria-label="Artikel im Outfit"
+                  aria-label={tr("Artikel im Outfit")}
                 />
               )}
             </button>
@@ -248,7 +260,7 @@ export function RiderWorkspace(props: Props) {
         <div
           className="workspace-budget"
           role="group"
-          aria-label="Budget auswählen"
+          aria-label={tr("Budget auswählen")}
         >
           {(["all", "budget", "value", "premium"] as const).map((t) => (
             <button
@@ -256,15 +268,18 @@ export function RiderWorkspace(props: Props) {
               aria-pressed={filters.tier === t}
               onClick={() => {
                 onFilter("tier", t);
-                if (view !== "products") onNavigate("ausruestung");
+                if (view !== "products" && view !== "extras")
+                  onNavigate(
+                    filters.supplementsOnly ? "extras" : "ausruestung",
+                  );
               }}
             >
-              {t === "all" ? "Alle Budgets" : tierLabels[t]}
+              {tr(t === "all" ? "Alle Budgets" : tierLabels[t])}
             </button>
           ))}
           <button
             className="workspace-filter-shortcut"
-            aria-label="Filter öffnen"
+            aria-label={tr("Filter öffnen")}
             onClick={() => onNavigate("filter")}
           >
             <SlidersHorizontal size={16} />
@@ -273,68 +288,97 @@ export function RiderWorkspace(props: Props) {
         </div>
       </div>
       <p className="sr-only" role="status" aria-live="polite">
-        {(view === "products" || view === "favorites") && product
-          ? `${product.name}, ${price(product)}, Artikel ${index + 1} von ${available.length}`
-          : view === "filters"
-            ? `${list.length} Artikel passen zu deinen Filtern.`
-            : view === "outfit"
-              ? `${chosen.length} Artikel im Outfit.`
-              : ""}
+        {tr(
+          (view === "products" || view === "favorites" || view === "extras") &&
+            product
+            ? tr("{name}, {price}, Artikel {index} von {total}", {
+                name: product.name,
+                price: price(product),
+                index: index + 1,
+                total: available.length,
+              })
+            : view === "filters"
+              ? tr("{count} Artikel passen zu deinen Filtern.", {
+                  count: list.length,
+                })
+              : view === "outfit"
+                ? tr("{count} Artikel im Outfit.", { count: chosen.length })
+                : "",
+        )}
       </p>
       <div
         className={`workspace-panel panel-${view}`}
         id="workspace-panel"
         tabIndex={-1}
-        aria-label={
+        aria-label={tr(
           {
             products: "Produktauswahl",
             filters: "Filter",
             outfit: "Dein Outfit",
             favorites: "Merkliste",
             kits: "Fertige Sets",
-          }[view]
-        }
+            extras: "Winter-Zubehör",
+          }[view],
+        )}
       >
-        {(view === "products" || view === "favorites") && (
+        {(view === "products" || view === "favorites" || view === "extras") && (
           <>
             <div className="workspace-panel-heading">
               <div>
                 <span className="eyebrow">
-                  {view === "favorites"
-                    ? "DEINE MERKLISTE"
-                    : (region?.label.toUpperCase() ?? "ALLE KÖRPERBEREICHE")}
+                  {tr(
+                    view === "extras"
+                      ? "WINTER-ZUBEHÖR"
+                      : view === "favorites"
+                        ? "DEINE MERKLISTE"
+                        : (region?.label.toUpperCase() ??
+                          "ALLE KÖRPERBEREICHE"),
+                  )}
                 </span>
                 <strong>
-                  {view === "favorites"
-                    ? "Für später gespeichert"
-                    : (region?.hint ?? "Ausrüstung mit echten Produktfotos")}
+                  {tr(
+                    view === "extras"
+                      ? "Wärmeextras und kleine Helfer für deine Schicht"
+                      : view === "favorites"
+                        ? "Für später gespeichert"
+                        : (region?.hint ??
+                          "Ausrüstung mit echten Produktfotos"),
+                  )}
                 </strong>
               </div>
               <button
                 className="workspace-list-toggle"
                 onClick={() => setPickerOpen(true)}
                 disabled={!available.length}
-                aria-label={`Alle ${available.length} Produkte anzeigen`}
+                aria-label={tr("Alle {0} Produkte anzeigen", {
+                  "0": available.length,
+                })}
               >
                 <List size={17} />
-                <span>{available.length} Artikel</span>
+                <span>
+                  {available.length}
+                  {tr(" Artikel")}
+                </span>
               </button>
             </div>
             {product ? (
               <>
                 <div className="workspace-product-nav">
                   <button
-                    aria-label="Vorheriges Produkt"
+                    aria-label={tr("Vorheriges Produkt")}
                     onClick={() => move(-1)}
                     disabled={index === 0}
                   >
                     <ChevronLeft size={20} />
                   </button>
                   <span aria-live="polite">
-                    Artikel {index + 1} von {available.length}
+                    {tr("Artikel {0} von {1}", {
+                      "0": index + 1,
+                      "1": available.length,
+                    })}
                   </span>
                   <button
-                    aria-label="Nächstes Produkt"
+                    aria-label={tr("Nächstes Produkt")}
                     onClick={() => move(1)}
                     disabled={index === available.length - 1}
                   >
@@ -357,14 +401,18 @@ export function RiderWorkspace(props: Props) {
               <div className="workspace-empty">
                 <Search size={30} />
                 <h2>
-                  {view === "favorites"
-                    ? "Deine Merkliste ist noch leer."
-                    : "Kein passender Artikel."}
+                  {tr(
+                    view === "favorites"
+                      ? "Deine Merkliste ist noch leer."
+                      : "Kein passender Artikel.",
+                  )}
                 </h2>
                 <p>
-                  {view === "favorites"
-                    ? "Tippe beim Produkt auf das Herz. Deine Auswahl bleibt auf deinem Gerät."
-                    : "Passe Budget oder Filter an. Nicht jeder Körperbereich hat bereits ein echtes Produktfoto."}
+                  {tr(
+                    view === "favorites"
+                      ? "Tippe beim Produkt auf das Herz. Deine Auswahl bleibt auf deinem Gerät."
+                      : "Passe Budget oder Filter an. Prüfe die verfügbaren Artikel.",
+                  )}
                 </p>
                 <button
                   className="button"
@@ -373,9 +421,11 @@ export function RiderWorkspace(props: Props) {
                     onNavigate("ausruestung");
                   }}
                 >
-                  {view === "favorites"
-                    ? "Artikel entdecken"
-                    : "Filter zurücksetzen"}
+                  {tr(
+                    view === "favorites"
+                      ? "Artikel entdecken"
+                      : "Filter zurücksetzen",
+                  )}
                 </button>
               </div>
             )}
@@ -385,8 +435,8 @@ export function RiderWorkspace(props: Props) {
           <>
             <div className="workspace-panel-heading">
               <div>
-                <span className="eyebrow">DEINE BEDINGUNGEN</span>
-                <strong>Was brauchst du für die Schicht?</strong>
+                <span className="eyebrow">{tr("DEINE BEDINGUNGEN")}</span>
+                <strong>{tr("Was brauchst du f\u00FCr die Schicht?")}</strong>
               </div>
               {editing ? (
                 <button
@@ -396,27 +446,27 @@ export function RiderWorkspace(props: Props) {
                     setEditing(false);
                   }}
                 >
-                  Fertig
+                  {tr("Fertig")}
                 </button>
               ) : (
                 <button className="text-button" onClick={props.onReset}>
-                  Zurücksetzen
+                  {tr("Zur\u00FCcksetzen")}
                 </button>
               )}
             </div>
             <div className="workspace-panel-scroll filter-fields">
               <div className="workspace-input-row">
                 <label>
-                  <span>Maximaler Artikelpreis</span>
+                  <span>{tr("Maximaler Artikelpreis")}</span>
                   <div className="workspace-price-input">
                     <input
                       inputMode="decimal"
                       type="number"
                       min="0"
                       step="0.01"
-                      aria-label="Maximaler Artikelpreis"
+                      aria-label={tr("Maximaler Artikelpreis")}
                       value={filters.maxPrice ?? ""}
-                      placeholder="Kein Limit"
+                      placeholder={tr("Kein Limit")}
                       onChange={(e) =>
                         onFilter(
                           "maxPrice",
@@ -426,32 +476,32 @@ export function RiderWorkspace(props: Props) {
                         )
                       }
                     />
-                    <span>€</span>
+                    <span>{tr("\u20AC")}</span>
                   </div>
                 </label>
                 <label>
-                  <span>Sortierung</span>
+                  <span>{tr("Sortierung")}</span>
                   <select
-                    aria-label="Produkte sortieren"
+                    aria-label={tr("Produkte sortieren")}
                     value={filters.sort}
                     onChange={(e) =>
                       onFilter("sort", e.target.value as Filters["sort"])
                     }
                   >
-                    <option value="relevance">Passende zuerst</option>
-                    <option value="price">Niedrigster Preis</option>
-                    <option value="score">Höchste Eignung</option>
+                    <option value="relevance">{tr("Passende zuerst")}</option>
+                    <option value="price">{tr("Niedrigster Preis")}</option>
+                    <option value="score">{tr("H\u00F6chste Eignung")}</option>
                   </select>
                 </label>
               </div>
               <label className="workspace-search">
-                <span>Produkt, Marke oder Händler</span>
+                <span>{tr("Produkt, Marke oder H\u00E4ndler")}</span>
                 <div>
                   <Search size={17} />
                   <input
                     type="search"
-                    aria-label="Produkte suchen"
-                    placeholder="Zum Beispiel Action oder Handschuhe"
+                    aria-label={tr("Produkte suchen")}
+                    placeholder={tr("Zum Beispiel Action oder Handschuhe")}
                     value={filters.search}
                     onChange={(e) => onFilter("search", e.target.value)}
                   />
@@ -460,7 +510,7 @@ export function RiderWorkspace(props: Props) {
               <fieldset>
                 <legend>
                   <CloudRain size={15} />
-                  Wetter · Mehrfachauswahl
+                  {tr("Wetter \u00B7 Mehrfachauswahl")}
                 </legend>
                 <div className="workspace-chips">
                   {weatherOptions.map((w) => (
@@ -476,7 +526,7 @@ export function RiderWorkspace(props: Props) {
                         )
                       }
                     >
-                      {w.label}
+                      {tr(w.label)}
                     </button>
                   ))}
                 </div>
@@ -484,7 +534,7 @@ export function RiderWorkspace(props: Props) {
               <fieldset>
                 <legend>
                   <Bike size={15} />
-                  Fahrzeug
+                  {tr("Fahrzeug")}
                 </legend>
                 <div className="workspace-chips">
                   {(
@@ -499,35 +549,37 @@ export function RiderWorkspace(props: Props) {
                       aria-pressed={filters.vehicle === v.id}
                       onClick={() => onFilter("vehicle", v.id)}
                     >
-                      {v.label}
+                      {tr(v.label)}
                     </button>
                   ))}
                 </div>
               </fieldset>
               <label className="workspace-field">
-                <span>Schichtdauer</span>
+                <span>{tr("Schichtdauer")}</span>
                 <select
-                  aria-label="Schichtdauer"
+                  aria-label={tr("Schichtdauer")}
                   value={filters.shift}
                   onChange={(e) =>
                     onFilter("shift", e.target.value as Filters["shift"])
                   }
                 >
-                  <option value="short">Kurze Schicht</option>
-                  <option value="medium">4–6 Stunden</option>
-                  <option value="long">6–8 Stunden oder länger</option>
+                  <option value="short">{tr("Kurze Schicht")}</option>
+                  <option value="medium">{tr("4\u20136 Stunden")}</option>
+                  <option value="long">
+                    {tr("6\u20138 Stunden oder l\u00E4nger")}
+                  </option>
                 </select>
               </label>
               <label className="workspace-field">
-                <span>Produktgruppe</span>
+                <span>{tr("Produktgruppe")}</span>
                 <select
-                  aria-label="Produktgruppe"
+                  aria-label={tr("Produktgruppe")}
                   value={filters.group ?? "all"}
                   onChange={(e) =>
                     onFilter("group", e.target.value as Filters["group"])
                   }
                 >
-                  <option value="all">Alle passenden Gruppen</option>
+                  <option value="all">{tr("Alle passenden Gruppen")}</option>
                   {Object.entries(groupLabels)
                     .filter(([g]) =>
                       allProducts.some(
@@ -539,7 +591,7 @@ export function RiderWorkspace(props: Props) {
                     )
                     .map(([g, label]) => (
                       <option key={g} value={g}>
-                        {label}
+                        {tr(label)}
                       </option>
                     ))}
                 </select>
@@ -549,8 +601,8 @@ export function RiderWorkspace(props: Props) {
                 aria-pressed={!!filters.photoOnly}
                 onClick={() => onFilter("photoOnly", !filters.photoOnly)}
               >
-                <span>{filters.photoOnly && <Check size={15} />}</span>Nur
-                Artikel mit echtem Produktfoto
+                <span>{filters.photoOnly && <Check size={15} />}</span>
+                {tr("Nur Artikel mit echtem Produktfoto")}
               </button>
               <button
                 className="workspace-check"
@@ -563,23 +615,30 @@ export function RiderWorkspace(props: Props) {
                 }
               >
                 <span>{filters.region === "all" && <Check size={15} />}</span>
-                Alle Körperregionen durchsuchen
+                {tr("Alle K\u00F6rperregionen durchsuchen")}
               </button>
               <p className="workspace-filter-note">
-                {filters.vehicle === "scooter"
-                  ? "Motorroller benötigen zusätzliche Motorrad-Schutzausrüstung. Radschuh-Systeme und Fahrrad-Lenkerstulpen werden ausgeblendet."
-                  : filters.vehicle === "ebike"
-                    ? "Auf dem E-Bike kann weniger Eigenwärme entstehen. Wärmeschichten und Pausen einplanen."
-                    : "Aktives Treten erzeugt Wärme. Belüftung und Feuchtetransport bleiben wichtig."}{" "}
-                Die Filter beruhen auf dokumentierten Eigenschaften; keine
-                Garantie für eine ganze Schicht.
+                {tr(
+                  filters.vehicle === "scooter"
+                    ? "Motorroller benötigen zusätzliche Motorrad-Schutzausrüstung. Radschuh-Systeme und Fahrrad-Lenkerstulpen werden ausgeblendet."
+                    : filters.vehicle === "ebike"
+                      ? "Auf dem E-Bike kann weniger Eigenwärme entstehen. Wärmeschichten und Pausen einplanen."
+                      : "Aktives Treten erzeugt Wärme. Belüftung und Feuchtetransport bleiben wichtig.",
+                )}
+                {tr(" ")}
+                {tr(
+                  "Die Filter beruhen auf dokumentierten Eigenschaften; keine Garantie f\u00FCr eine ganze Schicht.",
+                )}
               </p>
             </div>
             <button
               className="button workspace-apply"
-              onClick={() => onNavigate("ausruestung")}
+              onClick={() =>
+                onNavigate(filters.supplementsOnly ? "extras" : "ausruestung")
+              }
             >
-              {list.length} passende Artikel ansehen
+              {list.length}
+              {tr(" passende Artikel ansehen")}
               <ArrowRight size={17} />
             </button>
           </>
@@ -588,14 +647,17 @@ export function RiderWorkspace(props: Props) {
           <>
             <div className="workspace-panel-heading">
               <div>
-                <span className="eyebrow">DEIN WINTER-OUTFIT</span>
-                <strong>{chosen.length} Artikel · dein eigener Mix</strong>
+                <span className="eyebrow">{tr("DEIN WINTER-OUTFIT")}</span>
+                <strong>
+                  {chosen.length}
+                  {tr(" Artikel \u00B7 dein eigener Mix")}
+                </strong>
               </div>
               <button
                 className="text-button"
                 onClick={() => onNavigate("sets")}
               >
-                Fertige Sets
+                {tr("Fertige Sets")}
               </button>
             </div>
             <div className="workspace-panel-scroll workspace-outfit-list">
@@ -618,22 +680,27 @@ export function RiderWorkspace(props: Props) {
                         p ? props.onDetails(p) : selectRegion(r.id)
                       }
                     >
-                      <small>{r.label}</small>
-                      <strong>{p ? p.name : "Artikel auswählen"}</strong>
-                      {p && <span>{price(p)}</span>}
+                      <small>{tr(r.label)}</small>
+                      <strong>{tr(p ? p.name : "Artikel auswählen")}</strong>
+                      {p && <span>{tr(price(p))}</span>}
                     </button>
                     <button
                       className="outfit-row-change"
                       onClick={() => selectRegion(r.id)}
-                      aria-label={`Artikel für ${r.label} ${p ? "ändern" : "auswählen"}`}
+                      aria-label={tr("Artikel f\u00FCr {0} {1}", {
+                        "0": r.label,
+                        "1": p ? "ändern" : "auswählen",
+                      })}
                     >
-                      {p ? "Ändern" : "Wählen"}
+                      {tr(p ? "Ändern" : "Wählen")}
                     </button>
                     {p && (
                       <button
                         className="outfit-row-remove"
                         onClick={() => props.onRemove(p)}
-                        aria-label={`Aus Outfit entfernen: ${p.name}`}
+                        aria-label={tr("Aus Outfit entfernen: {0}", {
+                          "0": p.name,
+                        })}
                       >
                         <X size={16} />
                       </button>
@@ -642,20 +709,30 @@ export function RiderWorkspace(props: Props) {
                 );
               })}
               <label className="workspace-field extra-field">
-                <span>Zusätzliche Schicht oder Ausrüstung</span>
+                <span>
+                  {tr("Zus\u00E4tzliche Schicht oder Ausr\u00FCstung")}
+                </span>
                 <select
-                  aria-label="Zusätzlichen Artikel hinzufügen"
+                  aria-label={tr("Zusätzlichen Artikel hinzufügen")}
                   value=""
                   onChange={(e) =>
                     e.target.value && props.onExtra(e.target.value)
                   }
                 >
-                  <option value="">Unterwäsche, Socken, Pogies …</option>
+                  <option value="">
+                    {tr(
+                      "W\u00E4rmepads, Unterw\u00E4sche, Socken, Pogies \u2026",
+                    )}
+                  </option>
                   {allProducts
                     .filter((p) => !chosen.some((c) => c.id === p.id))
                     .map((p) => (
                       <option key={p.id} value={p.id}>
-                        {p.brand} · {p.name} · {price(p)}
+                        {tr(p.brand)}
+                        {tr(" \u00B7 ")}
+                        {tr(p.name)}
+                        {tr(" \u00B7 ")}
+                        {tr(price(p))}
                       </option>
                     ))}
                 </select>
@@ -666,8 +743,8 @@ export function RiderWorkspace(props: Props) {
                 return (
                   <div className="workspace-extra-row" key={id}>
                     <button onClick={() => props.onDetails(p)}>
-                      {p.name}
-                      <small>{price(p)}</small>
+                      {tr(p.name)}
+                      <small>{tr(price(p))}</small>
                     </button>
                     <a
                       href={link.url}
@@ -677,13 +754,17 @@ export function RiderWorkspace(props: Props) {
                           ? "sponsored noopener noreferrer"
                           : "noopener noreferrer"
                       }
-                      aria-label={`Händler öffnen: ${p.name}`}
+                      aria-label={tr("H\u00E4ndler \u00F6ffnen: {0}", {
+                        "0": p.name,
+                      })}
                     >
                       <ArrowUpRight size={17} />
                     </a>
                     <button
                       onClick={() => props.onRemove(p)}
-                      aria-label={`Zusatzartikel entfernen: ${p.name}`}
+                      aria-label={tr("Zusatzartikel entfernen: {0}", {
+                        "0": p.name,
+                      })}
                     >
                       <X size={16} />
                     </button>
@@ -692,7 +773,7 @@ export function RiderWorkspace(props: Props) {
               })}
               {chosen.length > 0 && (
                 <div className="workspace-shop-list">
-                  <span>EINZELN BEIM HÄNDLER ÖFFNEN</span>
+                  <span>{tr("EINZELN BEIM H\u00C4NDLER \u00D6FFNEN")}</span>
                   {chosen.map((p) => {
                     const link = shopLink(p);
                     return (
@@ -707,11 +788,11 @@ export function RiderWorkspace(props: Props) {
                         }
                       >
                         <span>
-                          {p.name}
+                          {tr(p.name)}
                           <small>
-                            {p.shop}
-                            {p.retailOnly ? " · nur Filiale" : ""}
-                            {link.affiliate ? " · " + link.label : ""}
+                            {tr(p.shop)}
+                            {tr(p.retailOnly ? " · nur Filiale" : "")}
+                            {tr(link.affiliate ? " · " + link.label : "")}
                           </small>
                         </span>
                         <ArrowUpRight size={16} />
@@ -721,9 +802,9 @@ export function RiderWorkspace(props: Props) {
                 </div>
               )}
               <p className="workspace-filter-note">
-                Beobachtete Preise, keine Livepreise; zzgl. Versand. Helm, Licht
-                und geeignete Schutzausrüstung ergänzen. Socken und Überschuhe
-                ersetzen keinen Schuh.
+                {tr(
+                  "Beobachtete Preise, keine Livepreise; zzgl. Versand. Helm, Licht und geeignete Schutzausr\u00FCstung erg\u00E4nzen. Socken und \u00DCberschuhe ersetzen keinen Schuh.",
+                )}
               </p>
               <button
                 className="text-button"
@@ -731,19 +812,21 @@ export function RiderWorkspace(props: Props) {
                 onClick={props.onClearOutfit}
               >
                 <Trash2 size={14} />
-                Auswahl leeren
+                {tr("Auswahl leeren")}
               </button>
             </div>
             <div className="workspace-outfit-total">
               <div>
                 <span>
-                  {total.complete
-                    ? "Beobachtete Artikelsumme"
-                    : "Bekannte Teilsumme"}
+                  {tr(
+                    total.complete
+                      ? "Beobachtete Artikelsumme"
+                      : "Bekannte Teilsumme",
+                  )}
                 </span>
                 <strong data-testid="outfit-total">
-                  {total.from ? "ab " : ""}
-                  {money(total.amount)}
+                  {tr(total.from ? "ab " : "")}
+                  {tr(money(total.amount))}
                 </strong>
               </div>
               <button
@@ -751,7 +834,7 @@ export function RiderWorkspace(props: Props) {
                 disabled={!chosen.length}
                 onClick={props.onCopy}
               >
-                Liste kopieren
+                {tr("Liste kopieren")}
               </button>
             </div>
           </>
@@ -760,14 +843,16 @@ export function RiderWorkspace(props: Props) {
           <>
             <div className="workspace-panel-heading">
               <div>
-                <span className="eyebrow">IN EINEM SCHRITT STARTKLAR</span>
-                <strong>Ein Set laden. Danach anpassen.</strong>
+                <span className="eyebrow">
+                  {tr("IN EINEM SCHRITT STARTKLAR")}
+                </span>
+                <strong>{tr("Ein Set laden. Danach anpassen.")}</strong>
               </div>
               <button
                 className="text-button"
                 onClick={() => onNavigate("outfit")}
               >
-                Mein Outfit
+                {tr("Mein Outfit")}
               </button>
             </div>
             <div className="workspace-panel-scroll workspace-kits">
@@ -780,24 +865,29 @@ export function RiderWorkspace(props: Props) {
                 return (
                   <article key={kit.id}>
                     <div>
-                      <span>0{i + 1}</span>
-                      <strong>{kit.name}</strong>
+                      <span>
+                        {tr("0")}
+                        {i + 1}
+                      </span>
+                      <strong>{tr(kit.name)}</strong>
                       <b>
-                        {sum.from ? "ab " : ""}
-                        {money(sum.amount)}
+                        {tr(sum.from ? "ab " : "")}
+                        {tr(money(sum.amount))}
                       </b>
                     </div>
-                    <p>{kit.description}</p>
+                    <p>{tr(kit.description)}</p>
                     <button
                       className="button"
                       onClick={() => props.onUseKit(kit.outfit)}
                     >
-                      Set übernehmen
+                      {tr("Set \u00FCbernehmen")}
                       <ArrowRight size={16} />
                     </button>
                     <small>
-                      {selected.length} Artikel · beobachtete Summe · zzgl.
-                      Versand
+                      {selected.length}
+                      {tr(
+                        " Artikel \u00B7 beobachtete Summe \u00B7 zzgl. Versand",
+                      )}
                     </small>
                   </article>
                 );
@@ -806,7 +896,10 @@ export function RiderWorkspace(props: Props) {
           </>
         )}
       </div>
-      <nav className="workspace-dock" aria-label="Konfigurator-Navigation">
+      <nav
+        className="workspace-dock"
+        aria-label={tr("Konfigurator-Navigation")}
+      >
         {views.map(({ view: v, route, label, icon: Icon }) => (
           <a
             key={v}
@@ -826,11 +919,11 @@ export function RiderWorkspace(props: Props) {
               {v === "filters" && activeFilters > 0 && <b>{activeFilters}</b>}
             </span>
             <small>
-              {label}
+              {tr(label)}
               {v === "outfit" && chosen.length > 0 && (
                 <em className="dock-total">
-                  {!total.complete ? "+ " : total.from ? "ab " : ""}
-                  {money(total.amount)}
+                  {tr(!total.complete ? "+ " : total.from ? "ab " : "")}
+                  {tr(money(total.amount))}
                 </em>
               )}
             </small>
@@ -838,18 +931,26 @@ export function RiderWorkspace(props: Props) {
         ))}
         <button
           onClick={props.onCompareOpen}
-          aria-label={`Vergleich öffnen, ${compared.length} Produkte`}
+          aria-label={tr("Vergleich \u00F6ffnen, {0} Produkte", {
+            "0": compared.length,
+          })}
         >
           <span>
             <GitCompareArrows size={20} />
             {compared.length > 0 && <b>{compared.length}</b>}
           </span>
-          <small>Vergleich</small>
+          <small>{tr("Vergleich")}</small>
         </button>
       </nav>
       {pickerOpen && (
         <Modal
-          title={`${available.length} Artikel · ${view === "favorites" ? "Merkliste" : (region?.label ?? "Alle Körperbereiche")}`}
+          title={tr("{0} Artikel \u00B7 {1}", {
+            "0": available.length,
+            "1":
+              view === "favorites"
+                ? "Merkliste"
+                : (region?.label ?? "Alle Körperbereiche"),
+          })}
           onClose={() => setPickerOpen(false)}
         >
           <div className="workspace-picker">
@@ -862,10 +963,12 @@ export function RiderWorkspace(props: Props) {
                 <ProductImage product={p} compact />
                 <span>
                   <small>
-                    {p.brand} · {tierLabels[p.tier]}
+                    {tr(p.brand)}
+                    {tr(" \u00B7 ")}
+                    {tr(tierLabels[p.tier])}
                   </small>
-                  <strong>{p.name}</strong>
-                  <b>{price(p)}</b>
+                  <strong>{tr(p.name)}</strong>
+                  <b>{tr(price(p))}</b>
                 </span>
                 {p.id === product?.id ? (
                   <Check size={18} />
@@ -880,7 +983,6 @@ export function RiderWorkspace(props: Props) {
     </section>
   );
 }
-
 function CompactProduct({
   product: p,
   favorite,
@@ -911,7 +1013,10 @@ function CompactProduct({
             <button
               className="workspace-heart"
               aria-pressed={favorite}
-              aria-label={`${favorite ? "Aus Merkliste entfernen" : "Merken"}: ${p.name}`}
+              aria-label={tr("{0}: {1}", {
+                "0": favorite ? "Aus Merkliste entfernen" : "Merken",
+                "1": p.name,
+              })}
               onClick={onFavorite}
             >
               <Heart size={19} fill={favorite ? "currentColor" : "none"} />
@@ -919,59 +1024,71 @@ function CompactProduct({
           </div>
           <div className="workspace-product-copy">
             <span className="workspace-product-brand">
-              {p.brand} · {p.shop}
-              {p.retailOnly ? " · Filiale" : ""}
+              {tr(p.brand)}
+              {tr(" \u00B7 ")}
+              {tr(p.shop)}
+              {tr(p.retailOnly ? " · Filiale" : "")}
             </span>
-            <h2>{p.name}</h2>
+            <h2>{tr(p.name)}</h2>
             <div className="workspace-product-price">
-              <strong>{price(p)}</strong>
+              <strong>{tr(price(p))}</strong>
               <button
                 onClick={onDetails}
-                aria-label={`Redaktionelle Eignung: ${score.score === null ? "Daten unzureichend" : score.score + " von 100 Punkten"}`}
+                aria-label={tr("Redaktionelle Eignung: {0}", {
+                  "0":
+                    score.score === null
+                      ? "Daten unzureichend"
+                      : score.score + " von 100 Punkten",
+                })}
               >
-                <b>{score.score ?? "–"}</b>
-                <small>{score.score === null ? "Daten offen" : "/ 100"}</small>
+                <b>{tr(score.score ?? "–")}</b>
+                <small>
+                  {tr(score.score === null ? "Daten offen" : "/ 100")}
+                </small>
               </button>
             </div>
             <span className="workspace-tier">
-              {p.badge?.label ?? tierLabels[p.tier]}
+              {tr(p.badge?.label ?? tierLabels[p.tier])}
             </span>
           </div>
         </div>
         <div className="workspace-attributes">
           <span>
             <Droplets size={14} />
-            {waterLabels[p.water]}
+            {tr(waterLabels[p.water])}
           </span>
           <span>
             <Flame size={14} />
-            {
-              [
-                "Ungefüttert",
-                "Leichte Wärme",
-                "Wärmende Schicht",
-                "Starke Isolation",
-              ][p.warmth]
-            }
+            {tr(
+              p.group === "warmer"
+                ? "Aktive Wärme"
+                : [
+                    "Ungefüttert",
+                    "Leichte Wärme",
+                    "Wärmende Schicht",
+                    "Starke Isolation",
+                  ][p.warmth],
+            )}
           </span>
         </div>
         <ul className="workspace-pros">
           {p.pros.map((s) => (
             <li key={s}>
               <Check size={13} />
-              {s}
+              {tr(s)}
             </li>
           ))}
         </ul>
+        {p.caution && <p className="accessory-caution">{tr(p.caution)}</p>}
       </div>
       <div className="workspace-product-tools">
         <button onClick={onDetails}>
-          Details & Grenzen
+          {tr("Details & Grenzen")}
           <ArrowUpRight size={14} />
         </button>
         <button aria-pressed={compared} onClick={onCompare}>
           <GitCompareArrows size={15} />
-          {compared ? "Im Vergleich" : "Vergleichen"}
+          {tr(compared ? "Im Vergleich" : "Vergleichen")}
         </button>
       </div>
       <div className="workspace-product-actions">
@@ -980,8 +1097,9 @@ function CompactProduct({
           disabled={selected}
           onClick={onAdd}
         >
-          {selected ? <Check size={17} /> : <Plus size={17} />}{" "}
-          {selected ? "Im Outfit" : "Zum Outfit"}
+          {selected ? <Check size={17} /> : <Plus size={17} />}
+          {tr(" ")}
+          {tr(selected ? "Im Outfit" : "Zum Outfit")}
         </button>
         <a
           className="button outline"
@@ -993,14 +1111,16 @@ function CompactProduct({
               : "noopener noreferrer"
           }
         >
-          {p.retailOnly ? "Produktseite" : "Zum Händler"}
+          {tr(p.retailOnly ? "Produktseite" : "Zum Händler")}
           <ArrowUpRight size={16} />
         </a>
       </div>
       <p className="workspace-price-note">
-        Preisprüfung {dateLabel(p.checked)} · zzgl. Versand
-        {p.retailOnly ? " · nur Filiale" : ""}
-        {link.affiliate ? " · " + link.label : ""}
+        {tr("Preispr\u00FCfung ")}
+        {tr(dateLabel(p.checked))}
+        {tr(" \u00B7 zzgl. Versand")}
+        {tr(p.retailOnly ? " · nur Filiale" : "")}
+        {tr(link.affiliate ? " · " + link.label : "")}
       </p>
     </article>
   );

@@ -1,0 +1,23 @@
+{
+  "id": "./",
+  "name": "Flink Aschaffenburg · Rider Community",
+  "short_name": "Flink AB",
+  "description": "Unabhängiger Ausrüstungsberater für Lieferfahrer in Aschaffenburg.",
+  "lang": "de",
+  "start_url": "./#/ausruestung",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fffafd",
+  "theme_color": "#fffafd",
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "icons/app-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/app-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/app-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Winter-Outfit", "url": "./#/outfit" },
+    { "name": "Winter-Zubehör", "url": "./#/extras" },
+    { "name": "Merkliste", "url": "./#/merkliste" }
+  ]
+}

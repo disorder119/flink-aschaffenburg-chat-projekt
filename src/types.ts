@@ -11,7 +11,10 @@ export type Group =
   | "shoe"
   | "sock"
   | "cover"
-  | "pogie";
+  | "pogie"
+  | "warmer"
+  | "visibility"
+  | "accessory";
 export type Water = "waterproof" | "repellent" | "none" | "unknown";
 export type Vehicle = "bike" | "ebike" | "scooter";
 export type Weather = "light" | "heavy" | "cold" | "frost" | "wind" | "mixed";
@@ -54,6 +57,8 @@ export interface Product {
   compatibility?: "spd" | "road" | "gravel" | "flatbar" | "flatshoe";
   badge?: { label: string; reason: string };
   independentSource?: string;
+  supplement?: boolean;
+  caution?: string;
 }
 export interface Filters {
   photoOnly?: boolean;
@@ -67,4 +72,5 @@ export interface Filters {
   shift: "short" | "medium" | "long";
   sort: "relevance" | "price" | "score";
   favoritesOnly: boolean;
+  supplementsOnly?: boolean;
 }

@@ -1,3 +1,4 @@
+import { tr } from "../i18n/core";
 import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 export function Modal({
@@ -37,11 +38,11 @@ export function Modal({
     >
       <div className="modal-inner">
         <div className="modal-head">
-          <h2>{title}</h2>
+          <h2>{tr(title)}</h2>
           <button
             className="icon-button"
             onClick={onClose}
-            aria-label="Schließen"
+            aria-label={tr("Schließen")}
           >
             <X size={22} />
           </button>

@@ -1,3 +1,4 @@
+import { tr } from "../i18n/core";
 import type { Group } from "../types";
 import { useId } from "react";
 // Original, deliberately schematic product illustrations; never presented as product photos.
@@ -14,7 +15,7 @@ export function GearArt({
       className="gear-art"
       viewBox="0 0 280 160"
       role="img"
-      aria-label="Symbolabbildung, kein Original-Produktfoto"
+      aria-label={tr("Symbolabbildung, kein Original-Produktfoto")}
     >
       <defs>
         <linearGradient id={gradientId}>

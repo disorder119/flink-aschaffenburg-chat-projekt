@@ -1,8 +1,8 @@
+import { tr } from "../i18n/core";
 import { useState } from "react";
 import { ImageOff } from "lucide-react";
 import type { Product } from "../types";
 import { photoFor, photoSrc } from "../data/photos";
-
 export function ProductImage({
   product,
   compact = false,
@@ -28,7 +28,7 @@ export function ProductImage({
           <img
             key={src}
             src={src}
-            alt={photo.alt}
+            alt={tr(photo.alt)}
             loading={compact ? "lazy" : "eager"}
             decoding="async"
             referrerPolicy="no-referrer"
@@ -37,19 +37,24 @@ export function ProductImage({
             onError={() => setFailedSrc(src)}
             onLoad={() => setLoadedSrc(src)}
           />
-          <figcaption>{photo.credit}</figcaption>
+          <figcaption>{tr(photo.credit)}</figcaption>
         </>
       ) : (
         <>
           <div
             className="product-photo-unavailable"
             role="img"
-            aria-label={`Für ${product.name} ist aktuell kein freigegebenes Originalfoto verfügbar`}
+            aria-label={tr(
+              "F\u00FCr {0} ist aktuell kein freigegebenes Originalfoto verf\u00FCgbar",
+              { "0": product.name },
+            )}
           >
             <ImageOff aria-hidden="true" size={26} strokeWidth={1.3} />
-            <span>{photo ? "Foto nicht geladen" : "Originalfoto fehlt"}</span>
+            <span>
+              {tr(photo ? "Foto nicht geladen" : "Originalfoto fehlt")}
+            </span>
           </div>
-          <figcaption>Beim Händler ansehen</figcaption>
+          <figcaption>{tr("Beim H\u00E4ndler ansehen")}</figcaption>
         </>
       )}
     </figure>

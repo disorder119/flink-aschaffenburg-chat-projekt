@@ -1,4 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { tr } from "./i18n/core";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { languageRevision, subscribeLanguage } from "./i18n/core";
+import { LanguagePicker } from "./components/LanguagePicker";
+import { InstallPanel, OfflineBanner } from "./components/InstallPanel";
+import { repositoryUrl } from "./config/publication";
+import { addProductToOutfit } from "./lib/outfit";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -37,7 +43,6 @@ import { operator } from "./config/operator";
 import { RiderWorkspace } from "./components/RiderWorkspace";
 import { workspaceViewOf } from "./lib/workspace";
 import { ProductCard, waterLabels } from "./components/ProductCard";
-
 import { ProductImage } from "./components/ProductImage";
 import { photoFor } from "./data/photos";
 import { Modal } from "./components/Modal";
@@ -78,23 +83,25 @@ function safeOutfit(): Outfit {
       Object.entries(candidate.primary).filter(
         ([r, id]) =>
           regions.some((x) => x.id === r) &&
-          products.some((p) => p.id === id && p.region === r),
+          products.some((p) => p.id === id && p.region === r && !p.supplement),
       ),
     ),
     extras: candidate.extras.filter((id) => products.some((p) => p.id === id)),
   };
 }
 const productById = (id: string) => products.find((p) => p.id === id);
-
 export function outfitProducts(outfit: Outfit): Product[] {
   return [...new Set([...Object.values(outfit.primary), ...outfit.extras])]
     .map((id) => productById(id!))
     .filter((p): p is Product => !!p);
 }
 export function App() {
+  const languageVersion = useSyncExternalStore(
+    subscribeLanguage,
+    languageRevision,
+  );
   const experience = useExperience();
   const appearance = riderStyles.find((s) => s.id === experience.style)!;
-
   const [route, setRoute] = useState(location.hash.slice(2) || "");
   const [filters, setFilters] = useState<Filters>(initialFilters);
   const workspaceView = workspaceViewOf(route);
@@ -129,6 +136,14 @@ export function App() {
     setCompareOpen(false);
     setFavoritesOpen(false);
     if (!workspaceViewOf(route)) window.scrollTo({ top: 0, behavior: "auto" });
+    if (route === "extras")
+      setFilters((old) =>
+        old.supplementsOnly
+          ? old
+          : { ...old, region: "all", group: "all", supplementsOnly: true },
+      );
+    if (["", "ausruestung"].includes(route))
+      setFilters((old) => ({ ...old, supplementsOnly: false }));
   }, [route]);
   useEffect(() => {
     try {
@@ -166,7 +181,7 @@ export function App() {
   }, [isWorkspace]);
   const list = useMemo(
     () => filteredProducts(products, filters, favorites),
-    [filters, favorites],
+    [filters, favorites, languageVersion],
   );
   const chosen = outfitProducts(outfit);
   const compared = compare.map(productById).filter((p): p is Product => !!p);
@@ -176,7 +191,6 @@ export function App() {
       [key]: value,
       ...(key === "region" ? { group: "all" as const } : {}),
     }));
-
   const navigate = (path: string) => {
     location.hash = "#/" + path;
   };
@@ -205,17 +219,7 @@ export function App() {
       setToast("Dieser Artikel ist bereits in deinem Outfit.");
       return;
     }
-    if (
-      ["base", "liner", "sock", "cover", "pogie"].includes(p.group) &&
-      outfit.primary[p.region]
-    )
-      setOutfit((old) => ({ ...old, extras: [...old.extras, p.id] }));
-    else
-      setOutfit((old) => ({
-        ...old,
-        primary: { ...old.primary, [p.region]: p.id },
-        extras: old.extras.filter((id) => id !== p.id),
-      }));
+    setOutfit((old) => addProductToOutfit(old, p));
     setToast(`${p.name} wurde zum Outfit hinzugefügt.`);
   };
   const useKit = (o: Outfit) => {
@@ -249,7 +253,6 @@ export function App() {
       onDetails={() => setDetails(p)}
     />
   );
-
   return (
     <div
       className={`rider-app ${isWorkspace ? "workspace-mode" : ""}`}
@@ -272,75 +275,81 @@ export function App() {
           document.getElementById("main")?.focus({ preventScroll: true });
         }}
       >
-        Zum Inhalt
+        {tr("Zum Inhalt")}
       </a>
+      <OfflineBanner />
       <header className="header">
         <div className="header-inner">
           <a
             className="brand"
             href="#/"
-            aria-label="Flink Aschaffenburg Chat Projekt, Startseite"
+            aria-label={tr("Flink Aschaffenburg Chat Projekt, Startseite")}
           >
             <span className="brand-icon">
               <Bike size={25} />
             </span>
             <span>
-              FLINK ASCHAFFENBURG<small>CHAT PROJEKT</small>
+              {tr("FLINK ASCHAFFENBURG")}
+              <small>{tr("CHAT PROJEKT")}</small>
             </span>
           </a>
           <nav
             className={`navigation ${menu ? "open" : ""}`}
-            aria-label="Hauptnavigation"
+            aria-label={tr("Hauptnavigation")}
           >
             <a
               className={isWorkspace && route !== "outfit" ? "active" : ""}
               href="#/ausruestung"
             >
-              Ausrüstung
+              {tr("Ausr\u00FCstung")}
             </a>
             <a className={route === "outfit" ? "active" : ""} href="#/outfit">
-              Winter-Outfit
+              {tr("Winter-Outfit")}
             </a>
             <a className={route === "wissen" ? "active" : ""} href="#/wissen">
-              Wissen
+              {tr("Wissen")}
             </a>
-            <a href="#/methodik">Bewertung</a>
-            <a href="#/impressum">Impressum</a>
-            <a href="#/datenschutz">Datenschutz</a>
+            <a href="#/methodik">{tr("Bewertung")}</a>
+            <a href="#/impressum">{tr("Impressum")}</a>
+            <a href="#/datenschutz">{tr("Datenschutz")}</a>
           </nav>
           <div className="header-actions">
+            <LanguagePicker />
+            <InstallPanel />
             <button
               className="motion-button icon-button"
-              aria-label={
+              aria-label={tr(
                 experience.motion
                   ? "Animationen ausschalten"
-                  : "Animationen einschalten"
-              }
+                  : "Animationen einschalten",
+              )}
               aria-pressed={experience.motion}
               onClick={() => experience.setMotion(!experience.motion)}
-              title={
+              title={tr(
                 experience.motion
                   ? "Animationen ausschalten"
-                  : "Animationen einschalten"
-              }
+                  : "Animationen einschalten",
+              )}
             >
               <Sparkles size={18} />
-              <span>Effekte</span>
+              <span>{tr("Effekte")}</span>
             </button>
             <button
               className="saved-button"
               onClick={() =>
                 isWorkspace ? navigate("merkliste") : setFavoritesOpen(true)
               }
-              aria-label={`Merkliste öffnen, ${favorites.length} Produkte`}
+              aria-label={tr("Merkliste \u00F6ffnen, {0} Produkte", {
+                "0": favorites.length,
+              })}
             >
               <Heart size={20} />
-              <span>Merkliste</span>
+              <span>{tr("Merkliste")}</span>
               {favorites.length > 0 && <b>{favorites.length}</b>}
             </button>
             <button
               className="menu-button icon-button"
-              aria-label="Menü öffnen"
+              aria-label={tr("Menü öffnen")}
               aria-expanded={menu}
               onClick={() => setMenu(!menu)}
             >
@@ -395,373 +404,377 @@ export function App() {
         )}
         {route === "methodik" && (
           <section className="document-page section-wrap">
-            <span className="eyebrow">WIE WIR BEWERTEN</span>
+            <span className="eyebrow">{tr("WIE WIR BEWERTEN")}</span>
             <h1>
-              Klare Kriterien.
+              {tr("Klare Kriterien.")}
               <br />
-              <em>Ehrliche Grenzen.</em>
+              <em>{tr("Ehrliche Grenzen.")}</em>
             </h1>
             <p className="lead">
-              Die Punkte sind eine redaktionelle Einschätzung der dokumentierten
-              Eignung. Sie sind keine Kundenbewertung und kein eigener
-              Praxistest.
+              {tr(
+                "Die Punkte sind eine redaktionelle Einsch\u00E4tzung der dokumentierten Eignung. Sie sind keine Kundenbewertung und kein eigener Praxistest.",
+              )}
             </p>
-            <h2>Was die Zahl bedeutet</h2>
+            <h2>{tr("Was die Zahl bedeutet")}</h2>
             <p>
-              Wir vergeben je Kriterium 0–5 redaktionelle Stufen anhand der
-              angegebenen Ausstattung: 0 = keine relevante Funktion belegt, 1 =
-              sehr eingeschränkt, 2 = einfache Funktion mit deutlichen Grenzen,
-              3 = plausibel passende Ausstattung, 4 = mehrere konkret
-              dokumentierte Funktionen, 5 = besonders umfassende dokumentierte
-              Ausstattung für den Einsatzzweck. Herstellerangaben bleiben
-              Angaben des Herstellers, auch wenn wir sie in eine Einschätzung
-              übersetzen.
+              {tr(
+                "Wir vergeben je Kriterium 0\u20135 redaktionelle Stufen anhand der angegebenen Ausstattung: 0 = keine relevante Funktion belegt, 1 = sehr eingeschr\u00E4nkt, 2 = einfache Funktion mit deutlichen Grenzen, 3 = plausibel passende Ausstattung, 4 = mehrere konkret dokumentierte Funktionen, 5 = besonders umfassende dokumentierte Ausstattung f\u00FCr den Einsatzzweck. Herstellerangaben bleiben Angaben des Herstellers, auch wenn wir sie in eine Einsch\u00E4tzung \u00FCbersetzen.",
+              )}
             </p>
             <p>
-              Die gewichteten Stufen ergeben 0–100 Punkte, gerundet auf fünf
-              Punkte. Material bewertet den beschriebenen Aufbau.
-              Verschleißvorsorge bewertet Verstärkungen oder Reparierbarkeit,
-              keine tatsächliche Lebensdauer. Sichtbarkeit / Grip betrachtet die
-              in der Gruppe relevante Sicherheitsfunktion. Schichtkomfort
-              basiert auf Schnitt, Belüftung, Flexibilität und Feuchtetransport,
-              nicht auf gemessenen Acht-Stunden-Schichten.
+              {tr(
+                "Die gewichteten Stufen ergeben 0\u2013100 Punkte, gerundet auf f\u00FCnf Punkte. Material bewertet den beschriebenen Aufbau. Verschlei\u00DFvorsorge bewertet Verst\u00E4rkungen oder Reparierbarkeit, keine tats\u00E4chliche Lebensdauer. Sichtbarkeit / Grip betrachtet die in der Gruppe relevante Sicherheitsfunktion. Schichtkomfort basiert auf Schnitt, Bel\u00FCftung, Flexibilit\u00E4t und Feuchtetransport, nicht auf gemessenen Acht-Stunden-Schichten.",
+              )}
             </p>
-            <h2>Gewichtung nach Produktgruppe</h2>
+            <h2>{tr("Gewichtung nach Produktgruppe")}</h2>
             <div className="table-scroll">
               <table className="method-table">
                 <thead>
                   <tr>
-                    <th>Produktgruppe</th>
+                    <th>{tr("Produktgruppe")}</th>
                     {criterionLabels.map((c) => (
-                      <th key={c}>{c}</th>
+                      <th key={c}>{tr(c)}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {Object.entries(weights).map(([group, w]) => (
                     <tr key={group}>
-                      <th>{groupLabels[group as keyof typeof groupLabels]}</th>
+                      <th>
+                        {tr(groupLabels[group as keyof typeof groupLabels])}
+                      </th>
                       {w.map((v, i) => (
-                        <td key={i}>{v}%</td>
+                        <td key={i}>
+                          {v}
+                          {tr("%")}
+                        </td>
                       ))}
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <h2>Fehlende Daten bleiben sichtbar</h2>
+            <h2>{tr("Fehlende Daten bleiben sichtbar")}</h2>
             <p>
-              Unbekannte optionale Kriterien erhalten keine erfundene Stufe. Wir
-              zeigen eine Gesamtzahl erst ab 80 % gewichteter Datenabdeckung;
-              bekannte Kriterien werden auf diese Abdeckung normiert. Bei
-              wesentlichen offenen Angaben – etwa einer widersprüchlichen
-              Regenhülle – bleibt die Bewertung ganz offen. Jede Detailansicht
-              zeigt die Einzelstufen, Gewichte und Datenabdeckung. Fehlende
-              Daten bedeuten weder automatisch gute noch schlechte Qualität.
+              {tr(
+                "Unbekannte optionale Kriterien erhalten keine erfundene Stufe. Wir zeigen eine Gesamtzahl erst ab 80 % gewichteter Datenabdeckung; bekannte Kriterien werden auf diese Abdeckung normiert. Bei wesentlichen offenen Angaben \u2013 etwa einer widerspr\u00FCchlichen Regenh\u00FClle \u2013 bleibt die Bewertung ganz offen. Jede Detailansicht zeigt die Einzelstufen, Gewichte und Datenabdeckung. Fehlende Daten bedeuten weder automatisch gute noch schlechte Qualit\u00E4t.",
+              )}
             </p>
             <p>
-              Formel: Summe aus (Stufe ÷ 5 × Gewicht) ÷ belegte Gewichtssumme ×
-              100; anschließend auf fünf Punkte runden. Bewertungen
-              verschiedener Produktgruppen sind wegen der anderen Aufgabe und
-              Gewichtung nur eingeschränkt vergleichbar.
+              {tr(
+                "Formel: Summe aus (Stufe \u00F7 5 \u00D7 Gewicht) \u00F7 belegte Gewichtssumme \u00D7 100; anschlie\u00DFend auf f\u00FCnf Punkte runden. Bewertungen verschiedener Produktgruppen sind wegen der anderen Aufgabe und Gewichtung nur eingeschr\u00E4nkt vergleichbar.",
+              )}
             </p>
-            <h2>Preis-Leistung, Budgets und Tipps</h2>
+            <h2>{tr("Preis-Leistung, Budgets und Tipps")}</h2>
             <p>
-              Preis-Leistung ist eine redaktionelle Einschätzung im Verhältnis
-              zu alternativen Artikeln derselben Aufgabe. Günstig,
-              Preis-Leistung und Premium sind Auswahlstufen je Körperbereich,
-              keine starren, überall gleichen Euro-Grenzen. Ein höherer Preis
-              verbessert den Wetterschutz nicht automatisch. Ein Tipp setzt
-              nachvollziehbare Ausstattung und einen beobachteten Preis voraus.
-              Die Begründung steht in der Produktdetailansicht. Tipps sind keine
-              Auszeichnung aus einem eigenen Produkttest.
+              {tr(
+                "Preis-Leistung ist eine redaktionelle Einsch\u00E4tzung im Verh\u00E4ltnis zu alternativen Artikeln derselben Aufgabe. G\u00FCnstig, Preis-Leistung und Premium sind Auswahlstufen je K\u00F6rperbereich, keine starren, \u00FCberall gleichen Euro-Grenzen. Ein h\u00F6herer Preis verbessert den Wetterschutz nicht automatisch. Ein Tipp setzt nachvollziehbare Ausstattung und einen beobachteten Preis voraus. Die Begr\u00FCndung steht in der Produktdetailansicht. Tipps sind keine Auszeichnung aus einem eigenen Produkttest.",
+              )}
             </p>
-            <h2>Recherche und Quellen</h2>
+            <h2>{tr("Recherche und Quellen")}</h2>
             <p>
-              Stand: {dateLabel(RESEARCH_DATE)}. {products.length} konkrete
-              Modelle, davon{" "}
-              {products.filter((p) => p.sourceMethod === "catalogue").length}{" "}
-              direkt über den öffentlichen{" "}
+              {tr("Stand: ")}
+              {tr(dateLabel(RESEARCH_DATE))}
+              {tr(". ")}
+              {products.length}
+              {tr(" konkrete Modelle, davon")}
+              {tr(" ")}
+              {products.filter((p) => p.sourceMethod === "catalogue").length}
+              {tr(" ")}
+              {tr("direkt \u00FCber den \u00F6ffentlichen")}
+              {tr(" ")}
               <a
                 href="https://www.gripgrab.com/products.json?limit=250"
                 target="_blank"
                 rel="noreferrer"
               >
-                GripGrab-Produktkatalog
-              </a>{" "}
-              erfasst. Weitere Preise und Eigenschaften stammen aus verlinkten
-              Hersteller-/Händlerseiten und öffentlich abrufbaren
-              Suchindexfassungen. Preise sind daher zuletzt beobachtete Preise.
-              Versand, konkrete Größe, Farbe, Verfügbarkeit und Aktionspreise
-              können abweichen. Die Links führen zur jeweiligen Produktseite.
+                {tr("GripGrab-Produktkatalog")}
+              </a>
+              {tr(" ")}
+              {tr(
+                "erfasst. Weitere Preise und Eigenschaften stammen aus verlinkten Hersteller-/H\u00E4ndlerseiten und \u00F6ffentlich abrufbaren Suchindexfassungen. Preise sind daher zuletzt beobachtete Preise. Versand, konkrete Gr\u00F6\u00DFe, Farbe, Verf\u00FCgbarkeit und Aktionspreise k\u00F6nnen abweichen. Die Links f\u00FChren zur jeweiligen Produktseite.",
+              )}
             </p>
             <p>
-              Es gibt ergänzende Hinweise aus einem{" "}
+              {tr("Es gibt erg\u00E4nzende Hinweise aus einem")}
+              {tr(" ")}
               <a
                 href="https://www.cyclingnews.com/features/best-winter-cycling-gloves/"
                 target="_blank"
                 rel="noreferrer"
               >
-                unabhängigen Cyclingnews-Handschuhvergleich
-              </a>{" "}
-              für Polaris 2. Gemischte Kundenberichte zu EDR waterproof und
-              City-900-Überschuhen werden als solche verlinkt. Kundenberichte
-              sind keine kontrollierten Tests. Für die übrigen Produkte fließen
-              keine erfundenen Rezensionen oder Testergebnisse ein.
+                {tr("unabh\u00E4ngigen Cyclingnews-Handschuhvergleich")}
+              </a>
+              {tr(" ")}
+              {tr(
+                "f\u00FCr Polaris 2. Gemischte Kundenberichte zu EDR waterproof und City-900-\u00DCberschuhen werden als solche verlinkt. Kundenberichte sind keine kontrollierten Tests. F\u00FCr die \u00FCbrigen Produkte flie\u00DFen keine erfundenen Rezensionen oder Testergebnisse ein.",
+              )}
             </p>
-            <h2>Wetterfilter und Fahrzeuge</h2>
+            <h2>{tr("Wetterfilter und Fahrzeuge")}</h2>
             <p>
-              Starker Regen verlangt eine dokumentierte wasserdichte
-              Konstruktion; reine DWR-Beschichtungen und unklare
-              Action-Varianten werden ausgeschlossen. Das bleibt eine Vorauswahl
-              und keine Dichtigkeitsgarantie für lange Schichten. Frost filtert
-              starke dokumentierte Isolation, ohne Hersteller-Temperaturen vom
-              Gehen auf Radfahren zu übertragen. Ein Regen- und Kältefilter
-              verlangt beide Eigenschaften im selben Produkt; häufig solltest du
-              die zwei Schichten getrennt suchen.
+              {tr(
+                "Starker Regen verlangt eine dokumentierte wasserdichte Konstruktion; reine DWR-Beschichtungen und unklare Action-Varianten werden ausgeschlossen. Das bleibt eine Vorauswahl und keine Dichtigkeitsgarantie f\u00FCr lange Schichten. Frost filtert starke dokumentierte Isolation, ohne Hersteller-Temperaturen vom Gehen auf Radfahren zu \u00FCbertragen. Ein Regen- und K\u00E4ltefilter verlangt beide Eigenschaften im selben Produkt; h\u00E4ufig solltest du die zwei Schichten getrennt suchen.",
+              )}
             </p>
             <p>
-              Schichtdauer und Fahrzeug verändern die Reihenfolge. Für längere
-              Schichten wird der belegte Komfort stärker gewichtet; E-Bike
-              priorisiert wärmere Produkte. Beim Motorroller werden spezielle
-              Radschuh-Systeme und Unterziehhandschuhe ausgeschlossen. Kleidung
-              aus diesem Katalog ersetzt keine geprüfte
-              Motorrad-Schutzausrüstung.
+              {tr(
+                "Schichtdauer und Fahrzeug ver\u00E4ndern die Reihenfolge. F\u00FCr l\u00E4ngere Schichten wird der belegte Komfort st\u00E4rker gewichtet; E-Bike priorisiert w\u00E4rmere Produkte. Beim Motorroller werden spezielle Radschuh-Systeme und Unterziehhandschuhe ausgeschlossen. Kleidung aus diesem Katalog ersetzt keine gepr\u00FCfte Motorrad-Schutzausr\u00FCstung.",
+              )}
             </p>
             <a className="button" href="#/ausruestung">
-              Zur Ausrüstung
+              {tr("Zur Ausr\u00FCstung")}
               <ArrowRight size={17} />
             </a>
           </section>
         )}
         {route === "wissen" && (
           <section className="document-page section-wrap">
-            <span className="eyebrow">DER SCHICHT-RATGEBER</span>
+            <span className="eyebrow">{tr("DER SCHICHT-RATGEBER")}</span>
             <h1>
-              Gut angezogen.
+              {tr("Gut angezogen.")}
               <br />
-              <em>Besser unterwegs.</em>
+              <em>{tr("Besser unterwegs.")}</em>
             </h1>
             <p className="lead">
-              Ein paar einfache Routinen machen Ausrüstung im Arbeitsalltag
-              nützlicher.
+              {tr(
+                "Ein paar einfache Routinen machen Ausr\u00FCstung im Arbeitsalltag n\u00FCtzlicher.",
+              )}
             </p>
             <div className="guide-grid">
               <article>
-                <span>01</span>
+                <span>{tr("01")}</span>
                 <Layers />
-                <h2>In Schichten denken</h2>
+                <h2>{tr("In Schichten denken")}</h2>
                 <p>
-                  Eine feuchtetransportierende Basis liegt an der Haut, darüber
-                  kommt je nach Bedarf Isolation und außen eine Wind- oder
-                  Regenhülle. Beim aktiven Treten früher lüften, in Pausen die
-                  Wärmeschicht ergänzen. Nassgeschwitzte Kleidung isoliert im
-                  Stillstand schlechter.
+                  {tr(
+                    "Eine feuchtetransportierende Basis liegt an der Haut, dar\u00FCber kommt je nach Bedarf Isolation und au\u00DFen eine Wind- oder Regenh\u00FClle. Beim aktiven Treten fr\u00FCher l\u00FCften, in Pausen die W\u00E4rmeschicht erg\u00E4nzen. Nassgeschwitzte Kleidung isoliert im Stillstand schlechter.",
+                  )}
                 </p>
               </article>
               <article>
-                <span>02</span>
+                <span>{tr("02")}</span>
                 <CloudRain />
-                <h2>Wasser findet die Lücke</h2>
+                <h2>{tr("Wasser findet die L\u00FCcke")}</h2>
                 <p>
-                  Bei Membranhandschuhen Jackenärmel über die Bündchen ziehen.
-                  Regenhose über die Schäfte von Schuhen oder Überschuhen legen.
-                  Auch ein wasserdichtes Material hilft wenig, wenn Wasser am
-                  offenen Rand hineinläuft.
+                  {tr(
+                    "Bei Membranhandschuhen Jacken\u00E4rmel \u00FCber die B\u00FCndchen ziehen. Regenhose \u00FCber die Sch\u00E4fte von Schuhen oder \u00DCberschuhen legen. Auch ein wasserdichtes Material hilft wenig, wenn Wasser am offenen Rand hineinl\u00E4uft.",
+                  )}
                 </p>
               </article>
               <article>
-                <span>03</span>
+                <span>{tr("03")}</span>
                 <Wind />
-                <h2>Atmen statt überhitzen</h2>
+                <h2>{tr("Atmen statt \u00FCberhitzen")}</h2>
                 <p>
-                  Wasserabweisend ist nicht wasserdicht. Eine dichte Regenhülle
-                  kann trotzdem innen feucht werden: Belüftung nutzen und die
-                  Isolation an dein Tempo anpassen. Auf dem E-Bike oder beim
-                  Warten kann mehr Wärme nötig sein als beim kräftigen Treten.
+                  {tr(
+                    "Wasserabweisend ist nicht wasserdicht. Eine dichte Regenh\u00FClle kann trotzdem innen feucht werden: Bel\u00FCftung nutzen und die Isolation an dein Tempo anpassen. Auf dem E-Bike oder beim Warten kann mehr W\u00E4rme n\u00F6tig sein als beim kr\u00E4ftigen Treten.",
+                  )}
                 </p>
               </article>
               <article>
-                <span>04</span>
+                <span>{tr("04")}</span>
                 <Snowflake />
-                <h2>Ein trockenes Reservepaar</h2>
+                <h2>{tr("Ein trockenes Reservepaar")}</h2>
                 <p>
-                  Nasse Handschuhe und Socken möglichst wechseln. Ein trocken
-                  verpacktes Ersatzpaar ist für lange Schichten sinnvoll.
-                  Handschuhe müssen mit allen Fingern sicher bremsen und
-                  schalten lassen; Smartphone-Bedienung nur im Stillstand.
+                  {tr(
+                    "Nasse Handschuhe und Socken m\u00F6glichst wechseln. Ein trocken verpacktes Ersatzpaar ist f\u00FCr lange Schichten sinnvoll. Handschuhe m\u00FCssen mit allen Fingern sicher bremsen und schalten lassen; Smartphone-Bedienung nur im Stillstand.",
+                  )}
                 </p>
               </article>
               <article>
-                <span>05</span>
+                <span>{tr("05")}</span>
                 <ShieldCheck />
-                <h2>Sichtbar und geschützt</h2>
+                <h2>{tr("Sichtbar und gesch\u00FCtzt")}</h2>
                 <p>
-                  Funktionierendes Licht und die erforderlichen Reflektoren am
-                  Rad sind die Basis. Sichtbare Kleidung ergänzt sie. Prüfe, ob
-                  dein Rucksack Reflexflächen verdeckt. Eine Unterhelmmütze darf
-                  den korrekten Helmsitz nicht verändern.
+                  {tr(
+                    "Funktionierendes Licht und die erforderlichen Reflektoren am Rad sind die Basis. Sichtbare Kleidung erg\u00E4nzt sie. Pr\u00FCfe, ob dein Rucksack Reflexfl\u00E4chen verdeckt. Eine Unterhelmm\u00FCtze darf den korrekten Helmsitz nicht ver\u00E4ndern.",
+                  )}
                 </p>
               </article>
               <article>
-                <span>06</span>
+                <span>{tr("06")}</span>
                 <Bike />
-                <h2>Schnee ist kein Glatteis</h2>
+                <h2>{tr("Schnee ist kein Glatteis")}</h2>
                 <p>
-                  Eine profilierte Sohle bietet keine Garantie gegen Eis.
-                  Schneeprofil ist auch kein Nachweis für Haftung auf Pedalen.
-                  Bei unsicheren Verhältnissen Tempo reduzieren oder absteigen;
-                  auf dem Motorroller ist passende Motorrad-Schutzausrüstung
-                  erforderlich.
+                  {tr(
+                    "Eine profilierte Sohle bietet keine Garantie gegen Eis. Schneeprofil ist auch kein Nachweis f\u00FCr Haftung auf Pedalen. Bei unsicheren Verh\u00E4ltnissen Tempo reduzieren oder absteigen; auf dem Motorroller ist passende Motorrad-Schutzausr\u00FCstung erforderlich.",
+                  )}
                 </p>
               </article>
             </div>
             <p className="source-note">
-              Grundlagen:{" "}
+              {tr("Grundlagen:")}
+              {tr(" ")}
               <a
                 href="https://www.adfc.de/artikel/kleidung-bei-kaelte"
                 target="_blank"
                 rel="noreferrer"
               >
-                ADFC: Kleidung bei Kälte
-              </a>{" "}
-              und{" "}
+                {tr("ADFC: Kleidung bei K\u00E4lte")}
+              </a>
+              {tr(" ")}
+              {tr("und")}
+              {tr(" ")}
               <a
                 href="https://www.adfc.de/dossier/radfahren-im-winter-sicher-unterwegs-trotz-eis-und-schnee"
                 target="_blank"
                 rel="noreferrer"
               >
-                ADFC: Radfahren im Winter
+                {tr("ADFC: Radfahren im Winter")}
               </a>
-              . Die Hinweise ersetzen keine individuelle Passform- und
-              Sicherheitsprüfung.
+              {tr(
+                ". Die Hinweise ersetzen keine individuelle Passform- und Sicherheitspr\u00FCfung.",
+              )}
             </p>
             <a className="button" href="#/ausruestung">
-              Passende Ausrüstung finden
+              {tr("Passende Ausr\u00FCstung finden")}
               <ArrowRight size={18} />
             </a>
           </section>
         )}
         {route === "impressum" && (
           <section className="document-page section-wrap">
-            <span className="eyebrow">RECHTLICHE INFORMATIONEN</span>
-            <h1>Impressum</h1>
+            <span className="eyebrow">{tr("RECHTLICHE INFORMATIONEN")}</span>
+            <h1>{tr("Impressum")}</h1>
             {operator.name && operator.email && operator.address.length ? (
               <>
-                <h2>Verantwortlicher Betreiber</h2>
+                <h2>{tr("Verantwortlicher Betreiber")}</h2>
                 <p>
-                  {operator.name}
+                  {tr(operator.name)}
                   <br />
                   {operator.address.map((line) => (
                     <span key={line}>
-                      {line}
+                      {tr(line)}
                       <br />
                     </span>
                   ))}
-                  <a href={`mailto:${operator.email}`}>{operator.email}</a>
+                  <a href={`mailto:${operator.email}`}>{tr(operator.email)}</a>
                 </p>
-                {operator.register && <p>{operator.register}</p>}
-                {operator.vatId && <p>USt-ID: {operator.vatId}</p>}
+                {operator.register && <p>{tr(operator.register)}</p>}
+                {operator.vatId && (
+                  <p>
+                    {tr("USt-ID: ")}
+                    {tr(operator.vatId)}
+                  </p>
+                )}
               </>
             ) : (
               <>
                 <div className="notice">
-                  Die Betreiberangaben sind noch nicht hinterlegt. Dieses
-                  Impressum ist unvollständig.
+                  {tr(
+                    "Die Betreiberangaben sind noch nicht hinterlegt. Dieses Impressum ist unvollst\u00E4ndig.",
+                  )}
                 </div>
-                <h2>Zu ergänzende Betreiberangaben</h2>
+                <h2>{tr("Zu erg\u00E4nzende Betreiberangaben")}</h2>
                 <dl className="legal-fields">
-                  <dt>Name / Organisation</dt>
-                  <dd>Noch nicht angegeben</dd>
-                  <dt>Ladungsfähige Anschrift</dt>
-                  <dd>Noch nicht angegeben</dd>
-                  <dt>Kontakt-E-Mail</dt>
-                  <dd>Noch nicht angegeben</dd>
-                  <dt>Register / Vertretungsberechtigte / USt-ID</dt>
-                  <dd>Falls auf den Betreiber zutreffend, zu ergänzen</dd>
+                  <dt>{tr("Name / Organisation")}</dt>
+                  <dd>{tr("Noch nicht angegeben")}</dd>
+                  <dt>{tr("Ladungsf\u00E4hige Anschrift")}</dt>
+                  <dd>{tr("Noch nicht angegeben")}</dd>
+                  <dt>{tr("Kontakt-E-Mail")}</dt>
+                  <dd>{tr("Noch nicht angegeben")}</dd>
+                  <dt>{tr("Register / Vertretungsberechtigte / USt-ID")}</dt>
+                  <dd>
+                    {tr("Falls auf den Betreiber zutreffend, zu erg\u00E4nzen")}
+                  </dd>
                 </dl>
               </>
             )}
-            <h2>Projektstatus</h2>
+            <h2>{tr("Projektstatus")}</h2>
             <p>
-              Unabhängiges Community-Projekt für Lieferfahrer in Aschaffenburg.
-              Keine offizielle Website von Flink. Keine Verbindung,
-              Partnerschaft oder Empfehlung durch das Unternehmen wird
-              behauptet. Es werden keine Unternehmenslogos verwendet.
+              {tr(
+                "Unabh\u00E4ngiges Community-Projekt f\u00FCr Lieferfahrer in Aschaffenburg. Keine offizielle Website von Flink. Keine Verbindung, Partnerschaft oder Empfehlung durch das Unternehmen wird behauptet. Es werden keine Unternehmenslogos verwendet.",
+              )}
             </p>
             <p>
-              Aktuell werden direkte Produktlinks ohne Affiliate-Konten
-              verwendet. Vor kommerzieller Nutzung sind Betreiberangaben und
-              rechtliche Informationspflichten zu vervollständigen und die
-              konkrete Betreiberkonstellation zu prüfen. Je nach Betriebsform
-              können Pflichten bereits für die öffentliche Community-Seite
-              gelten. Grundlage:{" "}
+              {tr(
+                "Aktuell werden direkte Produktlinks ohne Affiliate-Konten verwendet. Vor kommerzieller Nutzung sind Betreiberangaben und rechtliche Informationspflichten zu vervollst\u00E4ndigen und die konkrete Betreiberkonstellation zu pr\u00FCfen. Je nach Betriebsform k\u00F6nnen Pflichten bereits f\u00FCr die \u00F6ffentliche Community-Seite gelten. Grundlage:",
+              )}
+              {tr(" ")}
               <a
                 href="https://www.gesetze-im-internet.de/ddg/__5.html"
                 target="_blank"
                 rel="noreferrer"
               >
-                § 5 DDG
+                {tr("\u00A7 5 DDG")}
               </a>
-              .
+              {tr(".")}
             </p>
-            <h2>Redaktionelle Informationen</h2>
+            <h2>{tr("Redaktionelle Informationen")}</h2>
             <p>
-              Recherche vom {dateLabel(RESEARCH_DATE)}. Keine eigenen
-              Praxistests; keine Zusage bestimmter Preise oder Lagerbestände.{" "}
-              <a href="#/methodik">Bewertungsmethodik und Grenzen</a>.
+              {tr("Recherche vom ")}
+              {tr(dateLabel(RESEARCH_DATE))}
+              {tr(
+                ". Keine eigenen Praxistests; keine Zusage bestimmter Preise oder Lagerbest\u00E4nde.",
+              )}
+              {tr(" ")}
+              <a href="#/methodik">{tr("Bewertungsmethodik und Grenzen")}</a>
+              {tr(".")}
             </p>
           </section>
         )}
         {route === "datenschutz" && (
           <section className="document-page section-wrap">
-            <span className="eyebrow">LOKALE MERKLISTE. KEIN KONTO.</span>
-            <h1>Datenschutz</h1>
+            <span className="eyebrow">
+              {tr("LOKALE MERKLISTE. KEIN KONTO.")}
+            </span>
+            <h1>{tr("Datenschutz")}</h1>
             <p className="lead">
-              Die Anwendung verwendet keine Analyse- oder Werbetracker, keine
-              Registrierung und keine selbst gesetzten Cookies.
+              {tr(
+                "Die Anwendung verwendet keine Analyse- oder Werbetracker, keine Registrierung und keine selbst gesetzten Cookies.",
+              )}
             </p>
-            <h2>Verantwortlicher</h2>
+            <h2>{tr("Verantwortlicher")}</h2>
             <p>
-              {operator.name
-                ? operator.name
-                : "Die verantwortliche Betreiberidentität und Kontaktadresse müssen noch ergänzt werden."}{" "}
-              Siehe <a href="#/impressum">Impressum</a>. Die Datenschutzhinweise
-              sind bis zur Ergänzung der Verantwortlichenangaben unvollständig.
+              {tr(
+                operator.name
+                  ? operator.name
+                  : "Die verantwortliche Betreiberidentität und Kontaktadresse müssen noch ergänzt werden.",
+              )}
+              {tr(" ")}
+              {tr("Siehe ")}
+              <a href="#/impressum">{tr("Impressum")}</a>
+              {tr(
+                ". Die Datenschutzhinweise sind bis zur Erg\u00E4nzung der Verantwortlichenangaben unvollst\u00E4ndig.",
+              )}
             </p>
-            <h2>Hosting durch GitHub Pages</h2>
+            <h2>{tr("Hosting durch GitHub Pages")}</h2>
             <p>
-              Beim Seitenaufruf überträgt dein Browser technisch notwendige
-              Verbindungsdaten an GitHub. GitHub erklärt, IP-Adressen der
-              Besucher zu Sicherheitszwecken zu protokollieren und zu speichern.
-              Informationen:{" "}
+              {tr(
+                "Beim Seitenaufruf \u00FCbertr\u00E4gt dein Browser technisch notwendige Verbindungsdaten an GitHub. GitHub erkl\u00E4rt, IP-Adressen der Besucher zu Sicherheitszwecken zu protokollieren und zu speichern. Informationen:",
+              )}
+              {tr(" ")}
               <a
                 href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages"
                 target="_blank"
                 rel="noreferrer"
               >
-                GitHub Pages: Datenerfassung
-              </a>{" "}
-              und{" "}
+                {tr("GitHub Pages: Datenerfassung")}
+              </a>
+              {tr(" ")}
+              {tr("und")}
+              {tr(" ")}
               <a
                 href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
                 target="_blank"
                 rel="noreferrer"
               >
-                GitHub-Datenschutzerklärung
+                {tr("GitHub-Datenschutzerkl\u00E4rung")}
               </a>
-              . Der Betreiber muss die für seine Konstellation passenden
-              Rechtsgrundlagen, Empfänger- und Drittlandinformationen ergänzen.
+              {tr(
+                ". Der Betreiber muss die f\u00FCr seine Konstellation passenden Rechtsgrundlagen, Empf\u00E4nger- und Drittlandinformationen erg\u00E4nzen.",
+              )}
             </p>
-            <h2>Merkliste und Outfit im Browser</h2>
+            <h2>{tr("Merkliste und Outfit im Browser")}</h2>
             <p>
-              Produkt-IDs aus Merkliste und Outfit sowie der gewählte Farbstil
-              und die Einstellung für Effekte werden in localStorage auf deinem
-              Gerät gespeichert. Die Anwendung sendet diese Auswahl nicht an
-              einen Server. Die Daten bleiben bis zum Löschen oder Entfernen der
-              Browserdaten bestehen. Bei blockiertem Speicher funktionieren die
-              Auswahlen nur für die laufende Sitzung. Zweck ist die von dir
-              gewählte Merk- und Konfigurationsfunktion.
+              {tr(
+                "Auch deine Sprache wird lokal gespeichert. Der Offline-Speicher enth\u00E4lt nur \u00F6ffentliche App-Dateien und Artikeldaten dieses Projekts. Die Auswahl wird nicht an einen Server gesendet.",
+              )}
+            </p>
+            <p>
+              {tr(
+                "Produkt-IDs aus Merkliste und Outfit sowie der gew\u00E4hlte Farbstil und die Einstellung f\u00FCr Effekte werden in localStorage auf deinem Ger\u00E4t gespeichert. Die Anwendung sendet diese Auswahl nicht an einen Server. Die Daten bleiben bis zum L\u00F6schen oder Entfernen der Browserdaten bestehen. Bei blockiertem Speicher funktionieren die Auswahlen nur f\u00FCr die laufende Sitzung. Zweck ist die von dir gew\u00E4hlte Merk- und Konfigurationsfunktion.",
+              )}
             </p>
             <button
               className="button outline"
@@ -776,39 +789,31 @@ export function App() {
               }}
             >
               <Trash2 size={16} />
-              Lokale Auswahl löschen
+              {tr("Lokale Auswahl l\u00F6schen")}
             </button>
-            <h2>Shoplinks und Bilder</h2>
+            <h2>{tr("Shoplinks und Bilder")}</h2>
             <p>
-              Shopseiten werden erst durch einen Klick geöffnet. Danach gilt die
-              Datenschutzerklärung des jeweiligen Händlers. Originalfotos werden
-              überwiegend direkt von den offiziellen Bildservern von Decathlon,
-              Action, GripGrab (Shopify), Strauss, Lidl, VAUDE, Endura und
-              Shimano geladen. Dabei erhalten diese Anbieter technisch bedingt
-              deine IP-Adresse und Browserinformationen. Wir laden nur die
-              Bilddateien, keine Shop-Skripte oder Werbepixel, und senden keinen
-              Seiten-Referrer. Vier freigegebene Pressefotos, Fahrerillustration
-              und Schriftdateien liegen lokal bei der Website. Es gibt keine
-              externen Schriftserver.
+              {tr(
+                "Shopseiten werden erst durch einen Klick ge\u00F6ffnet. Danach gilt die Datenschutzerkl\u00E4rung des jeweiligen H\u00E4ndlers. Originalfotos werden \u00FCberwiegend direkt von den offiziellen Bildservern von Decathlon, Action, GripGrab (Shopify), Strauss, Lidl, VAUDE, Endura, Shimano und THE HEAT COMPANY (CloudFront) geladen. Dabei erhalten diese Anbieter technisch bedingt deine IP-Adresse und Browserinformationen. Wir laden nur die Bilddateien, keine Shop-Skripte oder Werbepixel, und senden keinen Seiten-Referrer. Vier freigegebene Pressefotos, Fahrerillustration und Schriftdateien liegen lokal bei der Website. Es gibt keine externen Schriftserver.",
+              )}
             </p>
-            <h2>Kommerzielle Verlinkungen</h2>
+            <h2>{tr("Kommerzielle Verlinkungen")}</h2>
             <p>
-              Derzeit sind keine Affiliate-URLs hinterlegt. Wenn später eigene
-              Affiliate-Links eingetragen werden, erscheinen sie mit einem
-              sichtbaren Werbehinweis und entsprechender Linkkennzeichnung. Vor
-              Aktivierung muss der Betreiber diese Datenschutzhinweise um die
-              tatsächlich eingesetzten Programme ergänzen.
+              {tr(
+                "Derzeit sind keine Affiliate-URLs hinterlegt. Wenn sp\u00E4ter eigene Affiliate-Links eingetragen werden, erscheinen sie mit einem sichtbaren Werbehinweis und entsprechender Linkkennzeichnung. Vor Aktivierung muss der Betreiber diese Datenschutzhinweise um die tats\u00E4chlich eingesetzten Programme erg\u00E4nzen.",
+              )}
             </p>
-            <h2>Deine Rechte</h2>
+            <h2>{tr("Deine Rechte")}</h2>
             <p>
-              Soweit personenbezogene Daten verarbeitet werden, bestehen nach
-              den jeweiligen gesetzlichen Voraussetzungen insbesondere Rechte
-              auf Auskunft, Berichtigung, Löschung, Einschränkung,
-              Datenübertragbarkeit und Widerspruch sowie Beschwerde bei einer
-              Datenschutzaufsichtsbehörde. Für die Ausübung gegenüber dem
-              Betreiber muss dessen Kontaktadresse im Impressum ergänzt werden.
+              {tr(
+                "Soweit personenbezogene Daten verarbeitet werden, bestehen nach den jeweiligen gesetzlichen Voraussetzungen insbesondere Rechte auf Auskunft, Berichtigung, L\u00F6schung, Einschr\u00E4nkung, Daten\u00FCbertragbarkeit und Widerspruch sowie Beschwerde bei einer Datenschutzaufsichtsbeh\u00F6rde. F\u00FCr die Aus\u00FCbung gegen\u00FCber dem Betreiber muss dessen Kontaktadresse im Impressum erg\u00E4nzt werden.",
+              )}
             </p>
-            <p>Stand: {dateLabel(RESEARCH_DATE)}.</p>
+            <p>
+              {tr("Stand: ")}
+              {tr(dateLabel(RESEARCH_DATE))}
+              {tr(".")}
+            </p>
           </section>
         )}
         {!isWorkspace &&
@@ -820,9 +825,9 @@ export function App() {
             "datenschutz",
           ].includes(route) && (
             <section className="empty-state section-wrap">
-              <h1>Diese Seite gibt es hier nicht.</h1>
+              <h1>{tr("Diese Seite gibt es hier nicht.")}</h1>
               <a className="button" href="#/">
-                Zur Startseite
+                {tr("Zur Startseite")}
               </a>
             </section>
           )}
@@ -835,39 +840,42 @@ export function App() {
                 <Bike size={26} />
               </span>
               <span>
-                FLINK ASCHAFFENBURG<small>CHAT PROJEKT</small>
+                {tr("FLINK ASCHAFFENBURG")}
+                <small>{tr("CHAT PROJEKT")}</small>
               </span>
             </a>
             <p>
-              Für gute Schichten.
+              {tr("F\u00FCr gute Schichten.")}
               <br />
-              Und trockene Heimwege.
+              {tr("Und trockene Heimwege.")}
             </p>
           </div>
           <div className="footer-bottom">
             <p>
-              Unabhängiges Community-Projekt für Lieferfahrer in Aschaffenburg.
+              {tr(
+                "Unabh\u00E4ngiges Community-Projekt f\u00FCr Lieferfahrer in Aschaffenburg.",
+              )}
               <br />
-              Keine offizielle Website von Flink. Auch keine Partnerschaft mit
-              Wolt, Uber Eats oder Lieferando.
+              {tr(
+                "Keine offizielle Website von Flink. Auch keine Partnerschaft mit Wolt, Uber Eats oder Lieferando.",
+              )}
             </p>
-            <nav aria-label="Weitere Informationen">
-              <a href="#/methodik">Bewertung & Quellen</a>
-              <a href="#/impressum">Impressum</a>
-              <a href="#/datenschutz">Datenschutz</a>
-              <a
-                href="https://github.com/disorder119/flink-aschaffenburg-chat-projekt"
-                target="_blank"
-                rel="noreferrer"
-              >
-                GitHub
+            <nav aria-label={tr("Weitere Informationen")}>
+              <a href="#/methodik">{tr("Bewertung & Quellen")}</a>
+              <a href="#/impressum">{tr("Impressum")}</a>
+              <a href="#/datenschutz">{tr("Datenschutz")}</a>
+              <a href={repositoryUrl} target="_blank" rel="noreferrer">
+                {tr("GitHub")}
                 <ArrowUpRight size={13} />
               </a>
             </nav>
           </div>
           <small>
-            Recherche {dateLabel(RESEARCH_DATE)} · Preise können sich ändern ·
-            Keine eigenen Praxistests
+            {tr("Recherche ")}
+            {tr(dateLabel(RESEARCH_DATE))}
+            {tr(
+              " \u00B7 Preise k\u00F6nnen sich \u00E4ndern \u00B7 Keine eigenen Praxistests",
+            )}
           </small>
         </div>
       </footer>
@@ -875,15 +883,17 @@ export function App() {
         <div className="compare-bar">
           <span>
             <GitCompareArrows size={19} />
-            {compare.length}/3 <small>{groupLabels[compared[0].group]}</small>
+            {compare.length}
+            {tr("/3 ")}
+            <small>{tr(groupLabels[compared[0].group])}</small>
           </span>
           <button className="button light" onClick={() => setCompareOpen(true)}>
-            Vergleich öffnen
+            {tr("Vergleich \u00F6ffnen")}
             <ArrowRight size={15} />
           </button>
           <button
             className="icon-button"
-            aria-label="Vergleich leeren"
+            aria-label={tr("Vergleich leeren")}
             onClick={() => setCompare([])}
           >
             <X size={19} />
@@ -892,18 +902,22 @@ export function App() {
       )}
       {toast && (
         <div className="toast" role="status">
-          {toast}
+          {tr(toast)}
         </div>
       )}
       {storageError && (
         <div className="storage-notice" role="status">
-          Dein Browser blockiert lokalen Speicher. Die Auswahl bleibt nur in
-          dieser Sitzung erhalten.
+          {tr(
+            "Dein Browser blockiert lokalen Speicher. Die Auswahl bleibt nur in dieser Sitzung erhalten.",
+          )}
         </div>
       )}
       {details && (
         <Modal
-          title={`${details.brand} · ${details.name}`}
+          title={tr("{0} \u00B7 {1}", {
+            "0": details.brand,
+            "1": details.name,
+          })}
           onClose={() => setDetails(null)}
         >
           <ProductDetails p={details} />
@@ -916,7 +930,7 @@ export function App() {
               }}
             >
               <Plus size={17} />
-              Zum Outfit
+              {tr("Zum Outfit")}
             </button>
             <ShopButton p={details} />
           </div>
@@ -924,27 +938,28 @@ export function App() {
       )}
       {compareOpen && (
         <Modal
-          title="Dein Produktvergleich"
+          title={tr("Dein Produktvergleich")}
           wide
           onClose={() => setCompareOpen(false)}
         >
           <p className="muted">
-            Bis zu drei Produkte derselben Produktgruppe. Redaktionelle Eignung,
-            kein eigener Praxistest.
+            {tr(
+              "Bis zu drei Produkte derselben Produktgruppe. Redaktionelle Eignung, kein eigener Praxistest.",
+            )}
           </p>
           {compared.length ? (
             <div className="table-scroll">
               <table className="comparison-table">
                 <thead>
                   <tr>
-                    <th>Merkmal</th>
+                    <th>{tr("Merkmal")}</th>
                     {compared.map((p) => (
                       <th key={p.id}>
                         <ProductImage product={p} compact />
                         <span>
-                          {p.brand}
+                          {tr(p.brand)}
                           <br />
-                          {p.name}
+                          {tr(p.name)}
                         </span>
                         <button
                           className="text-button"
@@ -952,7 +967,7 @@ export function App() {
                             setCompare((ids) => ids.filter((id) => id !== p.id))
                           }
                         >
-                          Entfernen
+                          {tr("Entfernen")}
                         </button>
                       </th>
                     ))}
@@ -970,7 +985,7 @@ export function App() {
                     "Shop",
                   ].map((row) => (
                     <tr key={row}>
-                      <th>{row}</th>
+                      <th>{tr(row)}</th>
                       {compared.map((p) => (
                         <td key={p.id}>
                           {row === "Preis" ? (
@@ -1006,13 +1021,13 @@ export function App() {
               </table>
             </div>
           ) : (
-            <p>Dein Vergleich ist leer.</p>
+            <p>{tr("Dein Vergleich ist leer.")}</p>
           )}
         </Modal>
       )}
       {favoritesOpen && (
         <Modal
-          title={`Deine Merkliste · ${favorites.length}`}
+          title={tr("Deine Merkliste \u00B7 {0}", { "0": favorites.length })}
           wide
           onClose={() => setFavoritesOpen(false)}
         >
@@ -1023,16 +1038,17 @@ export function App() {
           ) : (
             <div className="empty-state">
               <Heart size={35} />
-              <h3>Gute Ausrüstung im Blick behalten.</h3>
+              <h3>{tr("Gute Ausr\u00FCstung im Blick behalten.")}</h3>
               <p>
-                Tippe auf das Herz einer Produktkarte. Deine Merkliste wird nur
-                in deinem Browser gespeichert.
+                {tr(
+                  "Tippe auf das Herz einer Produktkarte. Deine Merkliste wird nur in deinem Browser gespeichert.",
+                )}
               </p>
               <button
                 className="button"
                 onClick={() => setFavoritesOpen(false)}
               >
-                Produkte entdecken
+                {tr("Produkte entdecken")}
               </button>
             </div>
           )}
@@ -1040,18 +1056,19 @@ export function App() {
       )}
       {copyFallback && (
         <Modal
-          title="Einkaufsliste kopieren"
+          title={tr("Einkaufsliste kopieren")}
           onClose={() => setCopyFallback("")}
         >
           <p>
-            Der Browser erlaubt gerade keinen direkten Zugriff auf die
-            Zwischenablage. Markiere und kopiere die Liste hier.
+            {tr(
+              "Der Browser erlaubt gerade keinen direkten Zugriff auf die Zwischenablage. Markiere und kopiere die Liste hier.",
+            )}
           </p>
           <textarea
             className="copy-fallback"
             readOnly
             value={copyFallback}
-            aria-label="Einkaufsliste zum manuellen Kopieren"
+            aria-label={tr("Einkaufsliste zum manuellen Kopieren")}
             onFocus={(e) => e.target.select()}
           />
         </Modal>
@@ -1073,10 +1090,12 @@ function ShopButton({ p }: { p: Product }) {
             : "noopener noreferrer"
         }
       >
-        {p.retailOnly ? "Offizielle Produktseite" : "Beim Händler öffnen"}
+        {tr(p.retailOnly ? "Offizielle Produktseite" : "Beim Händler öffnen")}
         <ArrowUpRight size={16} />
       </a>
-      {link.affiliate && <small className="affiliate-note">{link.label}</small>}
+      {link.affiliate && (
+        <small className="affiliate-note">{tr(link.label)}</small>
+      )}
     </div>
   );
 }
@@ -1090,133 +1109,167 @@ function ProductDetails({ p }: { p: Product }) {
         <ProductImage product={p} />
         <div>
           <span className="eyebrow">
-            {tierLabels[p.tier]} · {p.shop}
-            {p.retailOnly ? " · NUR FILIALE" : ""}
+            {tr(tierLabels[p.tier])}
+            {tr(" \u00B7 ")}
+            {tr(p.shop)}
+            {tr(p.retailOnly ? " · NUR FILIALE" : "")}
           </span>
           <strong>
-            {p.price === null
-              ? "Preis nicht überprüfbar"
-              : `${p.priceKind === "from" ? "ab " : ""}${money(p.price)}`}
+            {tr(
+              p.price === null
+                ? "Preis nicht überprüfbar"
+                : `${p.priceKind === "from" ? "ab " : ""}${money(p.price)}`,
+            )}
           </strong>
-          <p>{p.priceNote}</p>
+          <p>{tr(p.priceNote)}</p>
           <small>
-            Recherche / Preisbeobachtung: {dateLabel(p.checked)}
-            {p.sourceMethod === "catalogue"
-              ? " · öffentlicher Händlerkatalog"
-              : " · öffentlich recherchierte Produktseite / Suchindex"}
+            {tr("Recherche / Preisbeobachtung: ")}
+            {tr(dateLabel(p.checked))}
+            {tr(
+              p.sourceMethod === "catalogue"
+                ? " · öffentlicher Händlerkatalog"
+                : " · öffentlich recherchierte Produktseite / Suchindex",
+            )}
           </small>
         </div>
       </div>
       {photo && (
         <p className="photo-source">
-          {photo.credit}. {photo.variant} Farbe und Ausführung im Shop prüfen.{" "}
+          {tr(photo.credit)}
+          {tr(". ")}
+          {tr(photo.variant)}
+          {tr(" Farbe und Ausf\u00FChrung im Shop pr\u00FCfen.")}
+          {tr(" ")}
           <a href={photo.source} target="_blank" rel="noopener noreferrer">
-            {photo.delivery === "local-press"
-              ? "Bildquelle / Pressebereich ↗"
-              : "Originalfoto: Produktseite ↗"}
+            {tr(
+              photo.delivery === "local-press"
+                ? "Bildquelle / Pressebereich ↗"
+                : "Originalfoto: Produktseite ↗",
+            )}
           </a>
         </p>
       )}
-      <p className="lead">{p.use}</p>
+      <p className="lead">{tr(p.use)}</p>
+      {p.caution && (
+        <div className="notice">
+          <b>{tr("Anwendungshinweis")}</b>
+          <p>{tr(p.caution)}</p>
+        </div>
+      )}
       {p.badge && (
         <div className="notice green">
-          <b>{p.badge.label}</b>
-          <p>{p.badge.reason}</p>
+          <b>{tr(p.badge.label)}</b>
+          <p>{tr(p.badge.reason)}</p>
         </div>
       )}
       <div className="detail-columns">
         <div>
-          <h3>Was dafür spricht</h3>
+          <h3>{tr("Was daf\u00FCr spricht")}</h3>
           <ul>
             {p.pros.map((s) => (
-              <li key={s}>{s}</li>
+              <li key={s}>{tr(s)}</li>
             ))}
           </ul>
         </div>
         <div>
-          <h3>Wo die Grenzen liegen</h3>
+          <h3>{tr("Wo die Grenzen liegen")}</h3>
           <ul>
             {p.cons.map((s) => (
-              <li key={s}>{s}</li>
+              <li key={s}>{tr(s)}</li>
             ))}
           </ul>
         </div>
       </div>
       <dl className="detail-facts">
-        <dt>Nässeschutz</dt>
+        <dt>{tr("N\u00E4sseschutz")}</dt>
         <dd>
-          {waterLabels[p.water]}. {p.waterNote}
+          {tr(waterLabels[p.water])}
+          {tr(". ")}
+          {tr(p.waterNote)}
         </dd>
-        <dt>Wärme</dt>
-        <dd>{p.warmthNote}</dd>
-        <dt>Material / Aufbau</dt>
-        <dd>{p.material}</dd>
-        <dt>Datenlage</dt>
-        <dd>{p.uncertainty}</dd>
+        <dt>{tr("W\u00E4rme")}</dt>
+        <dd>{tr(p.warmthNote)}</dd>
+        <dt>{tr("Material / Aufbau")}</dt>
+        <dd>{tr(p.material)}</dd>
+        <dt>{tr("Datenlage")}</dt>
+        <dd>{tr(p.uncertainty)}</dd>
         {p.compatibility && (
           <>
-            <dt>Kompatibilität</dt>
+            <dt>{tr("Kompatibilit\u00E4t")}</dt>
             <dd>
-              {p.compatibility === "flatshoe"
-                ? "Nur für passende Flat-Pedal-MTB-Schuhe; vollständig flache Sohle oder versenkte Cleats. Keine Kompatibilität mit beliebigen Alltagsschuhen."
-                : p.compatibility === "flatbar"
-                  ? "Nur für passende gerade oder City-Lenker. Bremsen, Schaltung und freies Herausziehen der Hände vor der Fahrt prüfen."
-                  : p.compatibility === "spd"
-                    ? "MTB-/SPD-Konstruktion; passende Pedale bzw. Plattformsitz prüfen."
-                    : p.compatibility === "road"
-                      ? "Für Rennradschuhe; nicht für beliebige Alltagsschuhe."
-                      : "Für Gravel-Radschuhe; passende Sohlenöffnungen prüfen."}
+              {tr(
+                p.compatibility === "flatshoe"
+                  ? "Nur für passende Flat-Pedal-MTB-Schuhe; vollständig flache Sohle oder versenkte Cleats. Keine Kompatibilität mit beliebigen Alltagsschuhen."
+                  : p.compatibility === "flatbar"
+                    ? "Nur für passende gerade oder City-Lenker. Bremsen, Schaltung und freies Herausziehen der Hände vor der Fahrt prüfen."
+                    : p.compatibility === "spd"
+                      ? "MTB-/SPD-Konstruktion; passende Pedale bzw. Plattformsitz prüfen."
+                      : p.compatibility === "road"
+                        ? "Für Rennradschuhe; nicht für beliebige Alltagsschuhe."
+                        : "Für Gravel-Radschuhe; passende Sohlenöffnungen prüfen.",
+              )}
             </dd>
           </>
         )}
       </dl>
       <h3>
-        Redaktionelle Eignung:{" "}
-        {score.score === null ? "Daten unzureichend" : `${score.score}/100`}
+        {tr("Redaktionelle Eignung:")}
+        {tr(" ")}
+        {tr(score.score === null ? "Daten unzureichend" : `${score.score}/100`)}
       </h3>
       <p className="muted">
-        {score.score === null
-          ? "Wesentliche Eigenschaften sind unzureichend dokumentiert. Wir vergeben keine scheinpräzise Zahl."
-          : `Gewichtete Datenabdeckung ${score.coverage} %. Auf fünf Punkte gerundet; keine Kundenrezension und kein eigener Praxistest.`}
+        {tr(
+          score.score === null
+            ? "Wesentliche Eigenschaften sind unzureichend dokumentiert. Wir vergeben keine scheinpräzise Zahl."
+            : `Gewichtete Datenabdeckung ${score.coverage} %. Auf fünf Punkte gerundet; keine Kundenrezension und kein eigener Praxistest.`,
+        )}
       </p>
       {p.assessment && (
         <table className="score-table">
           <thead>
             <tr>
-              <th>Kriterium</th>
-              <th>Stufe</th>
-              <th>Gewicht</th>
+              <th>{tr("Kriterium")}</th>
+              <th>{tr("Stufe")}</th>
+              <th>{tr("Gewicht")}</th>
             </tr>
           </thead>
           <tbody>
             {criterionLabels.map((c, i) => (
               <tr key={c}>
-                <th>{c}</th>
+                <th>{tr(c)}</th>
                 <td>
-                  {p.assessment![i] === null
-                    ? "Nicht belegt"
-                    : `${p.assessment![i]}/5`}
+                  {tr(
+                    p.assessment![i] === null
+                      ? "Nicht belegt"
+                      : `${p.assessment![i]}/5`,
+                  )}
                 </td>
-                <td>{w[i]} %</td>
+                <td>
+                  {w[i]}
+                  {tr(" %")}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
       <p>
-        <a href="#/methodik">Bewertungsregeln und Gewichtungen lesen</a>
+        <a href="#/methodik">{tr("Bewertungsregeln und Gewichtungen lesen")}</a>
       </p>
       <p className="source-note">
-        Primärquelle:{" "}
+        {tr("Prim\u00E4rquelle:")}
+        {tr(" ")}
         <a href={p.url} target="_blank" rel="noreferrer">
-          {p.shop}: konkrete Produktseite ↗
+          {tr(p.shop)}
+          {tr(": konkrete Produktseite \u2197")}
         </a>
         {p.independentSource && (
           <>
-            {" "}
-            ·{" "}
+            {tr(" ")}
+            {tr("\u00B7")}
+            {tr(" ")}
             <a href={p.independentSource} target="_blank" rel="noreferrer">
-              Ergänzende Test- oder Kundenquelle ↗
+              {tr("Erg\u00E4nzende Test- oder Kundenquelle \u2197")}
             </a>
           </>
         )}

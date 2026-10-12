@@ -1,0 +1,23 @@
+{
+  ". Der Betreiber muss die für seine Konstellation passenden Rechtsgrundlagen, Empfänger- und Drittlandinformationen ergänzen.": [". The operator must add the legal bases, recipient and third-country information appropriate to their actual situation.", ". يجب على المشغّل إضافة الأسس القانونية ومعلومات الجهات المستلمة والدول الأخرى المناسبة لوضعه الفعلي.", ". संचालक को अपनी वास्तविक स्थिति के अनुसार कानूनी आधार, प्राप्तकर्ता और अन्य देशों की जानकारी जोड़नी होगी।"],
+  ". Die Datenschutzhinweise sind bis zur Ergänzung der Verantwortlichenangaben unvollständig.": [". This privacy notice is incomplete until the responsible-party details are added.", ". معلومات الخصوصية غير مكتملة حتى إضافة بيانات الجهة المسؤولة.", ". ज़िम्मेदार पक्ष की जानकारी जुड़ने तक गोपनीयता सूचना अधूरी है।"],
+  ". Die Hinweise ersetzen keine individuelle Passform- und Sicherheitsprüfung.": [". These notes do not replace individual fit and safety checks.", ". هذه الإرشادات لا تحل محل فحص الملاءمة والأمان الشخصي.", ". ये निर्देश व्यक्तिगत फिट और सुरक्षा जाँच का विकल्प नहीं हैं।"],
+  ". Keine eigenen Praxistests; keine Zusage bestimmter Preise oder Lagerbestände.": [". No field tests by us; no promise of particular prices or stock levels.", ". لا اختبارات عملية أجريناها؛ لا وعد بأسعار أو مخزون محددين.", ". हमारे अपने व्यावहारिक परीक्षण नहीं; खास कीमत या स्टॉक का वादा नहीं।"],
+  "Alle Körperbereiche": ["All body areas", "كل مناطق الجسم", "शरीर के सभी हिस्से"],
+  "Android": ["Android", "Android", "Android"],
+  "Animationen ausschalten": ["Turn animations off", "إيقاف الحركة", "ऐनिमेशन बंद करें"],
+  "Animationen einschalten": ["Turn animations on", "تشغيل الحركة", "ऐनिमेशन चालू करें"],
+  "Aus Merkliste entfernen": ["Remove from favourites", "إزالة من المفضلة", "पसंदीदा से हटाएँ"],
+  "Dein Outfit": ["Your outfit", "تجهيزاتك", "आपका सेट"],
+  "FLINK ASCHAFFENBURG": ["FLINK ASCHAFFENBURG", "FLINK ASCHAFFENBURG", "FLINK ASCHAFFENBURG"],
+  "Merken": ["Save", "حفظ", "सेव करें"],
+  "Produktauswahl": ["Product selection", "اختيار المنتجات", "उत्पाद चयन"],
+  "Winter-Zubehör": ["Winter extras", "إضافات الشتاء", "सर्दियों के अतिरिक्त उपकरण"],
+  "auswählen": ["choose", "اختيار", "चुनें"],
+  "favorites": ["favorites", "favorites", "favorites"],
+  "iPhone und iPad": ["iPhone and iPad", "iPhone وiPad", "iPhone और iPad"],
+  "und": ["and", "و", "और"],
+  "von 100 Punkten": ["out of 100 points", "من 100 نقطة", "100 अंकों में से"],
+  "{0} von 100 Punkten": ["{0} out of 100 points", "{0} من 100 نقطة", "100 अंकों में से {0}"],
+  "ändern": ["change", "تغيير", "बदलें"]
+}
