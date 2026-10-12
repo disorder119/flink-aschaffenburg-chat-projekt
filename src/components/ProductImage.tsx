@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { ImageOff } from "lucide-react";
 import type { Product } from "../types";
-import { photoFor } from "../data/photos";
-import { GearArt } from "./GearArt";
+import { photoFor, photoSrc } from "../data/photos";
 
 export function ProductImage({
   product,
@@ -11,28 +11,45 @@ export function ProductImage({
   compact?: boolean;
 }) {
   const photo = photoFor(product.id);
-  const [failed, setFailed] = useState(false);
+  const src = photo ? photoSrc(photo, import.meta.env.BASE_URL) : null;
+  // A failed photo belongs only to that file, never to the next selected article.
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
+  const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
+  const available = !!photo && !!src && failedSrc !== src;
   return (
     <figure
-      className={`product-image ${photo && !failed ? "is-photo" : "is-symbol"} ${compact ? "compact" : ""}`}
+      className={`product-image ${available ? "is-photo" : "is-unavailable"} ${compact ? "compact" : ""}`}
+      data-photo-state={
+        available ? (loadedSrc === src ? "loaded" : "loading") : "unavailable"
+      }
     >
-      {photo && !failed ? (
+      {photo && src && available ? (
         <>
           <img
-            src={`${import.meta.env.BASE_URL}product-images/${photo.file}`}
+            key={src}
+            src={src}
             alt={photo.alt}
-            loading="lazy"
+            loading={compact ? "lazy" : "eager"}
             decoding="async"
+            referrerPolicy="no-referrer"
             width="512"
             height="512"
-            onError={() => setFailed(true)}
+            onError={() => setFailedSrc(src)}
+            onLoad={() => setLoadedSrc(src)}
           />
-          <figcaption>{photo.credit} · Modellvariante</figcaption>
+          <figcaption>{photo.credit}</figcaption>
         </>
       ) : (
         <>
-          <GearArt group={product.group} />
-          <figcaption>SYMBOLABBILDUNG</figcaption>
+          <div
+            className="product-photo-unavailable"
+            role="img"
+            aria-label={`Für ${product.name} ist aktuell kein freigegebenes Originalfoto verfügbar`}
+          >
+            <ImageOff aria-hidden="true" size={26} strokeWidth={1.3} />
+            <span>{photo ? "Foto nicht geladen" : "Originalfoto fehlt"}</span>
+          </div>
+          <figcaption>Beim Händler ansehen</figcaption>
         </>
       )}
     </figure>

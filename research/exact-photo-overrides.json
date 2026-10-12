@@ -1,0 +1,26 @@
+{
+  "endura-mt500-pants": {
+    "source": "https://www.endurasport.com/en-us/products/mens-mt500-waterproof-bib-trousers-black-re8136bk",
+    "reference": "RE8136BK",
+    "sourceTitle": "Men's MT500 Waterproof Bib Trousers",
+    "credit": "Foto: Endura",
+    "original": "https://www.endurasport.com/cdn/shop/files/R-E8136BK-B1_1ad680c3-6eee-4bb1-96c5-760a672db99c.jpg?v=1774214105&width=550",
+    "alt": "Endura MT500 Waterproof Hose RE8136BK in Schwarz, Originalfoto"
+  },
+  "shimano-mw702": {
+    "source": "https://bike.shimano.com/de-DE/products/apparel/pdp.P-SH-MW702.html",
+    "reference": "SH-MW702",
+    "sourceTitle": "SH-MW702",
+    "credit": "Foto: Shimano",
+    "original": "https://dassets.shimano.com/content/dam/global/cg1SHICCycling/final/products/cg2SHICLifeStyleGear/cg3SHICFootwear/cg4SHICShoes/cg5SHICShoes/SH-MW702-shic6-primary_1.jpg/jcr:content/renditions/SH-MW702-shic6-primary_1_750_750.jpeg",
+    "alt": "Shimano SH-MW702 in Schwarz, Original-Herstellerfoto"
+  },
+  "vaude-minaki": {
+    "source": "https://www.vaude.com/int/en/48585-minaki-iii-stx-winter-mtb-shoes.html",
+    "reference": "48585",
+    "sourceTitle": "Minaki III STX winter MTB shoes",
+    "credit": "Foto: VAUDE",
+    "original": "https://www.vaude.com/media/catalog/product/cache/207e23213cf636ccdef205098cf3c8a3/4/8/48585_010_6__485850100360_e5d18586.jpg",
+    "alt": "VAUDE Minaki III STX Artikel 48585 in Schwarz, Originalfoto"
+  }
+}

@@ -3,6 +3,7 @@ const entries = JSON.parse(await readFile("src/data/photos.json", "utf8"));
 await mkdir("public/product-images", { recursive: true });
 const report = [];
 for (const [id, photo] of Object.entries(entries)) {
+  if (photo.delivery !== "local-press") continue;
   const r = await fetch(photo.original, {
     signal: AbortSignal.timeout(25000),
     headers: { Accept: "image/jpeg" },

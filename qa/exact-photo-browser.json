@@ -1,0 +1,443 @@
+{
+  "checkedAt": "2026-10-12T10:18:38.111Z",
+  "url": "http://127.0.0.1:4175/flink-aschaffenburg-chat-projekt/#/ausruestung",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "checks": [
+    {
+      "id": "gg-ride-waterproof-lightweight-jacket",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/files/7f91eb028f6c1e12fa909c043ddb0498519536ad.jpg?v=1787147221&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-explr-waterproof-lightweight-jacket",
+      "loaded": true,
+      "src": "http://127.0.0.1:4175/flink-aschaffenburg-chat-projekt/product-images/gg-explr-jacket.jpg",
+      "width": 850
+    },
+    {
+      "id": "dec-city-jacket",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p3222500/k$c8c83ce8c7162f0b48ebfdfdebe25d66/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "gg-ride-2-waterproof-winter-gloves",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/files/109101_GG-com_553d2803-f203-4ebe-802a-056e13449d54.jpg?v=1725018597&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-polaris-2-waterproof-winter-gloves",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/1082_01_de4dc0de-7970-4d21-94d6-31987b466801.jpg?v=1694516921&width=512",
+      "width": 512
+    },
+    {
+      "id": "dec-edr-jacket",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p2464574/k$98764568754f4235b23f0bc420019cdb/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "dec-city900-pants",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p3222488/k$b8c2b51b6591789f1736a51469efd2f8/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "vaude-yaras",
+      "loaded": true,
+      "src": "https://www.vaude.com/media/catalog/product/cache/207e23213cf636ccdef205098cf3c8a3/4/5/45604_010_6__456040105200_39c862ef.jpg",
+      "width": 700
+    },
+    {
+      "id": "vaude-luminum",
+      "loaded": true,
+      "src": "https://www.vaude.com/media/catalog/product/cache/207e23213cf636ccdef205098cf3c8a3/4/7/47963_136_6__479631365200_a2e150f4.jpg",
+      "width": 700
+    },
+    {
+      "id": "endura-mt500-pants",
+      "loaded": true,
+      "src": "https://www.endurasport.com/cdn/shop/files/R-E8136BK-B1_1ad680c3-6eee-4bb1-96c5-760a672db99c.jpg?v=1774214105&width=550",
+      "width": 550
+    },
+    {
+      "id": "gg-aviator-windproof-deep-winter-skull-cap",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/5003_01_ef225bae-c128-4a75-94e2-965b15fd4c55.jpg?v=1666699172&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-waterproof-knitted-winter-gloves",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/1074_01.jpg?v=1673427465&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-explr-waterproof-lightweight-pants",
+      "loaded": true,
+      "src": "http://127.0.0.1:4175/flink-aschaffenburg-chat-projekt/product-images/gg-explr-waterproof-lightweight-pants.jpg",
+      "width": 850
+    },
+    {
+      "id": "gg-merino-lined-waterproof-winter-socks",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/3016_01.jpg?v=1644316704&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-arctic-2-waterproof-deep-winter-road-shoe-covers",
+      "loaded": true,
+      "src": "http://127.0.0.1:4175/flink-aschaffenburg-chat-projekt/product-images/gg-arctic-2-road.jpg",
+      "width": 850
+    },
+    {
+      "id": "dec-city940-pogies",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p3100863/k$7ea042890eeda05f50b783917d8130c7/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "shimano-mw702",
+      "loaded": true,
+      "src": "https://dassets.shimano.com/content/dam/global/cg1SHICCycling/final/products/cg2SHICLifeStyleGear/cg3SHICFootwear/cg4SHICShoes/cg5SHICShoes/SH-MW702-shic6-primary_1.jpg/jcr:content/renditions/SH-MW702-shic6-primary_1_750_750.jpeg",
+      "width": 750
+    },
+    {
+      "id": "gg-arctic-2-waterproof-deep-winter-gravel-shoe-covers",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/files/bfe96c78d83f8224f889980dfcea8329bcfc67c7.jpg?v=1756464970&width=512",
+      "width": 512
+    },
+    {
+      "id": "dec-balaclava",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p3215716/k$acb196462f0ed100b59175ad7815e74e/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "dec-merino-pants",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p2815528/k$561f14eedcb0aeab8af780d6bea2cf2d/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "vaude-fluid",
+      "loaded": true,
+      "src": "https://www.vaude.com/media/catalog/product/cache/207e23213cf636ccdef205098cf3c8a3/0/6/06343_010_6__063430100200_7c153d85.jpg",
+      "width": 700
+    },
+    {
+      "id": "gg-nordic-2-windproof-deep-winter-lobster-gloves",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/1081_01_17f7c2bb-baa9-4724-a808-38dfcaa54a13.jpg?v=1660644832&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-ride-winter-long-sleeve-base-layer",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/files/6063_01_Side_GG-com.jpg?v=1722517608&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-merino-blend-thermal-long-sleeve-base-layer",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/6008_01_0ccc6fbe-f9a5-4e1f-b91e-2aaf3ed4d218.jpg?v=1644331835&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-ride-winter-jacket",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/files/d0ae65b7e462c1ca00cbb178a5645b6229019e30.jpg?v=1787147238&width=512",
+      "width": 512
+    },
+    {
+      "id": "dec-city900-pogies",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p3222422/k$5bee7a3a82f74fecf9d4b5c0c2dda7df/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "dec-nh100",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p2779001/k$bd9a4742f9910b8cfa0dfac4c44c3df0/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "vaude-escape-pants",
+      "loaded": true,
+      "src": "https://www.vaude.com/media/catalog/product/cache/207e23213cf636ccdef205098cf3c8a3/4/8/48019_010_6__480190105300_150c2491.jpg",
+      "width": 700
+    },
+    {
+      "id": "vaude-minaki",
+      "loaded": true,
+      "src": "https://www.vaude.com/media/catalog/product/cache/207e23213cf636ccdef205098cf3c8a3/4/8/48585_010_6__485850100360_e5d18586.jpg",
+      "width": 700
+    },
+    {
+      "id": "gg-racethermo-waterproof-winter-road-shoe-covers",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/2023_08_bc7c9b8c-3c03-4086-9195-bb5bee273fe2.jpg?v=1669817115&width=512",
+      "width": 512
+    },
+    {
+      "id": "dec-cap",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p3215698/k$f2993d68f353daf83eaf208450663ea4/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "dec-legwarmers",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p3225824/k$6e6be14530d810f4413a87df44e9fb0a/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "strauss-basis",
+      "loaded": true,
+      "src": "https://cdn.strauss.com/de/assets/pdp/images/Original/product/1.Release.3410960/e_s_Funktions-Long_Pants_basis-warm-296311-1-638744232457438190.jpg",
+      "width": 1160
+    },
+    {
+      "id": "gg-thermo-windproof-winter-headband",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/5005_01.jpg?v=1644324242&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-thermal-winter-balaclava",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/5006_01.jpg?v=1666698097&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-pacr-winter-jacket",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/files/f639d1692727917eaea46aac29f80409d0c90c68.jpg?v=1787147221&width=512",
+      "width": 512
+    },
+    {
+      "id": "strauss-xwarm",
+      "loaded": true,
+      "src": "https://cdn.strauss.com/de/assets/pdp/images/Original/product/1.Release.3410840/e_s_Funktions-Long_Pants_thermo_stretch-x-warm-307455-0-638781416995654256.jpg",
+      "width": 1160
+    },
+    {
+      "id": "gg-belgian-style-thermal-windproof-winter-cycling-cap",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/5031_01.jpg?v=1644324419&width=512",
+      "width": 512
+    },
+    {
+      "id": "dec-winter-gloves",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p3047157/k$1ca36d83087bddb7f5ce6524e53bd186/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "dec-edr-gloves",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p3047141/k$15b6227209dc85fcba0b72d40128a514/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "lidl-shirt",
+      "loaded": true,
+      "src": "https://www.lidl.de/assets/gcp56011cabd8f34d94b0fb66ece1bd9150.jpg",
+      "width": 1500
+    },
+    {
+      "id": "lidl-pants",
+      "loaded": true,
+      "src": "https://www.lidl.de/assets/gcp91a455a1502c48fc912485dacaffb22a.jpg",
+      "width": 1500
+    },
+    {
+      "id": "gg-skull-cap",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/5002_01_728bfd4e-9cb3-47f8-aa02-aab15ef5d4bc.jpg?v=1670337290&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-merino-blend-lightweight-beanie",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/5041_59.jpg?v=1649158427&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-ride-2-windproof-winter-gloves",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/files/109001_GG-com_127fce1c-dfd4-439a-8ed2-513c4c21033a.jpg?v=1725018705&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-merino-winter-sock",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/3005_01.jpg?v=1644315883&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-alpine-merino-high-cut-winter-socks",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/3023_01_a5db39c8-46a3-4a05-8110-526e88ceee26.jpg?v=1660645237&width=512",
+      "width": 512
+    },
+    {
+      "id": "dec-mt900",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p2572825/k$a44aceb67f69b4a02466ba5800f266e0/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "gg-dryfoot-waterproof-everyday-shoe-covers-2",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/2035_01.jpg?v=1744183953&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-multifunctional-merino-neck-warmer",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/5029_01.jpg?v=1644487485&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-aquashield-waterproof-cycling-cap",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/5047_01B.jpg?v=1660647623&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-merino-wool-liner-gloves",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/1052_01.jpg?v=1644410480&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-primavera-2-merino-spring-autumn-gloves",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/1075_01.jpg?v=1655210066&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-ride-2-windproof-spring-autumn-gloves",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/files/108901_GG-com_f93306cc-6fdb-4805-859c-540029be11da.jpg?v=1725018910&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-thermo-sl-winter-socks",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/products/3019_01.jpg?v=1644316622&width=512",
+      "width": 512
+    },
+    {
+      "id": "gg-trailblazer-flat-pedal-mtb-shoe-covers",
+      "loaded": true,
+      "src": "http://127.0.0.1:4175/flink-aschaffenburg-chat-projekt/product-images/gg-trailblazer.jpg",
+      "width": 850
+    },
+    {
+      "id": "gg-aquaseal-waterproof-cycling-gaiter",
+      "loaded": true,
+      "src": "https://cdn.shopify.com/s/files/1/1565/1561/files/2045_01_GG-com.jpg?v=1722502410&width=512",
+      "width": 512
+    },
+    {
+      "id": "dec-city-pants",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p2572928/k$155adabc642accda9ad76547adc6a172/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "dec-essential",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p3047150/k$8a70bd5202d59bb3e16cd9a1c0798ca8/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "dec-raincut",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p2644239/k$a8f5d5a6f3139d101ace0f0deaacca1c/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "dec-city-covers",
+      "loaded": true,
+      "src": "https://contents.mediadecathlon.com/p2871164/k$e29276d0b9c3b8b3798082893f2a8f7d/picture.jpg?format=auto&f=512x0&quality=70",
+      "width": 512
+    },
+    {
+      "id": "action-neck",
+      "loaded": true,
+      "src": "https://asset.action.com/image/upload/t_digital_product_image/w_512/2577489_8721282249599-110_01_djaswl.webp",
+      "width": 512
+    },
+    {
+      "id": "action-beanie",
+      "loaded": true,
+      "src": "https://asset.action.com/image/upload/t_digital_product_image/w_512/2554993_8721302635364-110_01_adkyrm.webp",
+      "width": 512
+    },
+    {
+      "id": "action-gloves",
+      "loaded": true,
+      "src": "https://asset.action.com/image/upload/t_digital_product_image/w_512/2577090_8721302635296-110_01_hqtptb.webp",
+      "width": 512
+    },
+    {
+      "id": "action-socks",
+      "loaded": true,
+      "src": "https://asset.action.com/image/upload/t_digital_product_image/w_512/27368781.webp",
+      "width": 512
+    },
+    {
+      "id": "action-shirt",
+      "loaded": true,
+      "src": "https://asset.action.com/image/upload/t_digital_product_image/w_512/2568221_8718964247929-110_01_v684y4.webp",
+      "width": 512
+    },
+    {
+      "id": "action-pants",
+      "loaded": true,
+      "src": "https://asset.action.com/image/upload/t_digital_product_image/w_512/2568247_8718964297344-110_01_kpptc8.webp",
+      "width": 512
+    },
+    {
+      "id": "action-shirt-w",
+      "loaded": true,
+      "src": "https://asset.action.com/image/upload/t_digital_product_image/w_512/3217087_8718964247011-110_01_f6s9hv.webp",
+      "width": 512
+    },
+    {
+      "id": "action-pants-w",
+      "loaded": true,
+      "src": "https://asset.action.com/image/upload/t_digital_product_image/w_512/3217084_8718964247172-110_01_less2c.webp",
+      "width": 512
+    },
+    {
+      "id": "action-rain",
+      "loaded": true,
+      "src": "https://asset.action.com/image/upload/t_digital_product_image/w_512/3218112_8712382142446-110_01_acs4nv.webp",
+      "width": 512
+    },
+    {
+      "id": "action-rainset",
+      "loaded": true,
+      "src": "https://asset.action.com/image/upload/t_digital_product_image/w_512/39766473.webp",
+      "width": 512
+    },
+    {
+      "id": "lidl-gloves",
+      "loaded": true,
+      "src": "https://www.lidl.de/assets/gcpf4f8ab17834047dfb9f38e39c6a8266b.jpg",
+      "width": 1500
+    }
+  ],
+  "note": "Alle 72 Artikel über sichtbare Produktnavigation geöffnet; jedes Foto mit abgeschlossenem onLoad und naturalWidth > 0 bestätigt. Action Kaytan Shirt und Regenjacke luden bei der ersten Anfrage verzögert, anschließend erfolgreich. Kein echter iPhone-Hardwaretest."
+}

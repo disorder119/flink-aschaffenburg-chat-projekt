@@ -781,10 +781,15 @@ export function App() {
             <h2>Shoplinks und Bilder</h2>
             <p>
               Shopseiten werden erst durch einen Klick geöffnet. Danach gilt die
-              Datenschutzerklärung des jeweiligen Händlers. Produktfotos,
-              Illustrationen und Schriftdateien werden lokal mit der Website
-              geladen; die Anwendung lädt keine externen Produktbilder,
-              Werbepixel oder Schriftserver.
+              Datenschutzerklärung des jeweiligen Händlers. Originalfotos werden
+              überwiegend direkt von den offiziellen Bildservern von Decathlon,
+              Action, GripGrab (Shopify), Strauss, Lidl, VAUDE, Endura und
+              Shimano geladen. Dabei erhalten diese Anbieter technisch bedingt
+              deine IP-Adresse und Browserinformationen. Wir laden nur die
+              Bilddateien, keine Shop-Skripte oder Werbepixel, und senden keinen
+              Seiten-Referrer. Vier freigegebene Pressefotos, Fahrerillustration
+              und Schriftdateien liegen lokal bei der Website. Es gibt keine
+              externen Schriftserver.
             </p>
             <h2>Kommerzielle Verlinkungen</h2>
             <p>
@@ -1106,7 +1111,9 @@ function ProductDetails({ p }: { p: Product }) {
         <p className="photo-source">
           {photo.credit}. {photo.variant} Farbe und Ausführung im Shop prüfen.{" "}
           <a href={photo.source} target="_blank" rel="noopener noreferrer">
-            Bildquelle / Pressebereich ↗
+            {photo.delivery === "local-press"
+              ? "Bildquelle / Pressebereich ↗"
+              : "Originalfoto: Produktseite ↗"}
           </a>
         </p>
       )}
