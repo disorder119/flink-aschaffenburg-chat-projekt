@@ -1,0 +1,57 @@
+{
+  "checkedAt": "2026-10-12T17:31:52.982Z",
+  "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/",
+  "indexStatus": 200,
+  "https": true,
+  "resources": [
+    {
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/manifest.webmanifest",
+      "status": 200,
+      "bytes": 882,
+      "contentType": "application/manifest+json; charset=utf-8"
+    },
+    {
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/sw.js",
+      "status": 200,
+      "bytes": 2038,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/icons/app-192.png",
+      "status": 200,
+      "bytes": 3689,
+      "contentType": "image/png"
+    },
+    {
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/icons/app-512.png",
+      "status": 200,
+      "bytes": 9935,
+      "contentType": "image/png"
+    },
+    {
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/icons/apple-touch-icon.png",
+      "status": 200,
+      "bytes": 3450,
+      "contentType": "image/png"
+    },
+    {
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/favicon.svg",
+      "status": 200,
+      "bytes": 387,
+      "contentType": "image/svg+xml"
+    },
+    {
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/assets/index-JCc_afWx.js",
+      "status": 200,
+      "bytes": 455808,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://disorder119.github.io/flink-aschaffenburg-chat-projekt/assets/index-CHp81rZS.css",
+      "status": 200,
+      "bytes": 97449,
+      "contentType": "text/css; charset=utf-8"
+    }
+  ],
+  "note": "HTTP asset check only. Check GitHub Actions separately; this script does not infer workflow status, browser rendering or product availability."
+}
