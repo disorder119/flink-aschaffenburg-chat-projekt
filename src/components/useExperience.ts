@@ -31,6 +31,15 @@ export function useExperience() {
     () => matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
   const [requested3d, setRequested3d] = useState(false);
+  const [compact, setCompact] = useState(
+    () => matchMedia("(max-width: 760px)").matches,
+  );
+  useEffect(() => {
+    const query = matchMedia("(max-width: 760px)");
+    const change = () => setCompact(query.matches);
+    query.addEventListener("change", change);
+    return () => query.removeEventListener("change", change);
+  }, []);
   useEffect(() => {
     const query = matchMedia("(prefers-reduced-motion: reduce)");
     const change = () => setReduced(query.matches);
@@ -49,7 +58,7 @@ export function useExperience() {
     effectiveType: nav.connection?.effectiveType,
     memory: nav.deviceMemory,
     cores: nav.hardwareConcurrency,
-    coarse: matchMedia("(pointer: coarse)").matches,
+    coarse: compact || matchMedia("(pointer: coarse)").matches,
     reducedMotion: reduced,
   });
   const enable3d =

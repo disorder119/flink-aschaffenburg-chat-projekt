@@ -27,5 +27,5 @@ const report = {
   resources: results,
   note: "HTTP asset check only. Check GitHub Actions separately; this script does not infer workflow status, browser rendering or product availability.",
 };
-await writeFile("qa/live-assets.json", JSON.stringify(report, null, 2) + "\n");
+await writeFile(process.argv[2] ?? "qa/live-assets.json", JSON.stringify(report, null, 2) + "\n");
 console.log(JSON.stringify(report, null, 2));

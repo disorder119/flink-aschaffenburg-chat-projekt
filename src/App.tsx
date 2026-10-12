@@ -3,29 +3,22 @@ import {
   ArrowRight,
   ArrowUpRight,
   Bike,
-  Check,
-  ChevronDown,
-  Clipboard,
   CloudRain,
   GitCompareArrows,
   Heart,
   Layers,
   Menu,
   Plus,
-  Search,
   ShieldCheck,
-  SlidersHorizontal,
   Snowflake,
-  Sun,
   Trash2,
   Wind,
   X,
-  Zap,
   Sparkles,
 } from "lucide-react";
-import type { Filters, Product, Region, Weather } from "./types";
+import type { Filters, Product, Region } from "./types";
 import { products, RESEARCH_DATE } from "./data/products";
-import { kits, type Outfit } from "./data/kits";
+import { type Outfit } from "./data/kits";
 import {
   compareAllowed,
   criterionLabels,
@@ -37,14 +30,14 @@ import {
   scoreOf,
   shoppingList,
   tierLabels,
-  totalOf,
   weights,
 } from "./lib/logic";
 import { shopLink } from "./config/affiliate";
 import { operator } from "./config/operator";
-import { Rider } from "./components/Rider";
+import { RiderWorkspace } from "./components/RiderWorkspace";
+import { workspaceViewOf } from "./lib/workspace";
 import { ProductCard, waterLabels } from "./components/ProductCard";
-import { GearArt } from "./components/GearArt";
+
 import { ProductImage } from "./components/ProductImage";
 import { photoFor } from "./data/photos";
 import { Modal } from "./components/Modal";
@@ -61,14 +54,6 @@ const initialFilters: Filters = {
   sort: "relevance",
   favoritesOnly: false,
 };
-const weatherOptions: { id: Weather; label: string; icon: typeof Sun }[] = [
-  { id: "light", label: "Leichter Regen", icon: CloudRain },
-  { id: "heavy", label: "Starker Regen", icon: CloudRain },
-  { id: "cold", label: "Kalt", icon: Snowflake },
-  { id: "frost", label: "Frost", icon: Snowflake },
-  { id: "wind", label: "Wind", icon: Wind },
-  { id: "mixed", label: "Wechselhaft", icon: Sun },
-];
 function readLocal<T>(key: string, fallback: T): T {
   try {
     return JSON.parse(localStorage.getItem(key) ?? "null") ?? fallback;
@@ -100,65 +85,20 @@ function safeOutfit(): Outfit {
   };
 }
 const productById = (id: string) => products.find((p) => p.id === id);
-const photoProducts = products.filter((p) => photoFor(p.id));
+
 export function outfitProducts(outfit: Outfit): Product[] {
   return [...new Set([...Object.values(outfit.primary), ...outfit.extras])]
     .map((id) => productById(id!))
     .filter((p): p is Product => !!p);
 }
-function KitCards({ onUse }: { onUse: (outfit: Outfit) => void }) {
-  return (
-    <div className="kit-grid">
-      {kits.map((kit, i) => {
-        const list = outfitProducts(kit.outfit);
-        const total = totalOf(list);
-        return (
-          <article className={`kit-card kit-${kit.id}`} key={kit.id}>
-            <div className="kit-top">
-              <span>0{i + 1}</span>
-              <span>
-                {i === 0
-                  ? "KLEINES BUDGET"
-                  : i === 1
-                    ? "UNSER ALLTAGSMIX"
-                    : "HÄUFIG UNTERWEGS"}
-              </span>
-            </div>
-            <h3>{kit.name}</h3>
-            <p className="kit-subtitle">{kit.subtitle}</p>
-            <div className="kit-mini-art">
-              <GearArt group="shell" />
-              <GearArt group="glove" />
-              <GearArt group="shoe" />
-            </div>
-            <p className="kit-description">{kit.description}</p>
-            <div className="kit-price">
-              <strong>
-                {total.from ? "ab " : ""}
-                {money(total.amount)}
-              </strong>
-              <span>
-                {list.length} Artikel · zzgl. Versand
-                <br />
-                Beobachtete Summe, {dateLabel(RESEARCH_DATE)}
-              </span>
-            </div>
-            <button className="button" onClick={() => onUse(kit.outfit)}>
-              Set im Konfigurator öffnen
-              <ArrowRight size={17} />
-            </button>
-          </article>
-        );
-      })}
-    </div>
-  );
-}
 export function App() {
   const experience = useExperience();
   const appearance = riderStyles.find((s) => s.id === experience.style)!;
-  const [visibleCount, setVisibleCount] = useState(6);
+
   const [route, setRoute] = useState(location.hash.slice(2) || "");
   const [filters, setFilters] = useState<Filters>(initialFilters);
+  const workspaceView = workspaceViewOf(route);
+  const isWorkspace = workspaceView !== null;
   const [favorites, setFavorites] = useState<string[]>(() => {
     const ids = readLocal<unknown>("rider-favorites-v1", []);
     return Array.isArray(ids)
@@ -173,7 +113,6 @@ export function App() {
   const [compareOpen, setCompareOpen] = useState(false);
   const [favoritesOpen, setFavoritesOpen] = useState(false);
   const [menu, setMenu] = useState(false);
-  const [advanced, setAdvanced] = useState(false);
   const [toast, setToast] = useState("");
   const [storageError, setStorageError] = useState(false);
   const [copyFallback, setCopyFallback] = useState("");
@@ -189,11 +128,7 @@ export function App() {
     setDetails(null);
     setCompareOpen(false);
     setFavoritesOpen(false);
-    if (route === "ausruestung")
-      document
-        .getElementById("ausruestung")
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
-    else window.scrollTo({ top: 0, behavior: "auto" });
+    if (!workspaceViewOf(route)) window.scrollTo({ top: 0, behavior: "auto" });
   }, [route]);
   useEffect(() => {
     try {
@@ -208,12 +143,32 @@ export function App() {
     const timer = setTimeout(() => setToast(""), 4800);
     return () => clearTimeout(timer);
   }, [toast]);
+  useEffect(() => {
+    document.body.classList.toggle("workspace-active", isWorkspace);
+    return () => document.body.classList.remove("workspace-active");
+  }, [isWorkspace]);
+  useEffect(() => {
+    if (!isWorkspace) return;
+    const viewport = window.visualViewport;
+    const resize = () =>
+      document.documentElement.style.setProperty(
+        "--studio-height",
+        `${viewport?.height ?? window.innerHeight}px`,
+      );
+    resize();
+    viewport?.addEventListener("resize", resize);
+    window.addEventListener("resize", resize);
+    return () => {
+      viewport?.removeEventListener("resize", resize);
+      window.removeEventListener("resize", resize);
+      document.documentElement.style.removeProperty("--studio-height");
+    };
+  }, [isWorkspace]);
   const list = useMemo(
     () => filteredProducts(products, filters, favorites),
     [filters, favorites],
   );
   const chosen = outfitProducts(outfit);
-  const total = totalOf(chosen);
   const compared = compare.map(productById).filter((p): p is Product => !!p);
   const setFilter = <K extends keyof Filters>(key: K, value: Filters[K]) =>
     setFilters((old) => ({
@@ -221,17 +176,9 @@ export function App() {
       [key]: value,
       ...(key === "region" ? { group: "all" as const } : {}),
     }));
-  useEffect(() => setVisibleCount(6), [filters]);
-  const focusPogies = () => {
-    setFilters({ ...initialFilters, region: "haende", group: "pogie" });
-    navigate("ausruestung");
-  };
+
   const navigate = (path: string) => {
-    location.hash = `#/${path}`;
-    if (route === path && path === "ausruestung")
-      document
-        .getElementById("ausruestung")
-        ?.scrollIntoView({ behavior: "smooth" });
+    location.hash = "#/" + path;
   };
   const selectRegion = (r: Region) => {
     setFilter("region", r);
@@ -273,6 +220,7 @@ export function App() {
   };
   const useKit = (o: Outfit) => {
     setOutfit({ primary: { ...o.primary }, extras: [...o.extras] });
+    setFilters(initialFilters);
     navigate("outfit");
     setToast("Set geladen. Du kannst jeden Artikel austauschen.");
   };
@@ -301,10 +249,10 @@ export function App() {
       onDetails={() => setDetails(p)}
     />
   );
-  const isHome = route === "" || route === "ausruestung";
+
   return (
     <div
-      className="rider-app"
+      className={`rider-app ${isWorkspace ? "workspace-mode" : ""}`}
       data-style={experience.style}
       data-motion={experience.motion ? "on" : "off"}
       style={
@@ -316,7 +264,14 @@ export function App() {
         } as React.CSSProperties
       }
     >
-      <a className="skip-link" href="#main">
+      <a
+        className="skip-link"
+        href="#main"
+        onClick={(e) => {
+          e.preventDefault();
+          document.getElementById("main")?.focus({ preventScroll: true });
+        }}
+      >
         Zum Inhalt
       </a>
       <header className="header">
@@ -337,7 +292,10 @@ export function App() {
             className={`navigation ${menu ? "open" : ""}`}
             aria-label="Hauptnavigation"
           >
-            <a className={isHome ? "active" : ""} href="#/ausruestung">
+            <a
+              className={isWorkspace && route !== "outfit" ? "active" : ""}
+              href="#/ausruestung"
+            >
               Ausrüstung
             </a>
             <a className={route === "outfit" ? "active" : ""} href="#/outfit">
@@ -346,6 +304,9 @@ export function App() {
             <a className={route === "wissen" ? "active" : ""} href="#/wissen">
               Wissen
             </a>
+            <a href="#/methodik">Bewertung</a>
+            <a href="#/impressum">Impressum</a>
+            <a href="#/datenschutz">Datenschutz</a>
           </nav>
           <div className="header-actions">
             <button
@@ -368,7 +329,9 @@ export function App() {
             </button>
             <button
               className="saved-button"
-              onClick={() => setFavoritesOpen(true)}
+              onClick={() =>
+                isWorkspace ? navigate("merkliste") : setFavoritesOpen(true)
+              }
               aria-label={`Merkliste öffnen, ${favorites.length} Produkte`}
             >
               <Heart size={20} />
@@ -386,820 +349,49 @@ export function App() {
           </div>
         </div>
       </header>
-      <main id="main">
-        {isHome && (
-          <>
-            <section className="hero section-wrap">
-              <div className="hero-copy">
-                <div className="eyebrow">
-                  <span /> ASCHAFFENBURG RIDER CLUB · UNABHÄNGIG
-                </div>
-                <h1>
-                  Dein Job.
-                  <br />
-                  <em>Dein Upgrade.</em>
-                </h1>
-                <div className="style-selector">
-                  <span className="field-label">WÄHLE DEINEN RIDER-STYLE</span>
-                  <div role="group" aria-label="Rider-Style">
-                    {riderStyles.map((style) => (
-                      <button
-                        key={style.id}
-                        aria-pressed={experience.style === style.id}
-                        onClick={() => experience.setStyle(style.id)}
-                        style={
-                          { "--swatch": style.color } as React.CSSProperties
-                        }
-                      >
-                        <span />
-                        {style.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <p>
-                  Regen, Frost oder Gegenwind?
-                  <br className="desktop-br" /> Dein nächstes Setup wartet hier.
-                </p>
-                <p className="hero-explanation">
-                  Für Flink, Wolt, Uber Eats, Lieferando und alle, die auf dem
-                  Rad liefern. Tippe auf einen Körperbereich und finde passende
-                  Ausrüstung für dein Budget.
-                </p>
-                <a className="button hero-button" href="#/ausruestung">
-                  Ausrüstung finden
-                  <ArrowRight size={18} />
-                </a>
-                <div className="hero-note">
-                  <ShieldCheck size={16} /> Echte Produkte. Klare Grenzen. Keine
-                  erfundenen Tests.
-                </div>
-                <div className="hero-community">
-                  <span>AB</span>
-                  <div>
-                    Für unsere Community in Aschaffenburg
-                    <small>Unabhängig. Ohne Registrierung.</small>
-                  </div>
-                </div>
-              </div>
-              <Rider
-                selected={filters.region}
-                onSelect={selectRegion}
-                style={experience.style}
-                enable3d={experience.enable3d}
-                motion={experience.motion}
-                constrained={experience.constrained}
-                onRequest3d={experience.request3d}
-              />
-            </section>
-            <div className="trust-strip section-wrap">
-              <div>
-                <Search />
-                <span>
-                  <b>{products.length} recherchierte Produkte</b>
-                  <small>Mit verlinkten Händlerquellen</small>
-                </span>
-              </div>
-              <div>
-                <Layers />
-                <span>
-                  <b>Für jedes Budget</b>
-                  <small>Basics, Preis-Leistung & Premium</small>
-                </span>
-              </div>
-              <div>
-                <ShieldCheck />
-                <span>
-                  <b>Transparent bewertet</b>
-                  <small>Redaktionelle Eignung statt Testversprechen</small>
-                </span>
-              </div>
-            </div>
-            <section className="catalogue section-wrap" id="ausruestung">
-              <div className="photo-discovery">
-                <div className="photo-discovery-heading">
-                  <div>
-                    <span className="eyebrow">
-                      ECHTE PRODUKTE. ECHTE FOTOS.
-                    </span>
-                    <h2>Dein nächstes Upgrade.</h2>
-                    <p>
-                      {photoProducts.length} Artikel mit zugeordneten
-                      Herstellerfotos. Weitere Artikel mit gekennzeichneten
-                      Symbolbildern.
-                    </p>
-                  </div>
-                  <button
-                    className="text-button"
-                    onClick={() =>
-                      setFilters({
-                        ...initialFilters,
-                        region: "all",
-                        photoOnly: true,
-                      })
-                    }
-                  >
-                    Alle Artikel mit Foto <ArrowRight size={16} />
-                  </button>
-                </div>
-                <div className="photo-preview-grid">
-                  {photoProducts.slice(0, 4).map((p) => (
-                    <button
-                      className="photo-preview"
-                      key={p.id}
-                      onClick={() => setDetails(p)}
-                    >
-                      <ProductImage product={p} compact />
-                      <span>{p.brand}</span>
-                      <strong>{p.name}</strong>
-                      <b>
-                        {p.priceKind === "from" ? "ab " : ""}
-                        {money(p.price!)}
-                      </b>
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="section-heading">
-                <div>
-                  <span className="eyebrow">01 / DEINE AUSRÜSTUNG</span>
-                  <h2>
-                    Guter Schutz.
-                    <br />
-                    <em>Für dein Budget.</em>
-                  </h2>
-                </div>
-                <p>
-                  Wähle zuerst einen Körperbereich.
-                  <br />
-                  Dann machen wir die Auswahl kleiner.
-                </p>
-              </div>
-              <div className="region-tabs" aria-label="Körperregion">
-                <button
-                  className={filters.region === "all" ? "active" : ""}
-                  aria-pressed={filters.region === "all"}
-                  onClick={() => setFilter("region", "all")}
-                >
-                  Alles
-                </button>
-                {regions.map((r, i) => (
-                  <button
-                    key={r.id}
-                    className={filters.region === r.id ? "active" : ""}
-                    aria-pressed={filters.region === r.id}
-                    onClick={() => setFilter("region", r.id)}
-                  >
-                    <span>0{i + 1}</span>
-                    {r.label}
-                  </button>
-                ))}
-              </div>
-              {filters.region === "haende" && (
-                <div
-                  className="hand-categories"
-                  role="group"
-                  aria-label="Ausrüstung für Hände"
-                >
-                  <button
-                    aria-pressed={!filters.group || filters.group === "all"}
-                    onClick={() => setFilter("group", "all")}
-                  >
-                    Alle Handartikel
-                  </button>
-                  <button
-                    aria-pressed={filters.group === "glove"}
-                    onClick={() => setFilter("group", "glove")}
-                  >
-                    Handschuhe
-                  </button>
-                  <button
-                    aria-pressed={filters.group === "pogie"}
-                    onClick={() => setFilter("group", "pogie")}
-                  >
-                    Lenkerstulpen / Pogies <span>NEU</span>
-                  </button>
-                </div>
-              )}
-              {filters.group === "pogie" && (
-                <p className="pogie-note">
-                  Diese Handwärmer werden über den Lenker gestülpt. Bremsen,
-                  Schaltung und schnelles Herausziehen der Hände müssen nach der
-                  Montage frei funktionieren. Nur für die jeweils angegebenen
-                  Fahrradlenker.
-                </p>
-              )}
-              <div className="filter-panel">
-                <div className="primary-filters">
-                  <div className="budget-filter">
-                    <span className="field-label">DEIN BUDGET</span>
-                    <div className="segmented">
-                      <button
-                        aria-pressed={filters.tier === "all"}
-                        className={filters.tier === "all" ? "selected" : ""}
-                        onClick={() => setFilter("tier", "all")}
-                      >
-                        Alle
-                      </button>
-                      {(["budget", "value", "premium"] as const).map((t) => (
-                        <button
-                          key={t}
-                          className={filters.tier === t ? "selected" : ""}
-                          aria-pressed={filters.tier === t}
-                          onClick={() => setFilter("tier", t)}
-                        >
-                          {tierLabels[t]}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="max-price">
-                    <label className="field-label" htmlFor="max-price">
-                      MAXIMALER ARTIKELPREIS
-                    </label>
-                    <div>
-                      <input
-                        id="max-price"
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        inputMode="decimal"
-                        placeholder="Ohne Limit"
-                        value={filters.maxPrice ?? ""}
-                        onChange={(e) =>
-                          setFilter(
-                            "maxPrice",
-                            e.target.value === ""
-                              ? null
-                              : Math.max(0, Number(e.target.value)),
-                          )
-                        }
-                      />
-                      <span>€</span>
-                      {filters.maxPrice !== null && (
-                        <button
-                          aria-label="Preislimit entfernen"
-                          onClick={() => setFilter("maxPrice", null)}
-                        >
-                          <X size={15} />
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                  <button
-                    className={`advanced-toggle ${advanced ? "selected" : ""}`}
-                    aria-expanded={advanced}
-                    aria-controls="advanced-filters"
-                    onClick={() => setAdvanced(!advanced)}
-                  >
-                    <SlidersHorizontal size={17} />
-                    Wetter & Schicht
-                    <ChevronDown size={16} />
-                  </button>
-                </div>
-                <div className="search-row">
-                  <label className="search">
-                    <Search size={18} />
-                    <input
-                      type="search"
-                      placeholder="Produkt, Marke, Kategorie oder Shop suchen …"
-                      aria-label="Produkte suchen"
-                      value={filters.search}
-                      onChange={(e) => setFilter("search", e.target.value)}
-                    />
-                  </label>
-                  <button
-                    className="text-button"
-                    onClick={() => {
-                      setFilters({ ...initialFilters, region: filters.region });
-                      setToast("Filter zurückgesetzt.");
-                    }}
-                  >
-                    Zurücksetzen
-                  </button>
-                </div>
-                <button
-                  className={`photo-filter ${filters.photoOnly ? "selected" : ""}`}
-                  aria-pressed={!!filters.photoOnly}
-                  onClick={() => setFilter("photoOnly", !filters.photoOnly)}
-                >
-                  <Check size={15} />
-                  Nur Artikel mit Produktfoto
-                </button>
-                {advanced && (
-                  <div className="advanced-filters" id="advanced-filters">
-                    <div className="weather-filter">
-                      <span className="field-label">
-                        WAS ERWARTET DICH? <small>Mehrfachauswahl</small>
-                      </span>
-                      <div className="weather-chips">
-                        {weatherOptions.map(({ id, label, icon: Icon }) => (
-                          <button
-                            className={
-                              filters.weather.includes(id) ? "selected" : ""
-                            }
-                            key={id}
-                            aria-pressed={filters.weather.includes(id)}
-                            onClick={() =>
-                              setFilter(
-                                "weather",
-                                filters.weather.includes(id)
-                                  ? filters.weather.filter((w) => w !== id)
-                                  : [...filters.weather, id],
-                              )
-                            }
-                          >
-                            <Icon size={15} />
-                            {label}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="context-filters">
-                      <div>
-                        <span className="field-label">DEIN FAHRZEUG</span>
-                        <div className="segmented">
-                          <button
-                            onClick={() => setFilter("vehicle", "bike")}
-                            className={
-                              filters.vehicle === "bike" ? "selected" : ""
-                            }
-                            aria-pressed={filters.vehicle === "bike"}
-                          >
-                            <Bike size={16} />
-                            Fahrrad
-                          </button>
-                          <button
-                            onClick={() => setFilter("vehicle", "ebike")}
-                            className={
-                              filters.vehicle === "ebike" ? "selected" : ""
-                            }
-                            aria-pressed={filters.vehicle === "ebike"}
-                          >
-                            <Zap size={16} />
-                            E-Bike
-                          </button>
-                          <button
-                            onClick={() => setFilter("vehicle", "scooter")}
-                            className={
-                              filters.vehicle === "scooter" ? "selected" : ""
-                            }
-                            aria-pressed={filters.vehicle === "scooter"}
-                          >
-                            Motorroller
-                          </button>
-                        </div>
-                      </div>
-                      <label>
-                        <span className="field-label">DEINE SCHICHT</span>
-                        <select
-                          value={filters.shift}
-                          onChange={(e) =>
-                            setFilter(
-                              "shift",
-                              e.target.value as Filters["shift"],
-                            )
-                          }
-                        >
-                          <option value="short">Kurze Schicht</option>
-                          <option value="medium">4–6 Stunden</option>
-                          <option value="long">6–8 Stunden oder länger</option>
-                        </select>
-                      </label>
-                    </div>
-                    <p className="context-note">
-                      {filters.vehicle === "bike"
-                        ? "Aktives Treten erzeugt Wärme: Belüftung und Feuchtetransport beachten."
-                        : filters.vehicle === "ebike"
-                          ? "Auf dem E-Bike kann weniger Eigenwärme entstehen. Wärmebedarf und Pausen mit einplanen."
-                          : "Motorroller: passende Motorrad-Schutzausrüstung ist zusätzlich erforderlich. Fahrradartikel ersetzen sie nicht; Radschuh-Systeme werden ausgeblendet."}{" "}
-                      {filters.shift !== "short" &&
-                        "Lange Schichten: Komfort fließt stärker in die Reihenfolge ein; keine garantierte Eignung für die gesamte Dauer."}
-                    </p>
-                  </div>
-                )}
-              </div>
-              <div className="results-bar">
-                <div>
-                  <strong aria-live="polite">{list.length} Produkte</strong>
-                  <span>
-                    {filters.region === "all"
-                      ? "Alle Körperregionen"
-                      : regions.find((r) => r.id === filters.region)?.hint}
-                  </span>
-                </div>
-                <label>
-                  Sortieren
-                  <select
-                    value={filters.sort}
-                    onChange={(e) =>
-                      setFilter("sort", e.target.value as Filters["sort"])
-                    }
-                    aria-label="Produkte sortieren"
-                  >
-                    <option value="relevance">Passende zuerst</option>
-                    <option value="price">Niedrigster Preis</option>
-                    <option value="score">Höchste Eignung</option>
-                  </select>
-                </label>
-              </div>
-              {filters.weather.length > 0 && (
-                <p className="filter-explanation">
-                  Wetterfilter werden gemeinsam angewendet. „Frost“ zeigt starke
-                  dokumentierte Isolation, keine geprüfte Temperaturgarantie.
-                  Bei Regen + Kälte brauchst du häufig mehrere Schichten.
-                  „Wechselhaft“ priorisiert Regenhüllen. Der Preisfilter nutzt
-                  beobachtete Artikelpreise; unbekannte Preise werden bei einem
-                  Limit ausgeblendet.
-                </p>
-              )}
-              {list.length ? (
-                <>
-                  <div className="product-grid">
-                    {list.slice(0, visibleCount).map(renderCard)}
-                  </div>
-                  {visibleCount < list.length && (
-                    <div className="more-products">
-                      <button
-                        className="button outline"
-                        onClick={() => setVisibleCount((n) => n + 6)}
-                      >
-                        Weitere Produkte anzeigen <Plus size={16} />
-                      </button>
-                      <span>
-                        {Math.min(visibleCount, list.length)} von {list.length}{" "}
-                        angezeigt
-                      </span>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <div className="empty-state">
-                  <Search size={32} />
-                  <h3>Diese Kombination ist sehr speziell.</h3>
-                  <p>
-                    Versuche weniger Wetterfilter oder suche eine Wärmeschicht
-                    und eine Regenhülle getrennt.
-                  </p>
-                  <button
-                    className="button"
-                    onClick={() =>
-                      setFilters({ ...initialFilters, region: filters.region })
-                    }
-                  >
-                    Filter zurücksetzen
-                  </button>
-                </div>
-              )}
-              <p className="catalogue-note">
-                <InfoIcon /> Recherche vom {dateLabel(RESEARCH_DATE)}. Preise
-                sind beobachtete Artikelpreise, keine Livepreise. Verfügbarkeit,
-                Varianten und Versand bitte im Shop prüfen. Action-Artikel sind
-                nur in Filialen erhältlich.{" "}
-                <a href="#/methodik">So entstehen die Punkte ↗</a>
-              </p>
-            </section>
-            <section className="pogie-banner section-wrap">
-              <div>
-                <span className="eyebrow">
-                  WARMER GRIFF. WENIGER GEGENWIND.
-                </span>
-                <h2>
-                  Handschuhe?
-                  <br />
-                  <em>Geht auch am Lenker.</em>
-                </h2>
-                <p>
-                  Lenkerstulpen schützen rund um Griff, Bremse und Hand.
-                  Entdecke belegte Modelle und prüfe, welches zu deinem Lenker
-                  passt.
-                </p>
-                <button className="button" onClick={focusPogies}>
-                  Lenkerstulpen entdecken
-                  <ArrowRight size={18} />
-                </button>
-              </div>
-              <div className="pogie-banner-art">
-                <GearArt group="pogie" />
-                <span>POGIES / ÜBERSTÜLPBARE HANDWÄRMER</span>
-              </div>
-            </section>
-            <section className="kits-section section-wrap">
-              <div className="section-heading">
-                <div>
-                  <span className="eyebrow">02 / SCHICHT FÜR SCHICHT</span>
-                  <h2>
-                    Ein Outfit.
-                    <br />
-                    <em>Dein eigener Mix.</em>
-                  </h2>
-                </div>
-                <a className="text-link" href="#/outfit">
-                  Selbst zusammenstellen
-                  <ArrowUpRight size={18} />
-                </a>
-              </div>
-              <KitCards onUse={useKit} />
-            </section>
-            <section className="guide-banner section-wrap">
-              <div>
-                <span className="eyebrow">WISSEN FÜR UNTERWEGS</span>
-                <h2>
-                  Die richtige Schicht
-                  <br />
-                  macht den Unterschied.
-                </h2>
-                <p>
-                  Weshalb die dickste Jacke nicht immer die beste ist – und was
-                  du bei nassen Handschuhen beachten solltest.
-                </p>
-                <a className="button light" href="#/wissen">
-                  Zum kurzen Schicht-Ratgeber
-                  <ArrowRight size={18} />
-                </a>
-              </div>
-              <div className="layer-diagram">
-                <span>
-                  <b>03</b> Wetterschutz
-                  <small>Regen und Wind draußen halten</small>
-                </span>
-                <span>
-                  <b>02</b> Wärmeschicht
-                  <small>Isolation an Aktivität anpassen</small>
-                </span>
-                <span>
-                  <b>01</b> Basisschicht
-                  <small>Feuchtigkeit von der Haut weg</small>
-                </span>
-              </div>
-            </section>
-          </>
-        )}
-        {route === "outfit" && (
-          <section className="outfit-page section-wrap">
-            <div className="section-heading">
-              <div>
-                <span className="eyebrow">DEIN WINTER-OUTFIT</span>
-                <h1>
-                  Stell dir dein
-                  <br />
-                  <em>Winter-Outfit zusammen.</em>
-                </h1>
-              </div>
-              <p>
-                Fünf Körperbereiche. Dein eigener Mix.
-                <br />
-                Die Artikelsumme rechnet live mit.
-              </p>
-            </div>
-            <div className="outfit-layout">
-              <div className="outfit-slots">
-                {regions.map((r, i) => {
-                  const selected = productById(outfit.primary[r.id] ?? "");
-                  return (
-                    <article className="outfit-slot" key={r.id}>
-                      <div className="slot-visual">
-                        {selected ? (
-                          <ProductImage product={selected} compact />
-                        ) : (
-                          <GearArt
-                            group={
-                              (
-                                [
-                                  "head",
-                                  "shell",
-                                  "glove",
-                                  "pants",
-                                  "shoe",
-                                ] as const
-                              )[i]
-                            }
-                          />
-                        )}
-                      </div>
-                      <div className="slot-content">
-                        <span className="field-label">
-                          0{i + 1} / {r.label.toUpperCase()}
-                        </span>
-                        <label className="sr-only" htmlFor={`outfit-${r.id}`}>
-                          Artikel für {r.label}
-                        </label>
-                        <select
-                          id={`outfit-${r.id}`}
-                          value={selected?.id ?? ""}
-                          onChange={(e) =>
-                            setOutfit((old) => ({
-                              ...old,
-                              primary: {
-                                ...old.primary,
-                                [r.id]: e.target.value,
-                              },
-                              extras: old.extras.filter(
-                                (id) => id !== e.target.value,
-                              ),
-                            }))
-                          }
-                        >
-                          <option value="">Artikel auswählen …</option>
-                          {products
-                            .filter((p) => p.region === r.id)
-                            .map((p) => (
-                              <option value={p.id} key={p.id}>
-                                {p.brand} · {p.name} ·{" "}
-                                {p.price === null
-                                  ? "Preis offen"
-                                  : `${p.priceKind === "from" ? "ab " : ""}${money(p.price)}`}
-                              </option>
-                            ))}
-                        </select>
-                        {selected ? (
-                          <>
-                            <p>{selected.waterNote}</p>
-                            <div className="slot-actions">
-                              <button
-                                className="text-button"
-                                onClick={() => setDetails(selected)}
-                              >
-                                Details & Grenzen
-                              </button>
-                              <a
-                                className="text-link"
-                                href={shopLink(selected).url}
-                                rel={
-                                  shopLink(selected).affiliate
-                                    ? "sponsored noopener noreferrer"
-                                    : "noopener noreferrer"
-                                }
-                                target="_blank"
-                              >
-                                {selected.retailOnly
-                                  ? "Action-Produktseite"
-                                  : "Beim Händler öffnen"}
-                                <ArrowUpRight size={15} />
-                              </a>
-                            </div>
-                            {shopLink(selected).affiliate && (
-                              <small>{shopLink(selected).label}</small>
-                            )}
-                          </>
-                        ) : (
-                          <p>
-                            Du kannst hier direkt auswählen oder Produkte im
-                            Berater zum Outfit hinzufügen.
-                          </p>
-                        )}
-                      </div>
-                    </article>
-                  );
-                })}
-                <div className="extras-panel">
-                  <h3>
-                    <Layers size={20} /> Schichten & Ergänzungen
-                  </h3>
-                  <p>
-                    Regenhülle, Unterwäsche und Socken arbeiten zusammen.
-                    Zusätzliche Artikel zählen einmal zur Summe.
-                  </p>
-                  <label className="sr-only" htmlFor="extra-product">
-                    Zusätzliche Schicht auswählen
-                  </label>
-                  <select
-                    id="extra-product"
-                    value=""
-                    onChange={(e) => {
-                      if (e.target.value)
-                        setOutfit((old) => ({
-                          ...old,
-                          extras: [...old.extras, e.target.value],
-                        }));
-                    }}
-                  >
-                    <option value="">Zusätzlichen Artikel hinzufügen …</option>
-                    {products
-                      .filter((p) => !chosen.some((c) => c.id === p.id))
-                      .map((p) => (
-                        <option key={p.id} value={p.id}>
-                          {regions.find((r) => r.id === p.region)?.label}:{" "}
-                          {p.brand} {p.name} ·{" "}
-                          {p.price === null ? "Preis offen" : money(p.price)}
-                        </option>
-                      ))}
-                  </select>
-                  {outfit.extras.map((id) => {
-                    const p = productById(id)!;
-                    return (
-                      <div className="extra-item" key={id}>
-                        <div>
-                          <b>
-                            {p.brand} {p.name}
-                          </b>
-                          <span>
-                            {p.price === null
-                              ? "Preis offen"
-                              : `${p.priceKind === "from" ? "ab " : ""}${money(p.price)}`}
-                          </span>
-                        </div>
-                        <a
-                          href={shopLink(p).url}
-                          target="_blank"
-                          rel={
-                            shopLink(p).affiliate
-                              ? "sponsored noopener noreferrer"
-                              : "noopener noreferrer"
-                          }
-                          aria-label={`Händler öffnen: ${p.name}`}
-                        >
-                          <ArrowUpRight size={19} />
-                        </a>
-                        <button
-                          className="icon-button"
-                          aria-label={`Entfernen: ${p.name}`}
-                          onClick={() =>
-                            setOutfit((old) => ({
-                              ...old,
-                              extras: old.extras.filter((x) => x !== id),
-                            }))
-                          }
-                        >
-                          <X size={18} />
-                        </button>
-                        {shopLink(p).affiliate && (
-                          <small>{shopLink(p).label}</small>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-              <aside className="outfit-summary">
-                <span className="eyebrow">DEINE EINKAUFSLISTE</span>
-                <h2>
-                  {total.complete ? "Beobachtete Summe" : "Bekannte Teilsumme"}
-                </h2>
-                <strong className="outfit-total" data-testid="outfit-total">
-                  {total.from ? "ab " : ""}
-                  {money(total.amount)}
-                </strong>
-                <p>
-                  {chosen.length} Artikel · inkl. MwSt. · zzgl. Versand
-                  <br />
-                  Preisprüfungen:{" "}
-                  {[...new Set(chosen.map((p) => p.checked))]
-                    .sort()
-                    .map(dateLabel)
-                    .join(" / ") || "noch keine Auswahl"}
-                  <br />
-                  Keine aktuelle Preis- oder Lieferzusage.
-                </p>
-                {!total.complete && (
-                  <div className="notice">
-                    Mindestens ein Preis fehlt. Die Summe ist unvollständig.
-                  </div>
-                )}
-                <div className="outfit-checklist">
-                  {regions.map((r) => (
-                    <span key={r.id}>
-                      <Check
-                        size={16}
-                        className={outfit.primary[r.id] ? "checked" : ""}
-                      />
-                      {r.label}
-                      {!outfit.primary[r.id] && <small>noch offen</small>}
-                    </span>
-                  ))}
-                </div>
-                <button
-                  className="button light"
-                  disabled={!chosen.length}
-                  onClick={copyList}
-                >
-                  <Clipboard size={17} />
-                  Einkaufsliste kopieren
-                </button>
-                <button
-                  className="clear-outfit"
-                  disabled={!chosen.length}
-                  onClick={() => {
-                    setOutfit({ primary: {}, extras: [] });
-                    setToast("Outfit geleert.");
-                  }}
-                >
-                  <Trash2 size={15} />
-                  Auswahl leeren
-                </button>
-                <p className="summary-safety">
-                  Ein voller Konfigurator ist keine vollständige
-                  Schutzausrüstung: Helm, Licht, Sichtbarkeit und passende
-                  Schuhe ergänzen. Socken und Überschuhe ersetzen keinen Schuh.
-                  Für Motorroller passende Motorrad-Ausrüstung nutzen.
-                </p>
-              </aside>
-            </div>
-            <div className="section-heading small">
-              <h2>Mit einem Set starten</h2>
-            </div>
-            <KitCards onUse={useKit} />
-          </section>
+      <main id="main" tabIndex={-1}>
+        {workspaceView && (
+          <RiderWorkspace
+            view={workspaceView}
+            filters={filters}
+            list={list}
+            allProducts={products}
+            favorites={favorites}
+            compared={compare}
+            outfit={outfit}
+            chosen={chosen}
+            experience={experience}
+            onFilter={setFilter}
+            onReset={() =>
+              setFilters({ ...initialFilters, region: filters.region })
+            }
+            onNavigate={navigate}
+            onRegion={selectRegion}
+            onFavorite={favorite}
+            onCompare={toggleCompare}
+            onCompareOpen={() => setCompareOpen(true)}
+            onDetails={setDetails}
+            onAdd={addOutfit}
+            onCopy={copyList}
+            onUseKit={useKit}
+            onClearOutfit={() => setOutfit({ primary: {}, extras: [] })}
+            onExtra={(id) =>
+              setOutfit((old) => ({
+                ...old,
+                extras: old.extras.includes(id)
+                  ? old.extras
+                  : [...old.extras, id],
+              }))
+            }
+            onRemove={(p) =>
+              setOutfit((old) => ({
+                primary: Object.fromEntries(
+                  Object.entries(old.primary).filter(([, id]) => id !== p.id),
+                ),
+                extras: old.extras.filter((id) => id !== p.id),
+              }))
+            }
+          />
         )}
         {route === "methodik" && (
           <section className="document-page section-wrap">
@@ -1614,7 +806,7 @@ export function App() {
             <p>Stand: {dateLabel(RESEARCH_DATE)}.</p>
           </section>
         )}
-        {!isHome &&
+        {!isWorkspace &&
           ![
             "outfit",
             "wissen",
@@ -1674,24 +866,7 @@ export function App() {
           </small>
         </div>
       </footer>
-      {isHome && chosen.length > 0 && (
-        <a
-          className={`floating-outfit ${compare.length ? "with-compare" : ""}`}
-          href="#/outfit"
-        >
-          <Layers size={19} />
-          <span>
-            Dein Outfit <b>{chosen.length}</b>
-          </span>
-          <strong>
-            {total.from ? "ab " : ""}
-            {money(total.amount)}
-            {!total.complete ? " + offene Preise" : ""}
-          </strong>
-          <ArrowRight size={17} />
-        </a>
-      )}
-      {compare.length > 0 && (
+      {compare.length > 0 && !isWorkspace && (
         <div className="compare-bar">
           <span>
             <GitCompareArrows size={19} />
@@ -1878,9 +1053,6 @@ export function App() {
       )}
     </div>
   );
-}
-function InfoIcon() {
-  return <ShieldCheck size={16} />;
 }
 function ShopButton({ p }: { p: Product }) {
   const link = shopLink(p);

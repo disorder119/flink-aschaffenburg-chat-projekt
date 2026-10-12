@@ -132,7 +132,7 @@ export function createRiderScene(
     return m;
   };
   // Studio plinth and soft contact shadow, made entirely from small geometries.
-  const plate = add(
+  add(
     new T.CylinderGeometry(1.43, 1.48, 0.14, 40),
     mat("#fff4fa", 60),
     [0, 0.01, 0],

@@ -7,6 +7,7 @@ Live: https://disorder119.github.io/flink-aschaffenburg-chat-projekt/
 ## Was die Anwendung bietet
 
 - Rosa Rider-Studio mit fünf auswählbaren Körperregionen, drehbarer 3D-Figur und leichter SVG-Ansicht. Farbstile für Flink, Wolt, Uber Eats, Lieferando und die Community, ohne Markenlogos oder behauptete Partnerschaften.
+- Feste Konfiguratorfläche: Körperbereich, Budget, Artikel, Filter, Merkliste, Sets und Outfit wechseln auf demselben Bildschirm. Ein Produkt pro Ansicht mit Pfeiltasten und kompakter Direktwahl. Kaufaktionen und Live-Summe bleiben erreichbar; umfangreiche Filter und Informationen scrollen nur im Inhaltsbereich.
 - 72 recherchierte Modelle, darunter zwei abnehmbare Lenkerstulpen. 61 erhalten eine redaktionelle Eignungsbewertung; bei unzureichenden Daten bleibt die Zahl offen.
 - Fünf echte, modellgenau zugeordnete Pressefotos, sichtbare Bildquellen, Foto-Filter und Bilder in Produktdetails, Vergleich und Outfit. Übrige Produkte behalten gekennzeichnete Symbolbilder.
 - Budget, exakter maximaler Artikelpreis, Wetter, Fahrzeug, Schichtdauer, Suche und Sortierung.
@@ -77,7 +78,9 @@ Die Anwendung setzt keine Tracker und keine eigenen Cookies ein. Favoriten und O
 
 Fahrer, 3D-Modell und Symbolabbildungen sind eigenständig erstellt. Fünf echte Pressefotos von Decathlon und GripGrab werden lokal mit sichtbaren Credits im redaktionellen Kontext verwendet; Quellen und Grenzen stehen in `research/PHOTOS.md`. Die Foto-Zuordnung ersetzt keine Erlaubnis für Werbung: `photoFor` blendet Pressefotos bei aktivierter Affiliate-Konfiguration bis zu einer gesonderten Rechteprüfung aus. Symbolbilder bleiben ausdrücklich gekennzeichnet. Manrope ist lokal eingebunden; die SIL-OFL steht in `public/manrope-OFL.txt`. Abhängigkeiten und deren Lizenzhinweise bleiben zu beachten.
 
-Auf Touch-Geräten startet die leichte SVG-Ansicht. Bei Datensparen, sehr langsamer Verbindung oder höchstens 4 GB RAM / vier CPU-Kernen wird WebGL nicht geladen. Auf geeigneten Geräten ist 3D optional, auf leistungsfähigen Desktop-Geräten automatisch. Die separate 3D-Datei wird dynamisch geladen; maximal 24 Bilder/s, Pixelverhältnis 1, Pause außerhalb des sichtbaren Bereichs. Reduzierte Bewegung wird respektiert, Effekte lassen sich ausschalten. Fotos laden verzögert, Karten zunächst in Gruppen von sechs.
+Auf Touch-Geräten und bei Bildschirmbreiten bis 760 Pixel startet die leichte SVG-Ansicht. Bei Datensparen, sehr langsamer Verbindung oder höchstens 4 GB RAM / vier CPU-Kernen wird WebGL nicht geladen. Auf geeigneten Geräten ist 3D optional, auf leistungsfähigen Desktop-Geräten automatisch. Die separate 3D-Datei wird dynamisch geladen; maximal 24 Bilder/s, Pixelverhältnis 1, Pause außerhalb des sichtbaren Bereichs. Reduzierte Bewegung wird respektiert, Effekte lassen sich ausschalten. Im Konfigurator ist jeweils eine kompakte Produktkarte gemountet; Fotos laden verzögert. Die Höhe folgt dem sichtbaren Browserfenster, Eingaben auf dem Handy erhalten mehr Platz. Keine neue Laufzeitabhängigkeit für diesen Umbau.
+
+`src/components/RiderWorkspace.tsx` enthält den Konfigurator; `src/lib/workspace.ts` die Routen- und Auswahlregeln. Direkte Hash-Aufrufe von `#/filter`, `#/merkliste` und `#/sets` funktionieren zusätzlich zu den bestehenden Outfit- und Informationsseiten. Der Browser-Zurück-Knopf wechselt zwischen den Ansichten. Prüfungen dieses Umbaus stehen in `qa/WORKSPACE-2026-10-12.md`.
 
 ```sh
 npm run check:links
